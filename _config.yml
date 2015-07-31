@@ -1,0 +1,19 @@
+copyright: 'tdg5 &copy; 2015. All Rights Reserved.'
+highlighter: rouge
+language: en-US
+markdown: redcarpet
+redcarpet:
+  extensions: [
+    autolink,
+    disable_indented_code_blocks,
+    fenced_code_blocks,
+    footnotes,
+    no_intra_emphasis,
+    space_after_headers,
+    strikethrough,
+    tables,
+    underline
+  ]
+tagline: explore, create, adapt, repeat
+title: tdg5
+url: http://jekyll.tdg5.com
