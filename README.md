@@ -1,0 +1,2 @@
+# blog
+Jekyll-ified blog
