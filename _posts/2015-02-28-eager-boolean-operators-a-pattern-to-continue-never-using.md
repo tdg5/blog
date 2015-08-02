@@ -4,7 +4,7 @@ categories: [dev/ruby/anti-patterns/, dev/ruby/internals]
 featured_image:
   alt_text: I'm going to continue never washing this cheek again
   title: I'm going to continue never washing this cheek again
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/02/24024043/never_washing_this_cheek_again.jpg
+  url: /assets/images/featured/2015-02-28-eager-boolean-operators-a-pattern-to-continue-never-using.jpg
 layout: post
 permalink: /eager-boolean-operators-a-pattern-to-continue-never-using
 tags: [anti-pattern, anti-patterns, eager Boolean operators, Eager Evaluation, logical operator, logical operators, Ruby internals]

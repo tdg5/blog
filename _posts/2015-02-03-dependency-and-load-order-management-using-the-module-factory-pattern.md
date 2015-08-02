@@ -4,7 +4,7 @@ categories: [dev/ruby/design-patterns, design-patterns]
 featured_image:
   alt_text: Module Factory Assembly Line
   title: Module Factory Assembly Line
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/02/03025045/module_factory1.jpg
+  url: /assets/images/featured/2015-02-03-dependency-and-load-order-management-using-the-module-factory-pattern.jpg
 layout: post
 permalink: /dependency-and-load-order-management-using-the-module-factory-pattern
 tags: [dependency injection, design patterns, factory method, idiomatic Ruby, module factory, ruby idioms, Ruby]

@@ -4,7 +4,7 @@ categories: [dev/ruby/internals]
 featured_image:
   alt_text: Recursive Guinea Pigs
   title: Recursive Guinea Pigs
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/01/12021516/scaled_pigs.jpg
+  url: /assets/images/featured/2015-01-12-tail-call-optimization-in-ruby-background.jpg
 layout: post
 permalink: /tail-call-optimization-in-ruby-background
 tags: [bash, cli, command line, dd, knoppix, linux, shell, terminal, unix]

@@ -4,7 +4,7 @@ categories: [dev/project announcements, dev/ruby]
 featured_image:
   alt_text: tco_method
   title: tco_method
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/03/15014139/tco_method.jpg
+  url: /assets/images/featured/2015-03-15-introducing-the-tco-method-gem.jpg
 layout: post
 permalink: /introducing-the-tco-method-gem
 tags: [gem, project announcements, recursion, Ruby, tail call, tail call optimization, tail recursion, tail recursive, tco_method]

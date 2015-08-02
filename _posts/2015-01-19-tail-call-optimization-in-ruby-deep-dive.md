@@ -4,7 +4,7 @@ categories: [dev/ruby/internals]
 featured_image:
   alt_text: 'Tail Call Optimization in Ruby: Deep Dive'
   title:  'Tail Call Optimization in Ruby: Deep Dive'
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/01/19025114/tco_deep_dive1.jpg
+  url: /assets/images/featured/2015-01-19-tail-call-optimization-in-ruby-deep-dive.jpg
 layout: post
 permalink: /tail-call-optimization-in-ruby-deep-dive
 tags: [C, Ruby, Ruby VM, tail call optimization, tail recursion, tail recursive, YARV]

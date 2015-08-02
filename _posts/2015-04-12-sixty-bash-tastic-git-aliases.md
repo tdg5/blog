@@ -4,7 +4,7 @@ categories: [dev/bash, dev/git, dev/linux]
 featured_image:
   alt_text: 60 Bash-tastic Git Aliases
   title: 60 Bash-tastic Git Aliases
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/04/12151148/bash-tastic_git_aliases.jpg
+  url: /assets/images/featured/2015-04-12-sixty-bash-tastic-git-aliases.jpg
 layout: post
 permalink: /60-bash-tastic-git-aliases
 tags: [alias, aliases, bash, bash aliases, git, git aliases]

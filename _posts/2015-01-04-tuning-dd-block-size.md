@@ -4,7 +4,7 @@ categories: [dev/bash, dev/Linux, dev/Unix]
 featured_image:
   alt_text: Tuning dd block size
   title: Tuning dd block size
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/01/04153244/block_sizes.jpg
+  url: /assets/images/featured/2015-01-04-tuning-dd-block-size.jpg
 layout: post
 permalink: /tuning-dd-block-size
 tags: [bash, cli, command line, dd, knoppix, linux, shell, terminal, unix]

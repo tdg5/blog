@@ -4,7 +4,7 @@ categories: [dev/ruby/journeyman]
 featured_image:
   alt_text: Meditation Cairn Atop Rippling Waters
   title: Meditation Cairn Atop Rippling Waters
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/02/16202856/journeyman.jpg
+  url: /assets/images/featured/2015-02-16-on-the-road-from-ruby-journeyman-to-ruby-master.jpg
 layout: post
 permalink: /on-the-road-from-ruby-journeyman-to-ruby-master
 tags: [journeyman, Project Euler, Ruby, Ruby journeyman, Ruby Newbie, Rubyist, self-reflection]

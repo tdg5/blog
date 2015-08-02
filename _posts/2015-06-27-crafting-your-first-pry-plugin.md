@@ -4,7 +4,7 @@ categories: [dev/ruby/tools]
 featured_image:
   alt_text: Pry Plugins
   title: Pry Plugins
-  url: https://s3.amazonaws.com/tdg5/blog/wp-content/uploads/2015/06/08104046/pry_plugins.jpg
+  url: /assets/images/featured/2015-06-27-crafting-your-first-pry-plugin.jpg
 layout: post
 permalink: /crafting-your-first-pry-plugin
 tags: [cli, console, IRB, Pry, Pry plugins, Rails, REPL, Ruby, shell]
