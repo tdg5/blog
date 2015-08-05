@@ -1,0 +1,9 @@
+<div class="widget widget_archive">
+  <h3>Archives</h3>
+  <ul>
+    {% assign archives = site.posts | posts_by_year_and_month %}
+    {% for archive in archives %}
+      <li><a href="{{ archive.first | archive_url }}">{{ archive | first | date: "%B %Y" }}&nbsp;&#40;{{ archive | last | size }}&#41;</a></li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,0 +1,9 @@
+<div class="pad group">
+  <ul class="post-list group">
+    {% for post in posts %}
+      <li class="post-row">
+        {% include post_preview.html %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

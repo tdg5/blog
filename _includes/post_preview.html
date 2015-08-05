@@ -1,0 +1,17 @@
+<div class="group post">
+  <div class="post-inner post-hover">
+    <div class="post-thumbnail">
+      <a href="{{ post.url }}">
+        <img src="{{ post.featured_image.url }}" alt="{{ post.featured_image.alt_text }}" title="{{ post.featured_image.title }}">
+      </a>
+    </div>
+    <div class="post-meta group">
+      {{ post.categories | flat_categories }}
+      <p class="post-date">{{ post.date | date: "%d %b, %Y" }}</p>
+    </div>
+    <h2 class="post-title"><a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
+    <div class="entry excerpt">
+      {{ post.content | markdownify | strip_html | truncatewords: 50 }}
+    </div>
+  </div>
+</div>

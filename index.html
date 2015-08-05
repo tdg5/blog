@@ -1,0 +1,12 @@
+---
+layout: page
+header_title: tdg5
+---
+<div class="pad group">
+  <div class="featured">
+    {% assign post = site.posts.first %}
+    {% include post_preview.html %}
+  </div>
+</div>
+{% assign posts = site.posts | slice: 1, 11 %}
+{% include post_list.html %}
