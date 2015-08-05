@@ -1,0 +1,14 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<html class="no-js" lang="{{ site.language }}">
+  {% include head.html %}
+  <body class="{% layout_class %} {{ page.format }}">
+    <div id="wrapper">
+      {% include header.html %}
+      {% include content_page.html %}
+      {% include footer.html %}
+    </div>
+  </body>
+</html>

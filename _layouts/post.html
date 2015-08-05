@@ -1,0 +1,24 @@
+---
+layout: 3-column
+format: single
+---
+<section class="content page-content">
+  <div class="page-title pad group"><h2>{{ page.categories | flat_categories }}</h2></div>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/pygments.css">
+  <section class="content">
+    <div class="pad group">
+      <article class="">
+        <div class="post-inner group">
+          <h1 class="post-title">{{ page.title }}</h1>
+          {% byline %}
+          <div class="entry">
+            <div class="entry-inner">
+            {% include featured_image.html %}
+            {{ content }}
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</section>
