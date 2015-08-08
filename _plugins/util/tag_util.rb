@@ -1,8 +1,13 @@
+require_relative "config_util"
+
 module JekyllHueman
   module TagUtil
-    def tag_url(tag, site = nil)
-      config = site && site.respond_to?(:config) ? site.config : site
-      dir = config && config["tag_dir"] || "/tag"
+    include ConfigUtil
+
+    DEFAULT_TAG_DIR = "/tag".freeze
+
+    def tag_url(tag)
+      dir = simple_hueman_config["tag_dir"] || DEFAULT_TAG_DIR
       sanitized_tag_name = tag.downcase.gsub(/\s+/, '-')
       File.join(dir, sanitized_tag_name)
     end

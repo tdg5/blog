@@ -1,8 +1,11 @@
+require_relative "config_util"
+
 module JekyllHueman
   module ArchiveUtil
-    def archive_url(date, site = nil)
-      config = site && site.respond_to?(:config) ? site.config : site
-      dir = config && config["archive_dir"] || "/%04d/%02d"
+    include ConfigUtil
+
+    def archive_url(date)
+      dir = simple_hueman_config["monthly_archive_dir"] || "/%04d/%02d"
       File.join(dir % [date.year, date.month])
     end
 

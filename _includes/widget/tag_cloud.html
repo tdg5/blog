@@ -3,7 +3,7 @@
   <div class="tagcloud">
     {% assign tags = site.posts | weighted_tags_for_posts %}
     {% for tag in tags %}
-      <a href="{{ tag.first | tag_url: site }}" style="font-size: {{ tag.last }}%">{{ tag.first }}</a>
+      <a href="{{ tag.first | tag_url }}" style="font-size: {{ tag.last }}%">{{ tag.first }}</a>
     {% endfor %}
   </div>
 </div>

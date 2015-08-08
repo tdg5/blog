@@ -1,24 +1,35 @@
+require_relative "../util/config_util"
 require_relative "../util/category_util"
 
 module JekyllHueman
   class CategoryPage < Jekyll::Page
+    extend ConfigUtil
+    include ConfigUtil
     include CategoryUtil
 
+    DEFAULT_LAYOUT = "category_index".freeze
+    DEFAULT_TITLE_PREFIX = "Category: ".freeze
     FOLDER_ICON = %q[<i class="fa fa-folder-open"></i>].freeze
+
+    def self.layout_for_site(site)
+      simple_hueman_config(site)["category_page_layout"] || DEFAULT_LAYOUT
+    end
 
     def initialize(site, category, sub_categories)
       @site = site
       @base = site.source
-      @dir = category_url(category, site)
+      @context = Liquid::Context.new({}, {}, { :site => site })
+      @dir = category_url(category)
       @name = "index.html"
 
-      self.process(@name)
-      self.read_yaml(File.join(@base, "_layouts"), "category_index.html")
+      process(@name)
+      layout = site.layouts[self.class.layout_for_site(@site)]
+      read_yaml(File.dirname(layout.path), File.basename(layout.path))
 
       category_posts = sub_categories.flat_map {|sub_cat| site.categories[sub_cat] }
-      category_title_prefix = site.config["category_title_prefix"] || "Category: "
+      title_prefix = simple_hueman_config["category_title_prefix"] || DEFAULT_TITLE_PREFIX
       name_span = "<span>#{File.basename(category)}</span>"
-      header_title = "#{FOLDER_ICON}#{category_title_prefix}#{name_span}"
+      header_title = "#{FOLDER_ICON}#{title_prefix}#{name_span}"
 
       self.data["header_title"] = header_title
       self.data["posts"] = category_posts.uniq.sort.reverse
