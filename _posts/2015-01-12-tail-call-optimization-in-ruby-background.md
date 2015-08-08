@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-01-12-tail-call-optimization-in-ruby-background.jpg
 layout: post
 permalink: /tail-call-optimization-in-ruby-background
-tags: [bash, cli, command line, dd, knoppix, linux, shell, terminal, unix]
+tags: [recursion, ruby, ruby vm, tail call, tail call optimization, tail recursion, tail recursive]
 title: 'Tail Call Optimization in Ruby: Background'
 ---
 Back in November, care of [/r/ruby](https://www.reddit.com/r/ruby), I came

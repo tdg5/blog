@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-02-28-eager-boolean-operators-a-pattern-to-continue-never-using.jpg
 layout: post
 permalink: /eager-boolean-operators-a-pattern-to-continue-never-using
-tags: [anti-pattern, anti-patterns, eager Boolean operators, Eager Evaluation, logical operator, logical operators, Ruby internals]
+tags: [anti-pattern, anti-patterns, eager boolean operators, eager evaluation, logical operator, logical operators, ruby internals]
 title: 'Eager Boolean Operators: A Pattern to Continue Never Using'
 ---
 In relaying the story of eager Boolean operators, it is best to begin with their

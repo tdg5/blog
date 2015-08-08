@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-02-16-on-the-road-from-ruby-journeyman-to-ruby-master.jpg
 layout: post
 permalink: /on-the-road-from-ruby-journeyman-to-ruby-master
-tags: [journeyman, Project Euler, Ruby, Ruby journeyman, Ruby Newbie, Rubyist, self-reflection]
+tags: [journeyman, project euler, ruby, ruby journeyman, ruby newbie, rubyist, self-reflection]
 title: On the Road From Ruby Journeyman to Ruby Master
 ---
 Mind-blowingly awful are really the only words that come to mind to describe my

@@ -1,6 +1,6 @@
 ---
 author: Danny Guinther
-categories: [dev/bash, dev/Linux, dev/Unix]
+categories: [dev/bash, dev/linux, dev/unix]
 featured_image:
   alt_text: Tuning dd block size
   title: Tuning dd block size

@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-06-27-crafting-your-first-pry-plugin.jpg
 layout: post
 permalink: /crafting-your-first-pry-plugin
-tags: [cli, console, IRB, Pry, Pry plugins, Rails, REPL, Ruby, shell]
+tags: [cli, console, irb, pry, pry plugins, rails, repl, ruby, shell]
 title: Crafting Your First Pry Plugin
 ---
 When I was first introduced to the [pry][Pry - RubyGems] gem and the alternative

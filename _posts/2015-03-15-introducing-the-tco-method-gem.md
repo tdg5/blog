@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-03-15-introducing-the-tco-method-gem.jpg
 layout: post
 permalink: /introducing-the-tco-method-gem
-tags: [gem, project announcements, recursion, Ruby, tail call, tail call optimization, tail recursion, tail recursive, tco_method]
+tags: [gem, project announcements, recursion, ruby, tail call, tail call optimization, tail recursion, tail recursive, tco_method]
 title: Introducing the tco_method gem
 ---
 Earlier this week I published a gem intended to help simplify the process of
