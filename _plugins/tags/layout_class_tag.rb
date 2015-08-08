@@ -1,9 +1,9 @@
 module JekyllHueman
   class LayoutClassTag < Liquid::Tag
-    include HelperAccessors
 
     DEFAULT_KEY = "__default__".freeze
     DEFAULT_LAYOUT_CLASS = "col-3cm".freeze
+
     LAYOUT_CLASSES = {
       "3-column" => "col-3cm",
       DEFAULT_KEY => DEFAULT_LAYOUT_CLASS,
@@ -25,6 +25,14 @@ module JekyllHueman
         ancestor_layout = layouts[ancestor_layout.data["layout"]]
       end
       nil
+    end
+
+    def layouts
+      @context.registers[:site].layouts
+    end
+
+    def page_layout
+      @context.registers[:page]["layout"]
     end
   end
 end
