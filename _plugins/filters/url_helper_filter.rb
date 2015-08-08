@@ -7,6 +7,11 @@ module JekyllHueman
   module URLHelperFilter
     include ArchiveUtil, AuthorUtil, CategoryUtil, TagUtil
 
+    def initialize(context)
+      @context = context
+      super if defined?(super)
+    end
+
     def archive_url(*); super; end
     def author_url(*); super; end
     def category_url(*); super; end

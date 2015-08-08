@@ -3,7 +3,8 @@ require_relative "../pages/category_page"
 module JekyllHueman
   class CategoryPageGenerator < Jekyll::Generator
     def generate(site)
-      return unless site.layouts.key?("category_index")
+      layout = CategoryPage.layout_for_site(site)
+      return unless site.layouts.key?(layout)
       categories(site).each_pair do |category, sub_categories|
         site.pages << CategoryPage.new(site, category, sub_categories)
       end

@@ -4,9 +4,7 @@ module JekyllHueman
   module ArchiveFilter
     include ArchiveUtil
 
-    def posts_by_year_and_month(*)
-      super
-    end
+    def posts_by_year_and_month(*); super; end
   end
 end
 

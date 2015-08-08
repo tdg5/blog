@@ -5,7 +5,8 @@ module JekyllHueman
     LIST_HASH_PROC = lambda { |h, k| h[k] = [] }
 
     def generate(site)
-      return unless site.layouts.key?("author_index")
+      layout = AuthorPage.layout_for_site(site)
+      return unless site.layouts.key?(layout)
       author_posts(site).each_pair do |author, posts|
         site.pages << AuthorPage.new(site, author, posts)
       end

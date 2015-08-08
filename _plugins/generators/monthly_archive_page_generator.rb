@@ -6,7 +6,8 @@ module JekyllHueman
     include JekyllHueman::ArchiveUtil
 
     def generate(site)
-      return unless site.layouts.key?("monthly_archive")
+      layout = MonthlyArchivePage.layout_for_site(site)
+      return unless site.layouts.key?(layout)
       posts_by_year_and_month(site.posts).each do |date, posts|
         site.pages << MonthlyArchivePage.new(site, date, posts)
       end
