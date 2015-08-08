@@ -5,26 +5,12 @@ require_relative "../util/tag_util"
 
 module JekyllHueman
   module URLHelperFilter
-    include ArchiveUtil
-    include AuthorUtil
-    include CategoryUtil
-    include TagUtil
+    include ArchiveUtil, AuthorUtil, CategoryUtil, TagUtil
 
-    def archive_url(*)
-      super
-    end
-
-    def author_url(*)
-      super
-    end
-
-    def category_url(*)
-      super
-    end
-
-    def tag_url(*)
-      super
-    end
+    def archive_url(*); super; end
+    def author_url(*); super; end
+    def category_url(*); super; end
+    def tag_url(*); super; end
   end
 end
 
