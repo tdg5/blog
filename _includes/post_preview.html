@@ -6,7 +6,7 @@
       </a>
     </div>
     <div class="post-meta group">
-      {{ post.categories | flat_categories }}
+      {{ post.categories | flat_categories: site }}
       <p class="post-date">{{ post.date | date: "%d %b, %Y" }}</p>
     </div>
     <h2 class="post-title"><a href="{{ post.url }}" rel="bookmark" title="{{ post.title }}">{{ post.title }}</a></h2>
