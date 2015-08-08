@@ -7,7 +7,7 @@ featured_image:
   url: /assets/images/featured/2015-01-19-tail-call-optimization-in-ruby-deep-dive.jpg
 layout: post
 permalink: /tail-call-optimization-in-ruby-deep-dive
-tags: [C, Ruby, Ruby VM, tail call optimization, tail recursion, tail recursive, YARV]
+tags: [c, ruby, ruby vm, tail call optimization, tail recursion, tail recursive, yarv]
 title: 'Tail Call Optimization in Ruby: Deep Dive'
 ---
 In [my last post](http://blog.tdg5.com/tail-call-optimization-ruby-background/),
@@ -22,7 +22,7 @@ A lot of what follows wouldn't be possible without [Pat Shaughnessy's Ruby Under
 a Microscope](http://patshaughnessy.net/ruby-under-a-microscope) (and a healthy
 dose of [K & R](https://en.wikipedia.org/wiki/The_C_Programming_Language)). If
 you find you enjoy the conceptual level of this article and you're interested in
-more, I'd highly recommend [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope). 
+more, I'd highly recommend [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope).
 I found it an enjoyable, empowering, fascinating, and approachable introduction
 to the internals of Ruby. If you're curious about the book, but you're still
 unsure about it, I'd encourage you to check out [Ruby Rogues #146, a book club
