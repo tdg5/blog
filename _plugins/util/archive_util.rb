@@ -10,7 +10,8 @@ module JekyllHueman
     end
 
     def posts_by_year_and_month(posts)
-      posts.group_by { |post| Date.new(post.date.year, post.date.month) }
+      grps = posts.group_by { |post| Date.new(post.date.year, post.date.month) }
+      Hash[grps.sort_by(&:first).reverse]
     end
   end
 end
