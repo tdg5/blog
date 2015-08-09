@@ -1,9 +1,13 @@
 <div class="widget widget_categories">
   <h3>Categories</h3>
   <ul>
-    {% for category in site.categories %}
+    {% assign categories = site.categories | hierarchify_categories %}
+    {% for category in categories %}
       <li class="cat-item">
-        <a href="{{ category.first | category_url }}" name="{{ category.first }}">{{ category.first }}&nbsp;&#40;{{ category.last | size }}&#41;</a>
+        {% assign category_name = category.first | category_short_name %}
+        <a href="{{ category.first | category_url }}" name="{{ category.first }}">
+          {{ category_name }}&nbsp;&#40;{{ category.last | size }}&#41;
+        </a>
       </li>
     {% endfor %}
   </ul>

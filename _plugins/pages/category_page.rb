@@ -15,10 +15,9 @@ module JekyllHueman
       simple_hueman_config(site)["category_page_layout"] || DEFAULT_LAYOUT
     end
 
-    def initialize(site, category, sub_categories)
+    def initialize(site, category, posts)
       @site = site
       @base = site.source
-      @context = Liquid::Context.new({}, {}, { :site => site })
       @dir = category_url(category)
       @name = "index.html"
 
@@ -26,14 +25,13 @@ module JekyllHueman
       layout = site.layouts[self.class.layout_for_site(@site)]
       read_yaml(File.dirname(layout.path), File.basename(layout.path))
 
-      category_posts = sub_categories.flat_map {|sub_cat| site.categories[sub_cat] }
       title_prefix = simple_hueman_config["category_title_prefix"] || DEFAULT_TITLE_PREFIX
-      name_span = "<span>#{File.basename(category)}</span>"
+      name_span = "<span>#{category_short_name(category)}</span>"
       header_title = "#{FOLDER_ICON}#{title_prefix}#{name_span}"
 
       self.data["header_title"] = header_title
-      self.data["posts"] = category_posts.uniq.sort.reverse
-      self.data["title"] = "#{File.basename(category)} Archives"
+      self.data["posts"] = posts
+      self.data["title"] = "#{category_short_name(category)} Archives"
     end
   end
 end

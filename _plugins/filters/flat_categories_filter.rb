@@ -21,23 +21,26 @@ module JekyllHueman
       def category_map(categories)
         cat_map = {}
         working = categories.dup
-        until working.empty?
-          category = working.pop
-          next if cat_map.key?(category)
-          cat_map[File.basename(category)] = category
+        while category = working.pop
+          short_name = category_short_name(category)
+          next if cat_map.key?(short_name)
+          cat_map[short_name] = category
           parent_category = File.dirname(category)
           working << parent_category if parent_category != "."
         end
-        cat_map
+        sorted = {}
+        cat_map.keys.sort!(&:casecmp).each do |name|
+          sorted[name] = cat_map[name]
+        end
+        sorted
       end
 
       def markup
         cat_map = category_map(@categories)
-        names = cat_map.keys.sort(&:casecmp)
         output = %Q[<p class="post-category">]
-        links = names.map do |name|
-          url = category_url(cat_map[name])
-          %Q[<a href="#{url}" rel="category tag">#{name}</a>]
+        links = cat_map.each_pair.map do |short_name, full_name|
+          url = category_url(full_name)
+          %Q[<a href="#{url}" rel="category tag">#{short_name}</a>]
         end
         output.concat(links.join(" / "))
         output.concat("</p>")
