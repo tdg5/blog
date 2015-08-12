@@ -20,13 +20,18 @@
 }
 
 .entry code {
-  background-color: initial;
+  font-size: 100%;
   white-space: pre;
   word-wrap: normal;
 }
 
 .entry .featured-image {
   text-align: center;
+}
+
+.entry .highlight code {
+  background-color: initial;
+  font-size: 1.4em;
 }
 
 .fa-white .fa {
