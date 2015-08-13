@@ -1,8 +1,9 @@
 require_relative "../pages/author_page"
+require_relative "../util/author_util"
 
 module JekyllHueman
   class AuthorPageGenerator < Jekyll::Generator
-    LIST_HASH_PROC = lambda { |h, k| h[k] = [] }
+    include AuthorUtil
 
     def generate(site)
       layout = AuthorPage.layout_for_site(site)
@@ -10,14 +11,6 @@ module JekyllHueman
       author_posts(site).each_pair do |author, posts|
         site.pages << AuthorPage.new(site, author, posts)
       end
-    end
-
-    private
-
-    def author_posts(site)
-      posts = Hash.new(&LIST_HASH_PROC)
-      site.posts.each { |post| posts[post.data["author"]] << post }
-      posts
     end
   end
 end
