@@ -7,7 +7,7 @@ module JekyllHueman
     DEFAULT_AUTHOR_DIR = "/author".freeze
 
     def author_data(author)
-      (@context.registers[:site].data["authors"] || {})[author]
+      ((@site || @context.registers[:site]).data["authors"] || {})[author]
     end
 
     def author_url(author)

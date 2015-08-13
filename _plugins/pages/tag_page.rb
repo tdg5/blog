@@ -17,10 +17,10 @@ module JekyllHueman
 
     def initialize(site, tag, posts)
       @base = site.source
-      @context = Liquid::Context.new({}, {}, { :site => site })
+      @site = site
+
       @dir = tag_url(tag)
       @name = "index.html"
-      @site = site
 
       process(@name)
       layout = site.layouts[self.class.layout_for_site(@site)]

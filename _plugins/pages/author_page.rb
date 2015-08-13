@@ -18,7 +18,7 @@ module JekyllHueman
     def initialize(site, author, posts)
       @site = site
       @base = site.source
-      @context = Liquid::Context.new({}, {}, { :site => @site })
+
       @dir = author_url(author)
       @name = "index.html"
       author = author_data(author)
