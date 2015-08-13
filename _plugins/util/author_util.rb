@@ -5,9 +5,16 @@ module JekyllHueman
     include ConfigUtil
 
     DEFAULT_AUTHOR_DIR = "/author".freeze
+    LIST_HASH_PROC = lambda { |h, k| h[k] = [] }
 
     def author_data(author)
       ((@site || @context.registers[:site]).data["authors"] || {})[author]
+    end
+
+    def author_posts(site = @site)
+      posts = Hash.new(&LIST_HASH_PROC)
+      site.posts.each { |post| posts[post.data["author"]] << post }
+      posts
     end
 
     def author_url(author)
