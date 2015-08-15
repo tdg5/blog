@@ -6,5 +6,5 @@ Danny Guinther:
   social_links:
     github: https://github.com/tdg5
     linkedin: https://www.linkedin.com/in/dannyguinther
-    rss: /feed/tdg5
+    rss: true
     twitter: https://twitter.com/dannyguinther

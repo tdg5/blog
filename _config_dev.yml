@@ -1,4 +1,6 @@
+author: tdg5.com
 copyright: 'tdg5 &copy; 2015. All Rights Reserved.'
+description: Misadventures in programming!
 highlighter: rouge
 language: en-US
 markdown: redcarpet
@@ -14,6 +16,8 @@ redcarpet:
     tables,
     underline
   ]
+simple_hueman:
+  rss_item_limit: 10
 tagline: explore, create, adapt, repeat
 title: tdg5
 url: http://localhost:4000
