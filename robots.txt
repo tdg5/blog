@@ -2,4 +2,4 @@
 ---
 User-agent: *
 
-Sitemap: {{ site.url }}/sitemapindex.xml
+Sitemap: {{ "index" | sitemap_url }}
