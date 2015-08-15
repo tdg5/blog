@@ -4,6 +4,7 @@ description: Misadventures in programming!
 highlighter: rouge
 language: en-US
 markdown: redcarpet
+permalink: /:title/index.html
 redcarpet:
   extensions: [
     autolink,

@@ -6,7 +6,6 @@ featured_image:
   title: Pry Plugins
   url: /assets/images/featured/2015-06-27-crafting-your-first-pry-plugin.jpg
 layout: post
-permalink: /crafting-your-first-pry-plugin
 tags: [cli, console, irb, pry, pry plugins, rails, repl, ruby, shell]
 title: Crafting Your First Pry Plugin
 ---

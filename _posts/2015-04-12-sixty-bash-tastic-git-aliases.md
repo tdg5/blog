@@ -6,7 +6,6 @@ featured_image:
   title: 60 Bash-tastic Git Aliases
   url: /assets/images/featured/2015-04-12-sixty-bash-tastic-git-aliases.jpg
 layout: post
-permalink: /60-bash-tastic-git-aliases
 tags: [alias, aliases, bash, bash aliases, git, git aliases]
 title: 60 Bash-tastic Git Aliases
 ---

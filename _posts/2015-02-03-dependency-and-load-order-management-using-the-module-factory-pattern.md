@@ -6,7 +6,6 @@ featured_image:
   title: Module Factory Assembly Line
   url: /assets/images/featured/2015-02-03-dependency-and-load-order-management-using-the-module-factory-pattern.jpg
 layout: post
-permalink: /dependency-and-load-order-management-using-the-module-factory-pattern
 tags: [dependency injection, design patterns, factory method, idiomatic ruby, module factory, ruby idioms, ruby]
 title: Dependency and Load-Order Management Using the Module Factory Pattern
 ---

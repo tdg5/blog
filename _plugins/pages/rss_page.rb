@@ -1,4 +1,6 @@
 require_relative "../util/config_util"
+require_relative "../util/url_util"
+require_relative "../util/post_util"
 require_relative "../util/rss_util"
 require "cgi/util"
 require "rss"
@@ -7,7 +9,9 @@ module JekyllHueman
   class RSSPage < Jekyll::Page
     extend ConfigUtil
     include ConfigUtil
+    include PostUtil
     include RSSUtil
+    include URLUtil
 
     DEFAULT_LAYOUT = "rss".freeze
     HTML_ESCAPING = /<\/?[^>]+?>/.freeze
@@ -35,7 +39,7 @@ module JekyllHueman
         maker.channel.author = wrap_cdata(site.config["author"])
         maker.channel.copyright = wrap_cdata(site.config["copyright"])
         maker.channel.description = wrap_cdata(site.config["description"])
-        maker.channel.link = site.config["url"]
+        maker.channel.link = absolute_url
         maker.channel.title = wrap_cdata(site.config["title"])
 
         post_limit = simple_hueman_config["rss_item_limit"]
@@ -46,11 +50,11 @@ module JekyllHueman
           post = post.dup
           post.render(site.layouts, site.site_payload)
           maker.items.new_item do |item|
-            post_url = File.join(site.config["url"], post.url)
+            url = absolute_url(post_url(post.url))
             item.content_encoded = wrap_cdata(post.content)
             item.description = wrap_cdata(post.excerpt.gsub(HTML_ESCAPING, ""))
-            item.guid.content = post_url
-            item.link = post_url
+            item.guid.content = url
+            item.link = url
             item.title = post.title
             item.updated = post.date
           end

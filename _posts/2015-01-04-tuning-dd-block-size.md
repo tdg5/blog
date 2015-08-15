@@ -6,7 +6,6 @@ featured_image:
   title: Tuning dd block size
   url: /assets/images/featured/2015-01-04-tuning-dd-block-size.jpg
 layout: post
-permalink: /tuning-dd-block-size
 tags: [bash, cli, command line, dd, knoppix, linux, shell, terminal, unix]
 title: Tuning dd block size
 ---

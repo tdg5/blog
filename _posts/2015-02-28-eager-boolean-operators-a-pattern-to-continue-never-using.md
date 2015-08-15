@@ -6,7 +6,6 @@ featured_image:
   title: I'm going to continue never washing this cheek again
   url: /assets/images/featured/2015-02-28-eager-boolean-operators-a-pattern-to-continue-never-using.jpg
 layout: post
-permalink: /eager-boolean-operators-a-pattern-to-continue-never-using
 tags: [anti-pattern, anti-patterns, eager boolean operators, eager evaluation, logical operator, logical operators, ruby internals]
 title: 'Eager Boolean Operators: A Pattern to Continue Never Using'
 ---

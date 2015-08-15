@@ -4,7 +4,7 @@
     {% assign recent_posts = site.posts | slice: 0, 5 %}
     {% for recent_post in recent_posts %}
       <li>
-        <a href="{{ recent_post.url }}">{{ recent_post.title }}</a>
+        <a href="{{ recent_post.url | post_url }}">{{ recent_post.title }}</a>
         <span class="post-date">{{ recent_post.date | date: "%B %d, %Y" }}</span>
       </li>
     {% endfor %}

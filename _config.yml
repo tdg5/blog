@@ -5,6 +5,7 @@ google_analytics_id: UA-47215613-1
 highlighter: rouge
 language: en-US
 markdown: redcarpet
+permalink: /:title/index.html
 pingdom_rum_id: 54e9c078abe53d617dd34388
 redcarpet:
   extensions: [

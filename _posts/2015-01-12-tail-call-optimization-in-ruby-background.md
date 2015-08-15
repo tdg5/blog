@@ -6,7 +6,6 @@ featured_image:
   title: Recursive Guinea Pigs
   url: /assets/images/featured/2015-01-12-tail-call-optimization-in-ruby-background.jpg
 layout: post
-permalink: /tail-call-optimization-in-ruby-background
 tags: [recursion, ruby, ruby vm, tail call, tail call optimization, tail recursion, tail recursive]
 title: 'Tail Call Optimization in Ruby: Background'
 ---
