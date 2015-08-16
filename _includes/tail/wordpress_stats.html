@@ -1,0 +1,10 @@
+{% if site.wordpress_stats_id %}
+  <script type="text/javascript" src="http://stats.wp.com/e-201533.js" async defer></script>
+  <script type="text/javascript">
+    _stq = window._stq || [];
+    _stq.push(["view", {v:"ext",j:"1:3.5.3",blog:"{{ site.wordpress_stats_id }}",post:"0",tz:"0",srv:window.location.host}]);
+    _stq.push(["clickTrackerInit", "{{ site.wordpress_stats_id }}", "0" ]);
+  </script>
+{% else %}
+  <!-- No Wordpress Stats ID found for site -->
+{% endif %}
