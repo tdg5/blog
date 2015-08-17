@@ -56,17 +56,17 @@ to have, even if you don't use it everyday.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcl='git clone'
 ```
 
 **Mnemonic:**
 
-- **g**it **cl**one
+- <strong>g</strong>it <strong>cl</strong>one
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gcl git@github.com:pry/pry.git
 Cloning into 'pry'...
 remote: Counting objects: 23957, done.
@@ -87,7 +87,7 @@ which helps with remembering which is which.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gget='git pull'
 alias gput='git push'
 ```
@@ -95,12 +95,12 @@ alias gput='git push'
 **Mnemonic:**
 
 - Similar to HTTP verbs
-- **g**it ~~pull~~ **get**
-- **g**it ~~push~~ **put**
+- <strong>g</strong>it <del>pull</del> <strong>get</strong>
+- <strong>g</strong>it <del>push</del> <strong>put</strong>
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gget
 Current branch master is up to date.
 $ gput
@@ -132,17 +132,17 @@ status**.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gs='git status'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tatus
+- <strong>g</strong>it <strong>s</strong>tatus
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gs
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -160,17 +160,17 @@ applying amendments or rebasing interactively.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gsh='git show'
 ```
 
 **Mnemonic:**
 
-- **g**it **sh**ow
+- <strong>g</strong>it <strong>sh</strong>ow
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gsh
 commit d316dce7e8446a7381d9d1e7198f96edb29952b5
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -194,7 +194,7 @@ provided by **git log -p**.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gshn() {
   ([ -z "$1" ] || [ $(($1)) -lt 0 ]) && echo 'Invalid integer!' && return
   git show HEAD@{$1}
@@ -203,11 +203,11 @@ function gshn() {
 
 **Mnemonic:**
 
-- **g**it **sh**ow HEAD@{**n**}
+- <strong>g</strong>it <strong>sh</strong>ow HEAD@{<strong>n</strong>}
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gshn 1
 commit d316dce7e8446a7381d9d1e7198f96edb29952b5
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -232,17 +232,17 @@ full **git branch** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gbr='git branch'
 ```
 
 **Mnemonic:**
 
-- **g**it **br**anch
+- <strong>g</strong>it <strong>br</strong>anch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gbr
 * master
   dev
@@ -258,17 +258,17 @@ other commands when invoked from a sub-shell.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gbrc='git rev-parse --abbrev-ref HEAD'
 ```
 
 **Mnemonic:**
 
-- **g**it **br**anch **c**urrent
+- <strong>g</strong>it <strong>br</strong>anch <strong>c</strong>urrent
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 git checkout -b long_branch_name
 git push -u origin $(gbrc)
 Total 0 (delta 0), reused 0 (delta 0)
@@ -287,17 +287,17 @@ sub-shell.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gbrp='git reflog | sed -n "s/.*checkout: moving from .* to \(.*\)/\1/p" | sed "2q;d"'
 ```
 
 **Mnemonic:**
 
-- **g**it **br**anch **p**revious
+- <strong>g</strong>it <strong>br</strong>anch <strong>p</strong>revious
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 git rebase $(gbrp)
 First, rewinding head to replay your work on top of it...
 Fast-forwarded master to long_branch_name.
@@ -313,19 +313,19 @@ would take you back to master.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gbrb="git checkout -"
 ```
 
 **Mnemonic:**
 
-- **g**it **br**anch **b**ack
-- **g**it **b**e **r**ight **b**ack
-- **g**it **brb**
+- <strong>g</strong>it <strong>br</strong>anch <strong>b</strong>ack
+- <strong>g</strong>it <strong>b</strong>e <strong>r</strong>ight <strong>b</strong>ack
+- <strong>g</strong>it <strong>brb</strong>
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
@@ -350,7 +350,7 @@ Reynolds](git@github.com:nathforge/git-branch-recent.git).
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 GBRR_DEFAULT_COUNT=10
 function gbrr() {
   COUNT=${1-$GBRR_DEFAULT_COUNT}
@@ -378,11 +378,11 @@ function gbrr() {
 
 **Mnemonic:**
 
-- **g**it **br**anch **r**ecent
+- <strong>g</strong>it <strong>br</strong>anch <strong>r</strong>ecent
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gbrr
 0) master
 1) before_merge
@@ -413,18 +413,18 @@ use this alias that often, but it's occasionally convenient to have it around.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gst='git stash'
 ```
 
 **Mnemonic:**
 
-- **g**it **st**ash
-- **g**it **s**tash **t**ypical
+- <strong>g</strong>it <strong>st</strong>ash
+- <strong>g</strong>it <strong>s</strong>tash <strong>t</strong>ypical
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gst
 Saved working directory and index state WIP on master: 7bacf33 Add git merge related bash aliases
 HEAD is now at 7bacf33 Add git merge related bash aliases
@@ -439,17 +439,17 @@ default if you don't provide a message.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gss='git stash save'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **s**ave
+- <strong>g</strong>it <strong>s</strong>tash <strong>s</strong>ave
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gss "Minor refactoring of user model"
 Saved working directory and index state On master: Minor refactoring of user model
 HEAD is now at 62758b7 Add tests for user model
@@ -466,17 +466,17 @@ particular item in the stash.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gsa='git stash apply'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **a**pply
+- <strong>g</strong>it <strong>s</strong>tash <strong>a</strong>pply
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gsa stash@{1}
 On branch master
 Changes to be committed:
@@ -493,17 +493,17 @@ Lists all items in the local stash.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gsl='git stash list'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **l**ist
+- <strong>g</strong>it <strong>s</strong>tash <strong>l</strong>ist
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gsl
 stash@{0}: WIP on master: 21e072b Ignore generated src.html in project root
 stash@{1}: On master: e80ea55 Run test suite in parallel
@@ -519,17 +519,17 @@ stash stack and apples it to the working tree. Can also be used with
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gsp='git stash pop'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **p**op
+- <strong>g</strong>it <strong>s</strong>tash <strong>p</strong>op
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gsp
 On branch master
 Changes to be committed:
@@ -554,17 +554,17 @@ I use the **-p** option with this alias to make it more like **git show**.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gssh='git stash show -p'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **sh**ow
+- <strong>g</strong>it <strong>s</strong>tash <strong>sh</strong>ow
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gssh
 diff --git a/stashed_file b/stashed_file
 new file mode 100644
@@ -581,17 +581,17 @@ other command-line utilities that take a list of files such as **grep**.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gssh='git stash show --name-only'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **sh**ow
+- <strong>g</strong>it <strong>s</strong>tash <strong>sh</strong>ow <strong>n</strong>ame <strong>o</strong>nly
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gssh
 diff --git a/stashed_file b/stashed_file
 new file mode 100644
@@ -610,17 +610,17 @@ This alias is handy when it comes time to clean up an overgrown stash.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gsd='git stash drop'
 ```
 
 **Mnemonic:**
 
-- **g**it **s**tash **d**rop
+- <strong>g</strong>it <strong>s</strong>tash <strong>d</strong>rop
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gsd stash@{1}
 Dropped refs/stash@{1} (394f8cccb3416aa85117a9a187de1f0003dac69a)
 ```
@@ -646,17 +646,17 @@ haven't felt the need to incorporate the **-E** option.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gg='git grep'
 ```
 
 **Mnemonic:**
 
-- **g**it **g**rep
+- <strong>g</strong>it <strong>g</strong>rep
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gg Rails
 config.ru:run Rails.application
 config/application.rb:Bundler.require(:default, Rails.env)
@@ -677,17 +677,17 @@ where a class is used that might not refer to the class directly.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias ggi='git grep -i'
 ```
 
 **Mnemonic:**
 
-- **g**it **g**rep case-**i**nsensitive
+- <strong>g</strong>it <strong>g</strong>rep case-<strong>i</strong>nsensitive
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ ggi Rails
 Gemfile:gem 'rails', '~> 4.1.0'
 Gemfile:  gem 'factory_girl_rails'
@@ -715,17 +715,17 @@ without getting into the details of the context the string appears in.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias ggno='git grep --name-only'
 ```
 
 **Mnemonic:**
 
-- **g**it **g**rep **n**ame-**o**nly
+- <strong>g</strong>it <strong>g</strong>rep <strong>n</strong>ame-<strong>o</strong>nly
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ ggno Rails
 config.ru
 config/application.rb
@@ -752,7 +752,7 @@ found, but this hasn't been an issue for me.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function ggo() {
   $EDITOR $(git grep --name-only "$@")
 }
@@ -760,11 +760,11 @@ function ggo() {
 
 **Mnemonic:**
 
-- **g**it **g**rep **o**pen
+- <strong>g</strong>it <strong>g</strong>rep <strong>o</strong>pen
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # For my setup, opens a VIM session with every file that contains the word
 # Rails.
 $ ggo Rails
@@ -781,7 +781,7 @@ uses **$@** to pass any arguments on to the underlying **git grep** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function ggio() {
   $EDITOR $(git grep -i --name-only "$@")
 }
@@ -789,13 +789,13 @@ function ggio() {
 
 **Mnemonic:**
 
-- **g**it **g**rep case-**i**nsensitive **o**pen
-- **ggio** instead of **ggoi** because of order of operations. First the
-  case-**i**nsensitive **git grep**, then the **o**pen.
+- <strong>g</strong>it <strong>g</strong>rep case-<strong>i</strong>nsensitive <strong>o</strong>pen
+- <strong>ggio</strong> instead of <strong>ggoi</strong> because of order of operations. First the
+  case-<strong>i</strong>nsensitive <strong>git grep</strong>, then the <strong>o</strong>pen.
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # For my setup, opens a VIM session with every file that contains a
 # case-insensitive version of the word Rails.
 $ ggio Rails
@@ -817,17 +817,17 @@ This alias is a shorthand for the basic **git rebase** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grb='git rebase'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase
+- <strong>g</strong>it <strong>r</strong>e</strong>b</strong>ase
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ grb master
 First, rewinding head to replay your work on top of it...
 Fast-forwarded dev to master.
@@ -847,17 +847,17 @@ I encourage you to learn more about the process.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grbi='git rebase --interactive'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase **i**nteractive
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase <strong>i</strong>nteractive
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # In my setup, opens a VIM session with a list of the commits that are # going
 # to be rebased and allows me to select what actions to take on each of # those
 # commits.
@@ -876,17 +876,17 @@ of the common rebase actions.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grba='git rebase --abort'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase **a**bort
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase <strong>a</strong>bort
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # No message is displayed when aborting a rebase.
 $ grba
 ```
@@ -903,17 +903,17 @@ modification. Also useful after resolving merge conflicts.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grbc='git rebase --continue'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase **c**ontinue
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase <strong>c</strong>ontinue
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ grbc
 Stopped at bda4f7035b8f9db1f2dd42a316e2ccb2da8b0955... Add test harness
 You can amend the commit now, with
@@ -938,17 +938,17 @@ without them.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grbs='git rebase --skip'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase **s**kip
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase <strong>s</strong>kip
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 ```
 
 ***
@@ -967,7 +967,7 @@ the functional form is more readable than jamming it all into an alias. YMMV.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 # Rebase from previous branch
 function grbp() {
   br="$(git reflog | sed -n 's/.*checkout: moving from .* to \(.*\)/\1/p' | sed "2q;d")"
@@ -977,11 +977,11 @@ function grbp() {
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase from **p**revious branch
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase from <strong>p</strong>revious branch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ grbp
 First, rewinding head to replay your work on top of it...
 Fast-forwarded master to dev.
@@ -998,18 +998,18 @@ dedicated to just that.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 # Rebase from previous branch
 alias grbm='git rebase master'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**e**b**ase from **m**aster branch
+- <strong>g</strong>it <strong>r</strong>e<strong>b</strong>ase from <strong>m</strong>aster branch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ grbm
 First, rewinding head to replay your work on top of it...
 Fast-forwarded dev to master.
@@ -1028,17 +1028,17 @@ use my **$EDITOR** for adding commit messages. YMMV.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcm='git commit'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**o**m**mit
+- <strong>g</strong>it <strong>c</strong>o<strong>m</strong>mit
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # On my setup this opens VIM where I can enter my commit message. The following
 # is displayed after entering my commit message and exiting VIM.
 $ gcm
@@ -1056,17 +1056,17 @@ entering a commit message from the command-line.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcmm='git commit -m'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**o**m**mit with **m**essage
+- <strong>g</strong>it <strong>c</strong>o<strong>m</strong>mit with <strong>m</strong>essage
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gcmm "Add regression test for user auth bug."
 [master 61a5220] Add regression test for user auth bug.
  1 file changed, 32 insertion(+), 7 deletion(-)
@@ -1089,17 +1089,17 @@ preferred.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcp='git cherry-pick'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**herry-**p**ick
+- <strong>g</strong>it <strong>c</strong>herry-<strong>p</strong>ick
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gcp 06b12b8464725ec7b2c8d618a95f8b46c95b9f59
 [master f77f027] Add .gitkeep placeholder to config directory.
  1 file changed, 0 insertions(+), 0 deletions(-)
@@ -1128,18 +1128,18 @@ alias, **gamend** is what you are looking for.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gamd='git commit --amend --no-edit'
 ```
 
 **Mnemonic:**
 
-- **g**it **a**men**d** commit without editing message
+- <strong>g</strong>it <strong>a</strong>men<strong>d</strong> commit without editing message
 - Shorter command goes with shorter amend action (no message change required)
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gamd
 [master 7bacf33] Add user tests
  1 file changed, 9 insertions(+)
@@ -1156,18 +1156,18 @@ commit message.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gamend='git commit --amend'
 ```
 
 **Mnemonic:**
 
-- **g**it **amend** commit and edit message
+- <strong>g</strong>it <strong>amend</strong> commit and edit message
 - Longer command goes with longer amend action (message change possible)
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # On my setup, this command opens VIM allowing me to change the commit message
 # of the previous commit. The following output is displayed after exiting VIM.
 $ gamend
@@ -1188,17 +1188,17 @@ The **gm** alias is a shorthand for the vanilla **git merge** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gm='git merge'
 ```
 
 **Mnemonic:**
 
-- **g**it **m**erge
+- <strong>g</strong>it <strong>m</strong>erge
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gm master
 Updating 6b0d6e5..d5dce5f
 Fast-forward
@@ -1219,17 +1219,17 @@ that.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gmm='git merge master'
 ```
 
 **Mnemonic:**
 
-- **g**it **m**erge **m**aster
+- <strong>g</strong>it <strong>m</strong>erge <strong>m</strong>aster
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gmm
 Updating 6b0d6e5..d5dce5f
 Fast-forward
@@ -1254,7 +1254,7 @@ readable than trying to fit the whole alias into a single line.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gmp() {
   br="$(git reflog | sed -n 's/.*checkout: moving from .* to \(.*\)/\1/p' | sed "2q;d")"
   git merge $br
@@ -1263,11 +1263,11 @@ function gmp() {
 
 **Mnemonic:**
 
-- **g**it **m**erge **p**revious branch
+- <strong>g</strong>it <strong>m</strong>erge <strong>p</strong>revious branch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gmp
 Updating 6b0d6e5..d5dce5f
 Fast-forward
@@ -1290,17 +1290,17 @@ commands.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias ga='git add'
 ```
 
 **Mnemonic:**
 
-- **g**it **a**dd
+- <strong>g</strong>it <strong>a</strong>dd
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -1344,17 +1344,17 @@ alias.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gaa='git add -A'
 ```
 
 **Mnemonic:**
 
-- **g**it **a**dd **a**ll
+- <strong>g</strong>it <strong>a</strong>dd <strong>a</strong>ll
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -1389,17 +1389,17 @@ can be quite helpful when it comes to staging only parts of a modified file.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gap='git add -p'
 ```
 
 **Mnemonic:**
 
-- **g**it **a**dd **p**atch
+- <strong>g</strong>it <strong>a</strong>dd <strong>p</strong>atch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gap
 diff --git a/LICENSE b/LICENSE
 index 93cf6cc..8ad58ca 100644
@@ -1426,17 +1426,17 @@ adds no new files.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gau='git add -u'
 ```
 
 **Mnemonic:**
 
-- **g**it **a**dd **u**pdate
+- <strong>g</strong>it <strong>a</strong>dd <strong>u</strong>pdate
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -1486,17 +1486,17 @@ alias can be used to unstage files that have been staged erroneously.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias grh='git reset HEAD'
 ```
 
 **Mnemonic:**
 
-- **g**it **r**eset **h**ead
+- <strong>g</strong>it <strong>r</strong>eset <strong>h</strong>ead
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -1543,17 +1543,17 @@ commits that haven't yet been pushed to the origin.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gback='git reset --soft HEAD~'
 ```
 
 **Mnemonic:**
 
-- **g**it **back** to pre-commit state
+- <strong>g</strong>it <strong>back</strong> to pre-commit state
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git show
 commit 9908c29d4c12ac7ef53dfeb571b5aeea1a6dde84
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -1599,17 +1599,17 @@ commit **and any uncommitted changes** since that commit **will be discarded**.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gbackk='git reset HEAD~ --hard'
 ```
 
 **Mnemonic:**
 
-- **g**it **back** to pre-commit state, **k**ill changes
+- <strong>g</strong>it <strong>back</strong> to pre-commit state, <strong>k</strong>ill changes
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git show
 commit 9908c29d4c12ac7ef53dfeb571b5aeea1a6dde84
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -1652,17 +1652,17 @@ checkout files/paths to the working tree from HEAD, another branch, or a commit.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gco='git checkout'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**heck**o**ut
+- <strong>g</strong>it <strong>c</strong>heck<strong>o</strong>ut
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # Checkout a branch
 $ gco dev
 Switched to branch 'dev'
@@ -1694,17 +1694,17 @@ tree.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcoa='git checkout .'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**heck**o**ut **a**ll
+- <strong>g</strong>it <strong>c</strong>heck<strong>o</strong>ut <strong>a</strong>ll
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ git status
 On branch masterr
 Changes to be committed:
@@ -1741,17 +1741,17 @@ to checkout that branch immediately.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gcob='git checkout -b'
 ```
 
 **Mnemonic:**
 
-- **g**it **c**heck**o**ut **b**ranch
+- <strong>g</strong>it <strong>c</strong>heck<strong>o</strong>ut <strong>b</strong>ranch
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gcob dev
 Switched to a new branch 'dev'
 ```
@@ -1772,17 +1772,17 @@ This alias is a shorthand for the basic **git log** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gl='git log'
 ```
 
 **Mnemonic:**
 
-- **g**it **l**og
+- <strong>g</strong>it <strong>l</strong>og
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gl
 commit 6a742ad7998bc48d1b82ea51bb27b9a2f9b09b43
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -1819,17 +1819,17 @@ source of the bug.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias glp='git log -p'
 ```
 
 **Mnemonic:**
 
-- **g**it **l**og with **p**atches
+- <strong>g</strong>it <strong>l</strong>og with <strong>p</strong>atches
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ glp
 commit 6a742ad7998bc48d1b82ea51bb27b9a2f9b09b43
 Author: Danny Guinther <dannyguinther@gmail.com>
@@ -1869,18 +1869,18 @@ of recent history in situations where author and date are not important.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gls='git log --oneline'
 ```
 
 **Mnemonic:**
 
-- **g**it **l**og **s**imple
-- **g**it **ls**
+- <strong>g</strong>it <strong>l</strong>og <strong>s</strong>imple
+- <strong>g</strong>it <strong>ls</strong>
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gls
 6a742ad Add new file
 33be681 Update modified_file
@@ -1901,17 +1901,17 @@ changes was added to a given branch.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias glv='git log --oneline --graph'
 ```
 
 **Mnemonic:**
 
-- **g**it **l**og **v**isual
+- <strong>g</strong>it <strong>l</strong>og <strong>v</strong>isual
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ glv
 *   ec61508 Merge branch 'other_branch' into master
 |\
@@ -1937,17 +1937,17 @@ This alias is a shorthand for the vanilla **git diff** command.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gd='git diff'
 ```
 
 **Mnemonic:**
 
-- **g**it **d**iff
+- <strong>g</strong>it <strong>d</strong>iff
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 # Show the diff between the current branch and the master branch.
 $ gd master
 diff --git a/modified_file b/modified_file
@@ -1972,17 +1972,17 @@ for the next commit.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gds='git diff --staged'
 ```
 
 **Mnemonic:**
 
-- **g**it **d**iff **s**taged
+- <strong>g</strong>it <strong>d</strong>iff <strong>s</strong>taged
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gds
 diff --git a/modified_file b/modified_file
 index cd08755..0a3ae34 100644
@@ -2011,17 +2011,17 @@ This alias displays a list of a repository's locally known tags.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gtagl="git tag -l"
 ```
 
 **Mnemonic:**
 
-- **g**it **tag** **l**ist
+- <strong>g</strong>it <strong>tag</strong> <strong>l</strong>ist
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gtagl
 0.8.20
 0.8.21
@@ -2048,7 +2048,7 @@ message of the tag.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gtaga() {
   [ -z "$1" ] && echo 'Invalid tag name!' && return
   [ -z "$2" ] && msg="$1" || msg="$2"
@@ -2058,11 +2058,11 @@ function gtaga() {
 
 **Mnemonic:**
 
-- **g**it **tag** **a**dd
+- <strong>g</strong>it <strong>tag</strong> <strong>a</strong>dd
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gtaga wip
 # No output is shown when creating a tag.
 $ git show wip
@@ -2091,17 +2091,17 @@ This alias deletes an existing tag.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias gtagd="git tag -d"
 ```
 
 **Mnemonic:**
 
-- **g**it **tag** **d**elete
+- <strong>g</strong>it <strong>tag</strong> <strong>d</strong>elete
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gtagd wip
 Deleted tag 'wip' (was 4a81695)
 ```
@@ -2114,7 +2114,7 @@ This alias deletes a remote tag from the repository's origin.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gtagdr() {
   [ -z "$1" ] && echo 'Invalid tag name!' && return
   git push origin :refs/tags/$1
@@ -2123,11 +2123,11 @@ function gtagdr() {
 
 **Mnemonic:**
 
-- **g**it **tag** **d**elete **r**emote
+- <strong>g</strong>it <strong>tag</strong> <strong>d</strong>elete <strong>r</strong>emote
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gtagdr wip
 To git@github.com:tdg5/some_repo.git
  - [deleted]         wip
@@ -2149,7 +2149,7 @@ option.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gputu() {
   if [ -z "$1" ]; then
     br="$(git rev-parse --abbrev-ref HEAD)"
@@ -2162,11 +2162,11 @@ function gputu() {
 
 **Mnemonic:**
 
-- **g**it ~~push~~ **put** and set **u**pstream
+- <strong>g</strong>it <del>push</del> <strong>put</strong> and set <strong>u</strong>pstream
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gputu
 Total 0 (delta 0), reused 0 (delta 0)
 To git@github.com:tdg5/some_repo.git
@@ -2189,7 +2189,7 @@ a second argument to the command.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function gcopr() {
   ([ -z "$1" ] || [ $(($1)) -le 0 ]) && echo 'Invalid pull request ID' && return
   pr_id=$1
@@ -2201,11 +2201,11 @@ function gcopr() {
 
 **Mnemonic:**
 
-- **g**it **c**heck**o**ut **p**ull **r**equest
+- <strong>g</strong>it <strong>c</strong>heck<strong>o</strong>ut <strong>p</strong>ull <strong>r</strong>equest
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ gcopr 1408
 remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (3/3), done.
@@ -2231,17 +2231,17 @@ will take you to the root of the file-system.
 
 **Alias:**
 
-```{"language": "bash", "gutter": false}
+```bash
 alias up='[ $(git rev-parse --show-toplevel 2>/dev/null || echo ~) = $(pwd) ] && cd $([ $(echo ~) = $(pwd) ] && echo / || echo) || cd $(git rev-parse --show-toplevel 2>/dev/null)'
 ```
 
 **Mnemonic:**
 
-- Navigate **up** the file-system tree toward the root
+- Navigate <strong>up</strong> the file-system tree toward the root
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 tdg5@src/some_repo/app/models/concerns$ up
 tdg5@src/some_repo$ up
 tdg5@~$ up
@@ -2262,7 +2262,7 @@ arbitrary commands to use git flavored bash completion.
 
 Here's what that looks like on my system, YMMV.
 
-```{"language": "bash", "gutter": false}
+```bash
 # Bash completion
 __git_complete ga _git_add
 __git_complete gap _git_add
@@ -2300,7 +2300,7 @@ aliasing.
 
 **Function:**
 
-```{"language": "bash", "gutter": false}
+```bash
 function topcmds() {
   [ ! -z $1 ] && n="$1" || n="10"
   history | awk '{a[$2 " " $3]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head -n $n
@@ -2309,11 +2309,11 @@ function topcmds() {
 
 **Mnemonic:**
 
-- The **top** n **c**o**m**man**ds** in the history file
+- The <strong>top</strong> n <strong>c</strong>o<strong>m</strong>man<strong>ds</strong> in the history file
 
 **Example:**
 
-```{"language": "text", "gutter": false}
+```text
 $ topcmds
 3166 gs
 927 ls
@@ -2341,7 +2341,7 @@ workflow with git.
 - [Nicola Paolucci - Becoming a Git Master - Atlassian Summit 2014](https://www.youtube.com/watch?v=-kVzV6m5_Qg)
 
 
-## To be continued...
+## To be continued&hellip;
 
 That's all the alias fun for today, kids! But don't worry, as I discover new
 aliases that I can't live without, I'll be sure to share them. So, check back

@@ -31,7 +31,7 @@ at how I might solve the same problem today. With any luck, we'll all learn
 something along the way, and if not, it seems like I'll be back to rant about
 the inferior quality of my past work in no time. For now though, onward!
 
-## When Danny met Ruby...
+## When Danny met Ruby&hellip;
 
 Back in 2009, at the encouragement of my stepfather who thought the future had
 great things in store for Ruby and Rails (boy, was he wrong!), I began to
@@ -150,7 +150,7 @@ to this type of optimization as far as I'm aware. If there is a benefit to this
 approach that I am unaware of, I can assure you it's not what I was striving for
 at the time.
 
-#### Hmm, seems like a loop might help...
+#### Hmm, seems like a loop might help&hellip;
 
 Next on my list of grievances is the ginormous series of substring accesses of
 the form **a[i+n, 1]**. First, let's get it out of the way that the second
@@ -186,7 +186,7 @@ the solution to handle any number of adjacent digits while also making the code
 easier to read, follow, and understand. Generality definitely wasn't something
 that was on my mind in solving this problem as we'll see again in a moment.
 
-#### Maybe one loop was a better choice...
+#### Maybe one loop was a better choice&hellip;
 
 Though we can hopefully agree that it seems like a loop would have been a better
 choice in the situation above, there are enough problems with that loop already

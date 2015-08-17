@@ -223,7 +223,7 @@ source for each step of the way from **CALL_METHOD** to the internals of Ruby's
 tail call optimization into one file](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c)
 for your viewing pleasure.
 
-Take a deep breath...
+Take a deep breath&hellip;
 
 - The call to [**vm_search_method**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L2)
   is where the value of [**ci->call** is set, and it is set to reference another

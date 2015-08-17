@@ -126,7 +126,7 @@ three parts. One part describing how a Pry plugin is composed and what it does:
 
 One part describing how a plugin does its thing:
 
-> A Pry plugin ... integrates with Pry, typically by configuring environment
+> A Pry plugin &hellip; integrates with Pry, typically by configuring environment
 > behavior through Pry's customization API; altering or extending Pry's command
 > system; and/or by registering behavior via Pry's system of life-cycle and REPL
 > hooks.
