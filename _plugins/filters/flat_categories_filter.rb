@@ -42,7 +42,7 @@ module JekyllHueman
           url = category_url(full_name)
           %Q[<a href="#{url}" rel="category tag">#{short_name}</a>]
         end
-        output.concat(links.join(" / "))
+        output.concat(links.join("&nbsp;<span>/</span> "))
         output.concat("</p>")
         output
       end
