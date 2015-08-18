@@ -130,7 +130,7 @@ and [the YARV instructions of the tail call optimized Factorial class here](http
 A vimdiff of the two instruction sequences with changed lines highlighted in
 purple and the actual changes highlighted in red looks like so:
 
-[![Differences between the unoptimized Factorial class and the tail call optimized Factorial class](https://tdg5.s3.amazonaws.com/blog/wp-content/uploads/2014/02/tco_diff.jpg)](https://tdg5.s3.amazonaws.com/blog/wp-content/uploads/2014/02/tco_diff.jpg)
+[![Differences between the unoptimized Factorial class and the tail call optimized Factorial class][tco-diff]][tco-diff]
 
 Oh no! Disaster! It seems that our initial descent is some what of a failure.
 Other than the addition of a **TAILCALL** flag to a few of the
@@ -288,7 +288,7 @@ Here's a side-by-side vimdiff highlighting the differences between the two
 functions, though I should warn you that I made a couple of minor adjustments to
 **vm_call_iseq_setup_normal** to suppress irrelevant differences:
 
-[![Differences between vm_call_iseq_setup_normal and vm_call_iseq_setup_tailcall](http://tdg5.s3.amazonaws.com/blog/wp-content/uploads/2014/02/vm_call_iseq_setup_diff.jpg)](http://tdg5.s3.amazonaws.com/blog/wp-content/uploads/2014/02/vm_call_iseq_setup_diff.jpg)
+[![Differences between vm_call_iseq_setup_normal and vm_call_iseq_setup_tailcall][vm-call-iseq-setup-diff]][vm-call-iseq-setup-diff]
 
 Compared to the extremely minimal differences in the our initial diff, I'm much
 more optimistic that we'll find what we're looking for in this larger change
@@ -577,3 +577,6 @@ I certainly did. Thanks for reading!
 (I swear my next post will be shorter!)
 
 [^1]: Ruby's special **$** variables are out of the scope of this article, but you can see where the [parser defines the various special variables here](https://github.com/ruby/ruby/blob/17a65c320d9ce3bce3d7fe0177d74bf78314b8fa/parse.y#L7606).
+
+[tco-diff]: {{ "tco-diff.jpg" | post_image_url }} "YARV TCO instructions diff"
+[vm-call-iseq-setup-diff]: {{ "vm-call-iseq-setup-diff.jpg" | post_image_url }} "vm_call_iseq_setup diff"
