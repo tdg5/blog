@@ -690,4 +690,3 @@ Thanks for reading and good luck Prying!
 [pry-theme - GitHub]: https://github.com/kyrylo/pry-theme "kyrylo/pry-theme - GitHub.com"
 [pry-theme - RubyGems]: https://rubygems.org/gems/pry-theme "pry-theme | RubyGems.org"
 [pryrepl.org]: http://pryrepl.org/ "pryrepl.org"
-

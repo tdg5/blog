@@ -7,13 +7,12 @@ featured_image:
   url: /assets/images/featured/2015-01-12-tail-call-optimization-in-ruby-background.jpg
 layout: post
 tags: [recursion, ruby, ruby vm, tail call, tail call optimization, tail recursion, tail recursive]
-title: 'Tail Call Optimization in Ruby: Background'
+title: "Tail Call Optimization in Ruby: Background"
 ---
-Back in November, care of [/r/ruby](https://www.reddit.com/r/ruby), I came
-across [a blog post by Nithin Bekal, Tail Call Optimization in
-Ruby](http://nithinbekal.com/posts/ruby-tco/), demonstrating Ruby's built-in
-support for tail call optimization and I have to admit, my mind was a little
-blown.
+Back in November, care of [/r/ruby][reddit for rubyists], I came across [a blog
+post by Nithin Bekal, Tail Call Optimization in Ruby][Nithin Bekal - TCO in Ruby],
+demonstrating Ruby's built-in support for tail call optimization and I have to
+admit, my mind was a little blown.
 
 It's not that I have a specific need for tail call optimization. In fact,
 I can't think of even a single situation where I would have done
@@ -27,11 +26,11 @@ enough to swap in the machinery to support tail call optimization whenever you
 decide you want it. Pretty awesome.
 
 With no particular use for tail call optimization, I've just been sitting on the
-knowledge, the notion bouncing around in my head. That is, until earlier
-this week when I decided I would try to apply some of what I learned from reading
-[Pat Shaughnessy's Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope)
-to better understanding how the Ruby VM can be so flexible when it comes to tail
-call optimization.
+knowledge, the notion bouncing around in my head. That is, until earlier this
+week when I decided I would try to apply some of what I learned from reading
+[Pat Shaughnessy's Ruby Under a Microscope][Pat Shaughnessy - RUM] to better
+understanding how the Ruby VM can be so flexible when it comes to tail call
+optimization.
 
 Though I think that that will make for an interesting blog post, it's turned into a
 bit of an epic. So this week, I'm going to begin with a little background on
@@ -44,11 +43,11 @@ tail call optimization happen at runtime.
 Let's get started!
 
 ## A little background on tail call optimization
-[Nithin's article](http://nithinbekal.com/posts/ruby-tco/) does a great job of
-explaining tail recursive functions and tail call optimization, so if you're a
-little iffy on either subject, I'd recommend reading that before you continue
-with this post. The [Tail call entry in Wikipedia](https://en.wikipedia.org/wiki/Tail_call)
-is also a useful resource for even more depth on the subject.
+[Nithin's article][Nithin Bekall - TCO in Ruby] does a great job of explaining
+tail recursive functions and tail call optimization, so if you're a little iffy
+on either subject, I'd recommend reading that before you continue with this
+post. The [Tail call entry in Wikipedia][Wikipedia - tail call] is also a useful
+resource for even more depth on the subject.
 
 To summarize, tail call optimization, or tail call elimination as it is also
 known, is a special feature of some kinds of tail recursive functions that
@@ -62,8 +61,9 @@ tail call optimization.
 Starting with Ruby 1.9.2, the Ruby VM offers built-in, though experimental,
 support for tail call optimization. That said, there are other ways of achieving
 tail call optimization without enabling it in the VM. [Magnus Holm offers a
-couple of other hacks for achieving tail call optimization in Ruby in his blog post
-Tailin' Ruby](http://timelessrepo.com/tailin-ruby), which is worth the read
+couple of other hacks for achieving tail call optimization in Ruby in his blog
+post Tailin' Ruby][Magnus Holm - Tailin' Ruby]
+([alternate][Magnus Holm - Tailin' Ruby Alternate]), which is worth the read
 just for the innovative ways he attempts to solve the problem, even if you're
 fine to use the Ruby VM's implementation of tail call optimization. Maybe it's
 just because I haven't had an itch that I needed tail call optimization to
@@ -75,10 +75,10 @@ of its experimental nature it isn't enabled by default and must be turned on
 either with a flag when compiling Ruby or by configuring
 **RubyVM::InstructionSequence** at runtime with special compile options. There
 was some talk of [enabling tail call optimization by default around the time
-that Ruby 2.0 was released](https://bugs.ruby-lang.org/issues/6602), however
-this hasn't come to be for a number of reasons: Primary concerns were that tail
-call optimization makes it difficult to implement **set_trace_func** and also
-causes backtrace weirdness due to the absence of a new stack frame.
+that Ruby 2.0 was released][bugs.ruby-lang.org - Issue 6602], however this
+hasn't come to be for a number of reasons: Primary concerns were that tail call
+optimization makes it difficult to implement **set_trace_func** and also causes
+backtrace weirdness due to the absence of a new stack frame.
 
 Now that we have a little background on tail call optimization in Ruby, let's
 take a look at an example of a tail recursive, tail call optimizable function.
@@ -90,13 +90,16 @@ call optimization in my next post, we'll first need a tail recursive function to
 be the subject of our experiments. As it turns out, we can actually extract such
 a subject from the Ruby source code itself.
 
-Depending on your feelings about the recent debate regarding how Ruby is
-tested[^1][^2], it may surprise you to learn that our Guinea pig comes directly
-from Ruby's built-in test suite. After all, though tail call optimization may
-not be enabled by default, and though it may only be experimental at this time,
-it's not unreasonable to think that there'd be a test for it somewhere. That
-somewhere is among a handful of other tests for various optimizations to the
-Ruby VM in the Ruby source at [test/ruby/test_optimization.rb](https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213).
+Depending on your feelings about the recent debate regarding how Ruby is tested
+[[1][Rubini.us - Matz's Ruby developers don't use RubySpec]]
+[[2][gist.github.com - Response to Matz's Ruby devs don't use RubySpec]], it may
+surprise you to learn that our Guinea pig comes directly from Ruby's built-in
+test suite. After all, though tail call optimization may not be enabled by
+default, and though it may only be experimental at this time, it's not
+unreasonable to think that there'd be a test for it somewhere. That somewhere is
+among a handful of other tests for various optimizations to the Ruby VM in the
+Ruby source at
+[ruby/test/ruby/test_optimization.rb][GitHub.com - ruby/test/ruby/test_optimizations].
 
 The test that is home to our Guinea pig is somewhat unremarkable, so though
 you're welcome to review the full contents of the test, for our purposes I've
@@ -126,8 +129,8 @@ of the test:
 The tail recursive method of interest above is the **fact_helper** method. It
 should hopefully be pretty obvious that **fact_helper** is tail recursive given
 that, in all but the base case, the final action of the method is the invocation
-of the itself with primitive values. Other than the tail recursive nature
-of this function, there are a couple of other things going on here that are worth
+of the itself with primitive values. Other than the tail recursive nature of
+this function, there are a couple of other things going on here that are worth
 noting.
 
 First, as I alluded to before in regard to tail call optimization not being
@@ -205,7 +208,7 @@ end
 #   ReloadedFactorial: 213237
 ```
 
-[View on GitHub](https://github.com/tdg5/blog_snippets/blob/8cdc800e711f5270754e352b9f3458d7e429b87d/lib/blog_snippets/tail_call_optimization_in_ruby_internals/tail_optimized_reload.rb)
+[View on GitHub][GitHub.com - tdg5/blog/tail_call_optimized_reload.rb]
 
 Since tail call optimization is still an experimental feature, if you're going
 to use tail call optimization in production code or in code that could become
@@ -223,5 +226,14 @@ just below the surface, down deep into the C weeds in search of the source
 of Ruby's tail call optimization implementation. It'll certainly be an
 interesting ride.
 
-[^1]: http://rubini.us/2014/12/31/matz-s-ruby-developers-don-t-use-rubyspec/
-[^2]: https://gist.github.com/nateberkopec/11dbcf0ee7f2c08450ea
+[GitHub.com - ruby/test/ruby/test_optimizations]: https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213 "Github.com - ruby/test/ruby/test_optimizations"
+[Github.com - tdg5/blog/tail_call_optimized_reload.rb]: https://github.com/tdg5/blog_snippets/blob/8cdc800e711f5270754e352b9f3458d7e429b87d/lib/blog_snippets/tail_call_optimization_in_ruby_internals/tail_optimized_reload.rb "Github.com - tail_call_optimized_reload.rb"
+[Magnus Holm - Tailin' Ruby Alternate]: http://oldblog.judofyr.net/posts/tailin-ruby.html "Magnus Holm - Tailin' Ruby - Alternate link"
+[Magnus Holm - Tailin' Ruby]: http://timelessrepo.com/tailin-ruby "Magnus Holm - Tailin' Ruby"
+[Nithin Bekal - TCO in Ruby]: http://nithinbekal.com/posts/ruby-tco/ "Nithin Bekal - Tail Call Optimization in Ruby"
+[Pat Shaughnessy - RUM]: http://patshaughnessy.net/ruby-under-a-microscope "Pat Shaughnessy - Ruby Under a Microscope"
+[Rubini.us - Matz's Ruby developers don't use RubySpec]: http://rubini.us/2014/12/31/matz-s-ruby-developers-don-t-use-rubyspec/
+[Wikipedia - tail call]: https://en.wikipedia.org/wiki/Tail_call "Wikipedia - Tail call"
+[bugs.ruby-lang.org - Issue 6602]: https://bugs.ruby-lang.org/issues/6602 "Tail call optimization: enable by default?"
+[gist.github.com - Response to Matz's Ruby devs don't use RubySpec]: https://gist.github.com/nateberkopec/11dbcf0ee7f2c08450ea
+[reddit for rubyists]: https://www.reddit.com/r/ruby "reddit for rubyists"

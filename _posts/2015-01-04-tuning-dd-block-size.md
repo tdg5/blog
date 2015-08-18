@@ -351,6 +351,5 @@ Thanks for reading!
 [GitHub - dd_ibs_test.sh]: https://github.com/tdg5/blog_snippets/blob/master/lib/blog_snippets/articles/tuning_dd_block_size/dd_ibs_test.sh "GitHub.com - dd_ibs_test.sh"
 [KNOPPIX]: http://www.knopper.net/knoppix/index-en.html "KNOPPIX"
 [Manpage - dd]: (http://man7.org/linux/man-pages/man1/dd.1.html) "Manpage - dd"
-[Tuning dd block size]: {{ page.featured_image.url }} {{ page.featured_image.title }}
 [Wikipedia - dd - Block Size]: https://en.wikipedia.org/wiki/Dd_(Unix)#Block_size "Wikipedia - dd - Block Size"
 [YouTube - Mongo DB Is Web Scale]: https://www.youtube.com/watch?v=b2F-DItXtZs&t=1m42s "YouTube - Mongo DB Is Web Scale"
