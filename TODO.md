@@ -8,4 +8,3 @@
 - css cleanup
 - remove need for jquery
 - pull out links in older articles
-- featured image in RSS

@@ -34,6 +34,10 @@ module JekyllHueman
 
     private
 
+    def layout_for_site
+      self.class.layout_for_site(@site)
+    end
+
     def render_rss(name, posts)
       rss = RSS::Maker.make("2.0") do |maker|
         maker.channel.author = wrap_cdata(site.config["author"])
@@ -48,10 +52,12 @@ module JekyllHueman
           break if post_limit && count == post_limit
           maker.channel.updated = post.date if maker.channel.updated.nil?
           post = post.dup
+          post.data = post.data.dup
+          post.data["layout"] = layout_for_site
           post.render(site.layouts, site.site_payload)
           maker.items.new_item do |item|
             url = absolute_url(post_url(post.url))
-            item.content_encoded = wrap_cdata(post.content)
+            item.content_encoded = wrap_cdata(post.output)
             item.description = wrap_cdata(post.excerpt.gsub(HTML_ESCAPING, ""))
             item.guid.content = url
             item.link = url
