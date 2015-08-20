@@ -2,40 +2,41 @@
 author: Danny Guinther
 categories: [dev/ruby/internals]
 featured_image:
-  alt_text: 'Tail Call Optimization in Ruby: Deep Dive'
-  title:  'Tail Call Optimization in Ruby: Deep Dive'
+  alt_text: "Tail Call Optimization in Ruby: Deep Dive"
+  title:  "Tail Call Optimization in Ruby: Deep Dive"
   url: /assets/images/featured/2015-01-19-tail-call-optimization-in-ruby-deep-dive.jpg
 layout: post
 tags: [c, ruby, ruby vm, tail call optimization, tail recursion, tail recursive, yarv]
-title: 'Tail Call Optimization in Ruby: Deep Dive'
+title: "Tail Call Optimization in Ruby: Deep Dive"
 ---
-In [my last post](http://blog.tdg5.com/tail-call-optimization-ruby-background/),
-I began an exploration of tail call optimization in Ruby with some
-[background on tail call optimization and its little known existence and usage
-in Ruby](http://blog.tdg5.com/tail-call-optimization-ruby-background/).
-In this post, we'll continue that exploration at a much lower level, moving out
-of the Ruby layer and descending to whatever depths are necessary to get to the
-bottom of how the Ruby VM implements tail call optimization internally.
+In [my last post][tdg5.com - Tail Call Optimization in Ruby: Background], I
+began an exploration of tail call optimization in Ruby with some [background on
+tail call optimization and its little known existence and usage in
+Ruby][tdg5.com - Tail Call Optimization in Ruby: Background]. In this post,
+we'll continue that exploration at a much lower level, moving out of the Ruby
+layer and descending to whatever depths are necessary to get to the bottom of
+how the Ruby VM implements tail call optimization internally.
 
 A lot of what follows wouldn't be possible without [Pat Shaughnessy's Ruby Under
-a Microscope](http://patshaughnessy.net/ruby-under-a-microscope) (and a healthy
-dose of [K & R](https://en.wikipedia.org/wiki/The_C_Programming_Language)). If
+a Microscope][Pat Shaughnessy - RUM] (and a healthy
+dose of [K & R][Wikipedia - The C Programming Language]). If
 you find you enjoy the conceptual level of this article and you're interested in
-more, I'd highly recommend [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope).
+more, I'd highly recommend [Ruby Under a Microscope][Pat Shaughnessy - RUM].
 I found it an enjoyable, empowering, fascinating, and approachable introduction
 to the internals of Ruby. If you're curious about the book, but you're still
 unsure about it, I'd encourage you to check out [Ruby Rogues #146, a book club
-episode featuring Ruby Under a Microscope](http://devchat.tv/ruby-rogues/146-rr-book-club-ruby-under-a-microscope-with-pat-shaughnessy)
-with guest appearances by the author, [Pat Shaughnessy](http://patshaughnessy.net/),
-and [Aaron Patterson](http://tenderlovemaking.com/), of Ruby and Rails fame, and
-who also wrote the foreword of the book. It's an enjoyable episode that
+episode featuring Ruby Under a Microscope][Ruby Rogues - RUM] with guest
+appearances by the author, [Pat Shaughnessy][Pat Shaughnessy - website], and
+[Aaron Patterson][Aaron Patterson - tenderlovemaking] of Ruby and Rails fame,
+and who also wrote the foreword of the book. It's an enjoyable episode that
 definitely helped guide my decision to read the book.
 
 So, getting on to the subject of today's post. Hold on to your butts.
 
 ## Revisiting our tail recursive Guinea pig
-In [my last post](http://blog.tdg5.com/tail-call-optimization-ruby-background/),
-we discovered a tail recursive function in [the Ruby test suite](https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213),
+In [my last post][tdg5.com - Tail Call Optimization in Ruby: Background], we
+discovered a tail recursive function in
+[the Ruby test suite][GitHub.com - ruby/test/ruby/test_optimization],
 which we extracted (with a few tweaks) to demonstrate tail call optimization in
 Ruby. We'll need our Guinea pig again for today's exercise, so allow me to
 introduce her one more time:
@@ -67,11 +68,12 @@ environment. Our journey begins with this class method.
 With our tail recursive Guinea pig revived, we can begin our descent into the
 internals of Ruby's implementation of tail call optimization. A month ago I
 wouldn't have known where to begin such a quest, but this is where some of the
-background and methods employed in [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope)
-will be of great utility.
+background and methods employed in
+[Ruby Under a Microscope][Pat Shaughnessy - RUM] will be of great utility.
 
-One method that [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope)
-uses to great effect is using [**RubyVM::InstructionSequence#disasm**](http://www.ruby-doc.org/core-2.2.0/RubyVM/InstructionSequence.html#method-c-disasm)
+One method that [Ruby Under a Microscope][Pat Shaughnessy - RUM] uses to great
+effect is using
+[**RubyVM::InstructionSequence#disasm**][RubyDoc.org - RubyVM::InstructionSequence.disasm]
 to disassemble Ruby code into the underlying YARV instructions that the Ruby VM
 will actually execute at runtime. Using this technique we should be able to
 disassemble both a tail call optimized version and an unoptimized version of our
@@ -84,8 +86,8 @@ instructions (called YARV instructions) and executing those instructions. YARV
 was introduced in Ruby 1.9 to improve performance over Ruby 1.8's direct
 traversal and interpretation of the Abstract Syntax Tree generated by parsing a
 Ruby program. For more insight into on how Ruby executes your code, you can
-check out an excerpt from [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope),
-[How Ruby Executes Your Code by Pat Shaughnessy](http://patshaughnessy.net/2012/6/29/how-ruby-executes-your-code).
+check out an excerpt from [Ruby Under a Microscope][Pat Shaughnessy - RUM],
+[How Ruby Executes Your Code by Pat Shaughnessy][Pat Shaughnessy - How Ruby Executes Your Code].
 
 Back to our regularly scheduled broadcast.
 
@@ -149,7 +151,7 @@ us, with the **opt_send_without_block** instruction. Hopefully, we can find
 something in the implementation of that instruction that will help us find
 our way to where Ruby implements tail call optimization internally.
 
-As discussed in [Ruby Under a Microscope](http://patshaughnessy.net/ruby-under-a-microscope),
+As discussed in [Ruby Under a Microscope][Pat Shaughnessy - RUM],
 the definitions that are used during the Ruby build process to generate the C
 code for all the YARV instructions live in the Ruby source in [insns.def](https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def).
 With a little grepping, we can find the definition of **opt_send_without_block**
@@ -578,5 +580,14 @@ I certainly did. Thanks for reading!
 
 [^1]: Ruby's special **$** variables are out of the scope of this article, but you can see where the [parser defines the various special variables here](https://github.com/ruby/ruby/blob/17a65c320d9ce3bce3d7fe0177d74bf78314b8fa/parse.y#L7606).
 
+[Aaron Patterson - tenderlovemaking]: http://tenderlovemaking.com/ "Aaron Patterson - tenderlovemaking.com"
+[GitHub.com - ruby/test/ruby/test_optimization]: https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213 "GitHub.com - ruby/test/ruby/test_optimization.rb"
+[Pat Shaughnessy - How Ruby Executes Your Code]: http://patshaughnessy.net/2012/6/29/how-ruby-executes-your-code "PatShaughnessy.net - How Ruby Executes Your Code"
+[Pat Shaughnessy - RUM]: http://patshaughnessy.net/ruby-under-a-microscope "Pat Shaughnessy - Ruby Under a Microscope"
+[Pat Shaughnessy - website]: http://patshaughnessy.net/ "PatShaughnessy.net"
+[Ruby Rogues - RUM]: http://devchat.tv/ruby-rogues/146-rr-book-club-ruby-under-a-microscope-with-pat-shaughnessy "Ruby Rogues Episode 146 - Ruby Under a Microscope with Path Shaughnessy"
+[RubyDoc.org - RubyVM::InstructionSequence.disasm]: http://www.ruby-doc.org/core-2.2.0/RubyVM/InstructionSequence.html#method-c-disasm "RubyDoc.org - RubyVM::InstructionSequence.disasm"
+[Wikipedia - The C Programming Language]: https://en.wikipedia.org/wiki/The_C_Programming_Language "Wikipedia - The C Programming Language"
 [tco-diff]: {{ "tco-diff.jpg" | post_image_url }} "YARV TCO instructions diff"
+[tdg5.com - Tail Call Optimization in Ruby: Background]: http://blog.tdg5.com/tail-call-optimization-ruby-background/ "tdg5.com - Tail Call Optimization in Ruby: Background"
 [vm-call-iseq-setup-diff]: {{ "vm-call-iseq-setup-diff.jpg" | post_image_url }} "vm_call_iseq_setup diff"
