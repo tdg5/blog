@@ -72,8 +72,7 @@ background and methods employed in
 [Ruby Under a Microscope][Pat Shaughnessy - RUM] will be of great utility.
 
 One method that [Ruby Under a Microscope][Pat Shaughnessy - RUM] uses to great
-effect is using
-[**RubyVM::InstructionSequence#disasm**][RubyDoc.org - RubyVM::InstructionSequence.disasm]
+effect is using [**RubyVM::InstructionSequence#disasm**][RubyDoc.org - RubyVM::InstructionSequence.disasm]
 to disassemble Ruby code into the underlying YARV instructions that the Ruby VM
 will actually execute at runtime. Using this technique we should be able to
 disassemble both a tail call optimized version and an unoptimized version of our
@@ -124,10 +123,10 @@ the two instruction sequences that don't actually pertain to how Ruby implements
 tail call optimization internally. Second, though it is not explicit in this
 script, I am running MRI Ruby 2.2.0 locally, so all of the YARV instructions and
 C code that we'll look at are specific to MRI Ruby 2.2.0 and may be different
-from other versions.
-
-You can view [the YARV instructions of the unoptimized Factorial class here](https://github.com/tdg5/blog_snippets/blob/60b19663b0c9a34117b47665045ba66679584e14/lib/blog_snippets/tail_call_optimization_in_ruby_internals/fact_disasm.txt)
-and [the YARV instructions of the tail call optimized Factorial class here](https://github.com/tdg5/blog_snippets/blob/60b19663b0c9a34117b47665045ba66679584e14/lib/blog_snippets/tail_call_optimization_in_ruby_internals/fact_tco_disasm.txt).
+from other versions.  You can view [the YARV instructions of the unoptimized
+Factorial class here][GitHub.com - YARV instructions of the unoptimized Factorial class]
+and [the YARV instructions of the tail call optimized Factorial class
+here][GitHub.com - YARV instructions of the tail call optimized Factorial class].
 
 A vimdiff of the two instruction sequences with changed lines highlighted in
 purple and the actual changes highlighted in red looks like so:
@@ -153,9 +152,10 @@ our way to where Ruby implements tail call optimization internally.
 
 As discussed in [Ruby Under a Microscope][Pat Shaughnessy - RUM],
 the definitions that are used during the Ruby build process to generate the C
-code for all the YARV instructions live in the Ruby source in [insns.def](https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def).
+code for all the YARV instructions live in the Ruby source in
+[insns.def][GitHub.com - ruby/insns.def].
 With a little grepping, we can find the definition of **opt_send_without_block**
-around [line 1047 of insns.def](https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def#L1047):
+around [line 1047 of insns.def][GitHub.com - ruby/insns.def - line 1047]:
 
 ```c
 DEFINE_INSN
@@ -173,7 +173,8 @@ opt_send_without_block
 As you've almost certainly noticed, this isn't quite C. Rather, during the Ruby
 build process this definition is used to generate the actual C code for the
 **opt_send_without_block** instruction. [You can view the fully generated C code
-for **opt_send_without_block** in all its monstrous glory here](https://github.com/tdg5/blog_snippets/blob/2a9e48ccc10082d37c821e3b838f223597a0d7b6/lib/blog_snippets/tail_call_optimization_in_ruby_internals/opt_send_without_block.vm.inc).
+for **opt_send_without_block** in all its monstrous glory
+here][GitHub.com - opt_send_without_block full].
 
 Luckily, for our purposes, we don't have to go quite to that extreme and can
 operate at the instruction definition level. One mutation I will make before we
@@ -222,46 +223,50 @@ that is made on the way to our goal, let's speed things up a bit. We'll still
 walk through each step, but we'll be more brief and skip the code snippets
 until we get a whiff of tail call optimization. That said, I've collected [the
 source for each step of the way from **CALL_METHOD** to the internals of Ruby's
-tail call optimization into one file](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c)
+tail call optimization into one file][GitHub.com - from_call_method_to_tco.tco]
 for your viewing pleasure.
 
 Take a deep breath&hellip;
 
-- The call to [**vm_search_method**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L2)
-  is where the value of [**ci->call** is set, and it is set to reference another
-  function, **vm_call_general**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L15).
+- The call to [**vm_search_method**][GitHub.com - vm_search_method] is where the
+  value of [**ci->call** is set, and it is set to reference another
+  function, **vm_call_general**][GitHub.com - vm_call_general - line 15].
 
-- [**vm_call_general**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L24)
-  when called [invokes and returns the result of another method, **vm_call_method**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L26).
+- [**vm_call_general**][GitHub.com - vm_call_general - line 24] when called
+  [invokes and returns the result of another method,
+  **vm_call_method**][GitHub.com - vm_call_method - line 26].
 
-- [**vm_call_method**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L31)
+- [**vm_call_method**][GitHub.com - vm_call_method - line 31]
   at about 155 lines, is a monster of a function, that handles every type of
-  method invocation that the Ruby VM supports. It'd be pretty easy to get lost in
-  this method, but we are fortunate in that we know we are dealing with an
+  method invocation that the Ruby VM supports. It'd be pretty easy to get lost
+  in this method, but we are fortunate in that we know we are dealing with an
   instruction sequence method type because we got to this point from a YARV
-  instruction. This allows us to jump right to the portion of the
-  switch statement that deals with instruction sequence type methods. In which
-  case, [**vm_call_method** returns the result of yet another function invocation **vm_call_iseq_setup**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L45).
+  instruction. This allows us to jump right to the portion of the switch
+  statement that deals with instruction sequence type methods. In which
+  case, [**vm_call_method** returns the result of yet another function
+  invocation **vm_call_iseq_setup**][GitHub.com - vm_call_iseq_setup - line 45].
 
 (If you're beginning to wonder if this rabbit hole of a descent has a bottom,
 don't worry, we're almost there.)
 
-- [**vm_call_iseq_setup**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L210)
+- [**vm_call_iseq_setup**][GitHub.com - vm_call_iseq_setup - line 210]
   is a two-liner that sets up the callee of the method and then [returns the
-  result of another function invocation, **vm_call_iseq_setup_2**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L213).
+  result of another function invocation,
+  **vm_call_iseq_setup_2**][GitHub.com - vm_call_iseq_setup_2 - line 213].
 
-- [**vm_call_iseq_setup_2**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L218)
+- [**vm_call_iseq_setup_2**][GitHub.com - vm_call_iseq_setup_2 - line 218]
   is where we finally get our first whiff of tail call optimization. In fact, the
   only purpose of **vm_call_iseq_setup_2** is to check if tail call optimization
-  is enabled and if so [it calls yet another function, **vm_call_iseq_setup_tailcall**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L224).
+  is enabled and if so [it calls yet another function,
+  **vm_call_iseq_setup_tailcall**][GitHub.com - vm_call_iseq_setup_tailcall - line 224].
 
 (**So close!** But, while we're here, it's worth noting that normally [when tail
 call optimization is not enabled, **vm_call_iseq_setup_2** will call
-**vm_call_iseq_setup_normal**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L221)
+**vm_call_iseq_setup_normal**][GitHub.com - vm_call_iseq_setup_normal]
 instead of **vm_call_iseq_setup_tailcall**. We'll come back to this alternative
 path in a moment.)
 
-- One look at [**vm_call_iseq_setup_tailcall**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L252)
+- One look at [**vm_call_iseq_setup_tailcall**][GitHub.com - vm_call_iseq_setup_tailcall - line 252]
   and it's obvious that we've found what we've been searching for, the heart of
   Ruby's support for tail call optimization.
 
@@ -280,7 +285,7 @@ better luck this time around.
 We've established that the tail optimized version can be found in
 **vm_call_iseq_setup_tailcall**, and if it wasn't obvious from its name or from
 my making a point of mentioning it during our descent, the unoptimized version
-can be found in [**vm_call_iseq_setup_normal**](https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L221).
+can be found in [**vm_call_iseq_setup_normal**][GitHub.com - vm_call_iseq_setup_normal].
 Looking at both methods at a high level, it looks like we're still in the
 process of making the method call, as both of these functions seem to be
 preparing Ruby's internal stack prior to pushing a new frame onto the call
@@ -582,6 +587,24 @@ I certainly did. Thanks for reading!
 
 [Aaron Patterson - tenderlovemaking]: http://tenderlovemaking.com/ "Aaron Patterson - tenderlovemaking.com"
 [GitHub.com - ruby/test/ruby/test_optimization]: https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213 "GitHub.com - ruby/test/ruby/test_optimization.rb"
+[GitHub.com - ruby/insns.def]: https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def "GitHub.com - ruby/insns.def"
+[GitHub.com - ruby/insns.def - line 1047]: https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def#L1047 "GitHub.com - ruby/insns.def line 1047"
+[GitHub.com - from_callmethod_to_tco.c]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c "GitHub.com - from_callmethod_to_tco_.c"
+[GitHub.com - opt_send_without_block full]: https://github.com/tdg5/blog_snippets/blob/2a9e48ccc10082d37c821e3b838f223597a0d7b6/lib/blog_snippets/tail_call_optimization_in_ruby_internals/opt_send_without_block.vm.inc "GitHub.com - opt_send_without_block full method"
+[GitHub.com - vm_call_general - line 15]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L15 "GitHub.com - vm_call_general - line 15"
+[GitHub.com - vm_call_general - line 24]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L24 "GitHub.com - vm_call_general - line 24"
+[GitHub.com - vm_call_iseq_setup - line 45]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L45 "GitHub.com - vm_call_iseq_setup - line 45"
+[GitHub.com - vm_call_iseq_setup - line 210]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L210 "GitHub.com - vm_call_iseq_setup - line 210"
+[GitHub.com - vm_call_iseq_setup_2 - line 213]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L213 "GitHub.com - vm_call_iseq_setup_2 - line 213"
+[GitHub.com - vm_call_iseq_setup_2 - line 218]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L218 "GitHub.com - vm_call_iseq_setup_2 - line 218"
+[GitHub.com - vm_call_iseq_setup_normal]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L221 "GitHub.com - vm_call_iseq_setup_normal"
+[GitHub.com - vm_call_iseq_setup_tailcall - line 224]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L224 "GitHub.com - vm_call_iseq_tailcall - line 224"
+[GitHub.com - vm_call_iseq_setup_tailcall - line 252]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L252 "GitHub.com - vm_call_iseq_tailcall - line 252"
+[GitHub.com - vm_call_method - line 26]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L26 "GitHub.com - vm_call_method - line 26"
+[GitHub.com - vm_call_method - line 31]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L31 "GitHub.com - vm_call_method - line 31"
+[GitHub.com - vm_search_method]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L2 "GitHub.com - vm_search_method"
+[GitHub.com - YARV instructions of the unoptimized Factorial class]: https://github.com/tdg5/blog_snippets/blob/60b19663b0c9a34117b47665045ba66679584e14/lib/blog_snippets/tail_call_optimization_in_ruby_internals/fact_disasm.txt "GitHub.com - YARV instructions of the unoptimized Factorial class"
+[GitHub.com - YARV instructions of the tail call optimized Factorial class]: https://github.com/tdg5/blog_snippets/blob/60b19663b0c9a34117b47665045ba66679584e14/lib/blog_snippets/tail_call_optimization_in_ruby_internals/fact_tco_disasm.txt "GitHub.com - YARV instructions of the tail call optimized Factorial class"
 [Pat Shaughnessy - How Ruby Executes Your Code]: http://patshaughnessy.net/2012/6/29/how-ruby-executes-your-code "PatShaughnessy.net - How Ruby Executes Your Code"
 [Pat Shaughnessy - RUM]: http://patshaughnessy.net/ruby-under-a-microscope "Pat Shaughnessy - Ruby Under a Microscope"
 [Pat Shaughnessy - website]: http://patshaughnessy.net/ "PatShaughnessy.net"
@@ -589,5 +612,5 @@ I certainly did. Thanks for reading!
 [RubyDoc.org - RubyVM::InstructionSequence.disasm]: http://www.ruby-doc.org/core-2.2.0/RubyVM/InstructionSequence.html#method-c-disasm "RubyDoc.org - RubyVM::InstructionSequence.disasm"
 [Wikipedia - The C Programming Language]: https://en.wikipedia.org/wiki/The_C_Programming_Language "Wikipedia - The C Programming Language"
 [tco-diff]: {{ "tco-diff.jpg" | post_image_url }} "YARV TCO instructions diff"
-[tdg5.com - Tail Call Optimization in Ruby: Background]: http://blog.tdg5.com/tail-call-optimization-ruby-background/ "tdg5.com - Tail Call Optimization in Ruby: Background"
+[tdg5.com - Tail Call Optimization in Ruby: Background]: {{ "2015-01-12-tail-call-optimization-in-ruby-background" | pretty_post_slug_url }} "tdg5.com - Tail Call Optimization in Ruby: Background"
 [vm-call-iseq-setup-diff]: {{ "vm-call-iseq-setup-diff.jpg" | post_image_url }} "vm_call_iseq_setup diff"
