@@ -27,7 +27,7 @@ module JekyllHueman
     def archive_url(*); super; end
     def author_url(*); super; end
     def category_url(*); super; end
-    def post_url(*); super; end
+    def pretty_post_url(*); super; end
     def post_image_url(*); super; end
     def sitemap_url(*); super; end
     def tag_url(*); super; end

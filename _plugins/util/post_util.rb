@@ -4,7 +4,7 @@ module JekyllHueman
   module PostUtil
     include URLUtil
 
-    def post_url(url)
+    def pretty_post_url(url)
       short = short_url(url)
       short.concat("/") unless short[-1] == "/"
       short
