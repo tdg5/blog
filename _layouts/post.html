@@ -20,6 +20,9 @@ format: single
       </article>
       {% include widget/entry_tags.html %}
       {% include widget/author_bio.html %}
+      <h4 class="heading"><i class="fa fa-hand-o-right"></i>You may also like...</h4>
+      {% assign related_posts = site.related_posts | slice: 0, 3 %}
+      {% include widget/related_posts.html %}
     </div>
   </section>
 </section>
