@@ -26,29 +26,29 @@ used for chaining together logical expressions are designed to minimize the
 amount of work required to determine the outcome of a logical expression. More
 specifically, when determining the outcome of a logical expression as few of
 the statements in the expression will be evaluated as possible. In the previous
-example, this notion, known as [short-circuit evaluation](https://en.wikipedia.org/wiki/Short-circuit_evaluation),
-is exploited to include some very bad code in a manner that renders that bad
-code completely innocuous.
+example, this notion, known as [short-circuit
+evaluation][Wikipedia.org - Short-circuit Evaluation], is exploited to include
+some very bad code in a manner that renders that bad code completely innocuous.
 
 In the first example, the short-circuiting behavior of the **||** Boolean
-operator, representing a [logical **OR** or logical disjunction](https://en.wikipedia.org/wiki/Logical_disjunction)
-operation, prevents a series of undefined methods from causing a fatal
-**NoMethodError** exception. This code can safely be executed because when the
-first argument of an **OR** operation is **true** then the overall value of the
-expression must also be **true**. Put more simply, **true OR _anything_** will
-always result in **true**. Given this logical maxim, at runtime the program does
-not need to execute the right-hand side of the expression and can move on
-without executing the explosive code.
+operator, representing a [logical **OR** or logical
+disjunction][Wikipedia.org - Logical Disjunction] operation, prevents a series
+of undefined methods from causing a fatal **NoMethodError** exception. This code
+can safely be executed because when the first argument of an **OR** operation is
+**true** then the overall value of the expression must also be **true**. Put
+more simply, **true OR _anything_** will always result in **true**. Given this
+logical maxim, at runtime the program does not need to execute the right-hand
+side of the expression and can move on without executing the explosive code.
 
 Similarly, in the second example, the short-circuiting behavior of the **&&**
-Boolean operator, representing a [logical **AND** or logical conjunction](https://en.wikipedia.org/wiki/Logical_conjunction)
-operation, prevents a fatal **ZeroDivisionError** exception. This code can
-safely be executed because when the first argument of an **AND** operation is
-**false** then the overall value of the expression must also be **false**. In
-simpler terms, **false AND _anything_** will always result in **false**. Given
-this basic tenant of Boolean logic, at runtime the program can decide the
-outcome of the logical expression without executing the subversive right-hand
-side of the expression.
+Boolean operator, representing a [logical **AND** or logical
+conjunction][Wikipedia.org - Logical Conjunction] operation, prevents a fatal
+**ZeroDivisionError** exception. This code can safely be executed because when
+the first argument of an **AND** operation is **false** then the overall value
+of the expression must also be **false**. In simpler terms, **false AND
+_anything_** will always result in **false**. Given this basic tenant of Boolean
+logic, at runtime the program can decide the outcome of the logical expression
+without executing the subversive right-hand side of the expression.
 
 It's interesting to note that, because of their short-circuiting behavior, the
 **||** and **&&** Boolean operators are more than just logical operators,
@@ -179,10 +179,10 @@ more popular libraries.
 The first example is far and away the best use-case I've found for both bitwise
 and eager Boolean operators that I've come across. The example below uses the
 bitwise **AND** operator, **&**, to create a version of
-[**Enumerable#all?**](http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-all-3F)
-that is guaranteed to evaluate all elements in a collection. This is different
-from the normal behavior of **Enumerable#all?** in that **Enumerable#all?**
-normally discontinues evaluation of the collection as soon as any element in the
+[**Enumerable#all?**][RubyDoc.org - Enumerable#all?] that is guaranteed to
+evaluate all elements in a collection. This is different from the normal
+behavior of **Enumerable#all?** in that **Enumerable#all?** normally
+discontinues evaluation of the collection as soon as any element in the
 collection returns **false** for the provided block.
 
 ```ruby
@@ -197,9 +197,9 @@ end
 
 This example leverages the **&** operator to ensure that the right-hand side of
 the logical expression is always evaluated. This behavior is combined with
-[**Enumerable#inject**](http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-inject)
-to ensure that all elements of the collection are evaluated, ultimately
-accumulating to the correct result.
+[**Enumerable#inject**][RubyDoc.org - Enumerable#inject] to ensure that all
+elements of the collection are evaluated, ultimately accumulating to the correct
+result.
 
 The astute among you may have noticed that this example could alternatively have
 used the short-circuiting **&&** Boolean operator by flipping the operands like
@@ -256,7 +256,7 @@ end
 Though the practice of double negation is pretty common, as it turns out, the
 coercive nature of the bitwise Boolean operators is actually slightly faster
 than the more idiomatic double negation. Consider this benchmark generated using
-the [benchmark-ips gem](https://github.com/evanphx/benchmark-ips):
+the [benchmark-ips gem][GitHub.com - benchmark-ips]:
 
 ```ruby
 require "benchmark/ips"
@@ -373,11 +373,11 @@ again, maybe I'm missing something. You be the judge.
 ### RubySpec: Three flavors of tainted?
 
 The three very similar examples I mentioned above come from the now defunct
-[RubySpec](https://github.com/rubyspec/rubyspec) project. Each occurs while
-testing whether a **String** has become tainted following a slice operation
-[[1]](https://github.com/rubyspec/rubyspec/blob/38b775a32293ce7ec5bdadaa7e70422fb5dc3a68/core/string/slice_spec.rb#L436)
-[[2]](https://github.com/rubyspec/rubyspec/blob/38b775a32293ce7ec5bdadaa7e70422fb5dc3a68/core/string/shared/slice.rb#L419)
-or a [concatenation using the **+** operator](https://github.com/rubyspec/rubyspec/blob/324c37bb67ea51f197954a37a2c71878eeadea01/core/string/plus_spec.rb#L41).
+[RubySpec][GitHub.com - RubySpec] project. Each occurs while testing whether a
+**String** has become tainted following a slice operation
+[[1]][GitHub.com - RubySpec - slice_spec]
+[[2]][GitHub.com - RubySpec - shared slice spec]
+or a [concatenation using the **+** operator][GitHub.com - RubySpec - plus_spec].
 The example testing concatenation with **+** is the shortest of the bunch, so
 let's have a look.
 
@@ -434,12 +434,12 @@ tested for validity.
 
 ### Ruby: k-nucleotide benchmark
 
-The final example we'll look at is a Ruby implementation of the
-[k-nucleotide benchmark](http://benchmarksgame.alioth.debian.org/u32/performance.php?test=knucleotide#about).
-Unchanged since it was added to the Ruby source tree in 2007,
-[bm_so_k_nucelotide.rb](https://github.com/ruby/ruby/blob/75feee0968c9345e7ffd2bda9835fcd60b4c0880/benchmark/bm_so_k_nucleotide.rb#L40)
-utilizes the eager Boolean operator **&** to read lines from a file until a line
-is encountered that starts with ">".
+The final example we'll look at is a Ruby implementation of the [k-nucleotide
+benchmark][Debian.org - k-nucleotide benchmark]. Unchanged since it was added
+to the Ruby source tree in 2007,
+[bm_so_k_nucelotide.rb][GitHub.com - Ruby - k-nucleotide benchmark] utilizes the
+eager Boolean operator **&** to read lines from a file until a line is
+encountered that starts with ">".
 
 ```ruby
 while (line !~ /^>/) & line do
@@ -524,9 +524,10 @@ much easier to reason about without the negation, extra logical expression, and
 parentheses.
 
 I've gotten a little off topic here, so we should move on, but before we do so,
-here are a few benchmarks generated using the [benchmark-ips gem](https://github.com/evanphx/benchmark-ips)
-for the **&**, **&&**, and altered **Regexp** versions of the **while**
-loop when run in the actual context of the nucleotide benchmark:
+here are a few benchmarks generated using the
+[benchmark-ips gem][GitHub.com - benchmark-ips] for the **&**, **&&**, and
+altered **Regexp** versions of the **while** loop when run in the actual context
+of the nucleotide benchmark:
 
 ```ruby
 # Calculating ----------------------------------------------
@@ -552,17 +553,21 @@ why one might want to use eager Boolean operators, the more research I've done,
 the more the question for me has become "Why would I ever want to use bitwise or
 eager Boolean operators?"
 
-If you looked at the [list of programming languages that support both short-circuiting and eager Boolean operators](https://en.wikipedia.org/wiki/Short-circuit_evaluation#Support_in_common_programming_languages)
-I referenced earlier, you may have noticed that quite a few languages support
-both types of operators. This seems like a clue that there is a strong
-reason to have both types of operators. However, perhaps my Google-fu failed me,
-but I really couldn't find a strong argument for using eager Boolean operators.
+If you looked at the [list of programming languages that support both
+short-circuiting and eager Boolean
+operators][Wikipedia.org - Short-circuit evaluation languages] I referenced
+earlier, you may have noticed that quite a few languages support both types of
+operators. This seems like a clue that there is a strong reason to have both
+types of operators. However, perhaps my Google-fu failed me, but I really
+couldn't find a strong argument for using eager Boolean operators.
 
 The best argument I came across that we haven't already discussed in some form
 comes from [a Stack Overflow question asking about the difference between the
-**||** operator and the **|** operator](https://stackoverflow.com/questions/7101992/why-do-we-usually-use-not-what-is-the-difference/7105382#7105382).
-All the way down 8 or 9 answers in is [an answer from Peter Lawrey](http://stackoverflow.com/a/7105382/1169710)
-that I think has some merit. Peter writes:
+**||** operator and the **|**
+operator][StackOverflow.com - Difference between boolean operators]. All the
+way down 8 or 9 answers in is [an answer from Peter
+Lawrey][StackOverflow.com - Peter Lawrey Answer] that I think has some merit.
+Peter writes:
 
 > Maybe use [eager Boolean operators] when you have very simple boolean
 > expressions and the cost of short cutting (i.e. a branch) is greater than the
@@ -576,7 +581,7 @@ I could see this type of behavior pretty easily existing in a lower level
 language like C, but I had reservations about whether or not something that must
 be a pretty minor micro-optimization could bubble all the way up into a higher
 level language like Ruby. To find out, I put together the following benchmark,
-again making use of the [benchmark-ips gem](https://github.com/evanphx/benchmark-ips):
+again making use of the [benchmark-ips gem][GitHub.com - benchmark-ips]:
 
 ```ruby
 require "benchmark/ips"
@@ -632,7 +637,7 @@ true_or(VALUE obj, VALUE obj2)
 }
 ```
 
-[View on GitHub](https://github.com/ruby/ruby/blob/16294913f71b8a38526096cf6458340b19b45f9f/object.c#L1247)
+[View on GitHub][GitHub.com - Ruby - Object.c - true_or]
 
 Thankfully, this is one of the simplest examples of Ruby's C source you'll come
 across. Though it's simple to read, the nuance of what is going on here is a
@@ -686,16 +691,17 @@ true_and(VALUE obj, VALUE obj2)
 }
 ```
 
-[View on GitHub](https://github.com/ruby/ruby/blob/16294913f71b8a38526096cf6458340b19b45f9f/object.c#L1225)
+[View on GitHub][GitHub.com - Ruby - Object.c - true_and]
 
 Thankfully, this method is also pretty easy to read. It's a little more
 complicated than **TrueClass#|**, but it's pretty easy to see that the method
 evaluates the **RTEST** macro on **obj2** and returns **true** or **false**
 depending on the outcome of that evaluation. I won't go into the inner workings
-of **RTEST**, but you can view [the C source for the **RTEST** macro here](https://github.com/ruby/ruby/blob/01195a202cb9fcc6ddb6cf793868e4c7d85292dc/include/ruby/ruby.h#L422)
-if you're interested. Basically, **RTEST** uses a couple of numeric bitwise
-operations to determine if its argument is **false** or **nil** and if not
-returns **true**, which in turn causes **true_and** to do the same.
+of **RTEST**, but you can view [the C source for the **RTEST** macro
+here][GitHub.com - Ruby - RTEST Macro] if you're interested. Basically,
+**RTEST** uses a couple of numeric bitwise operations to determine if its
+argument is **false** or **nil** and if not returns **true**, which in turn
+causes **true_and** to do the same.
 
 Okay, so given all that, it should make more sense that using a bitwise/eager
 Boolean operator would be slower than a more primitive operator. Unfortunately
@@ -710,8 +716,9 @@ without consequence. The overhead of a method call is only one consequence.
 Another consequence is that the bitwise Boolean operators have a different
 precedence than their logical cousins.
 
-I won't get into the nature of [precedence, or order of operations,](https://en.wikipedia.org/wiki/Order_of_operations)
-in this article, but I will offer these examples for your consideration:
+I won't get into the nature of [precedence, or order of
+operations,][Wikipedia.org - Order of Operations] in this article, but I will
+offer these examples for your consideration:
 
 ```ruby
 true || 1 && 3
@@ -783,5 +790,26 @@ Boolean operators being used effectively? Have I got it all wrong? Leave me a
 comment and let me know! I'd love to hear your feedback and/or find a
 legitimate reason to utilize the family of bitwise Boolean operators.*
 
-[^1]: [Short-circuit evaluation - Support in common programming languages](https://en.wikipedia.org/wiki/Short-circuit_evaluation#Support_in_common_programming_languages)
-[^2]: [Gist: Errors during eager evaluation cause result of logical expression to be lost](https://gist.github.com/tdg5/12eccaae6132e72c0490)
+[^1]: [Short-circuit evaluation - Support in common programming languages][Wikipedia.org - Short-circuit evaluation languages]
+[^2]: [Gist: Errors during eager evaluation cause result of logical expression to be lost][gist.github.com - Result of Logical Expression Lost]
+
+[Debian.org - k-nucleotide benchmark]: http://benchmarksgame.alioth.debian.org/u32/performance.php?test=knucleotide#about "Debian.org - K-Nucleotide Benchmark"
+[GitHub.com - Ruby - Object.c - true_and]: https://github.com/ruby/ruby/blob/16294913f71b8a38526096cf6458340b19b45f9f/object.c#L1225 "GitHub.com - ruby/ruby/object.c true_and"
+[GitHub.com - Ruby - Object.c - true_or]: https://github.com/ruby/ruby/blob/16294913f71b8a38526096cf6458340b19b45f9f/object.c#L1247 "GitHub.com - ruby/ruby/object.c - true_or"
+[GitHub.com - Ruby - RTEST Macro]: https://github.com/ruby/ruby/blob/01195a202cb9fcc6ddb6cf793868e4c7d85292dc/include/ruby/ruby.h#L422 "GitHub.com - ruby/ruby/include/ruby/ruby.h"
+[GitHub.com - Ruby - k-nucleotide benchmark]: https://github.com/ruby/ruby/blob/75feee0968c9345e7ffd2bda9835fcd60b4c0880/benchmark/bm_so_k_nucleotide.rb#L40 "GitHub.com - ruby/ruby/benchmark/bm_so_k_nucleotide.rb"
+[GitHub.com - RubySpec - plus_spec]: https://github.com/rubyspec/rubyspec/blob/324c37bb67ea51f197954a37a2c71878eeadea01/core/string/plus_spec.rb#L41 "GitHub.com - rubyspec/rubyspec/string/plus_spec.rb"
+[GitHub.com - RubySpec - shared slice spec]: https://github.com/rubyspec/rubyspec/blob/38b775a32293ce7ec5bdadaa7e70422fb5dc3a68/core/string/shared/slice.rb#L419 "GitHub.com - rubyspec/rubyspec/string/shared/slice_spec.rb"
+[GitHub.com - RubySpec - slice_spec]: https://github.com/rubyspec/rubyspec/blob/38b775a32293ce7ec5bdadaa7e70422fb5dc3a68/core/string/slice_spec.rb#L436 "GitHub.com - rubyspec/rubyspec/string/slice_spec.rb"
+[GitHub.com - RubySpec]: https://github.com/rubyspec/rubyspec "GitHub.com - rubyspec/rubyspec"
+[GitHub.com - benchmark-ips]: https://github.com/evanphx/benchmark-ips "GitHub.com - benchmark-ips"
+[RubyDoc.org - Enumerable#all?]: http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-all-3F "RubyDoc.org - Enumerable#all?"
+[RubyDoc.org - Enumerable#inject]: http://ruby-doc.org/core-2.2.0/Enumerable.html#method-i-inject "RubyDoc.org - Enumerable#inject"
+[StackOverflow.com - Difference between boolean operators]: https://stackoverflow.com/questions/7101992/why-do-we-usually-use-not-what-is-the-difference/7105382#7105382 "StackOverflow.com - Why Do We Usually Use || Not |? What is the difference?"
+[StackOverflow.com - Peter Lawrey Answer]: http://stackoverflow.com/a/7105382/1169710 "StackOverflow.com - Peter Lawrey's Answer to: Why Do We Usually Use || Not |? What is the difference?"
+[Wikipedia.org - Logical Conjunction]: https://en.wikipedia.org/wiki/Logical_conjunction "Wikipedia.org - Logical Conjunction"
+[Wikipedia.org - Logical Disjunction]: https://en.wikipedia.org/wiki/Logical_disjunction "Wikipedia.org - Logical Disjunction"
+[Wikipedia.org - Order of Operations]: https://en.wikipedia.org/wiki/Order_of_operations "Wikipedia.org - Order of Operations"
+[Wikipedia.org - Short-circuit Evaluation]: https://en.wikipedia.org/wiki/Short-circuit_evaluation "Wikipedia.org - Short-Circuit Evaluation"
+[Wikipedia.org - Short-circuit evaluation languages]: https://en.wikipedia.org/wiki/Short-circuit_evaluation#Support_in_common_programming_languages "Wikipedia.org - Short-Circuit Evaluation - Support in common programming languages"
+[gist.github.com - Result of Logical Expression Lost]: https://gist.github.com/tdg5/12eccaae6132e72c0490 "gist.github.com - Lost Result of Logical Expression"
