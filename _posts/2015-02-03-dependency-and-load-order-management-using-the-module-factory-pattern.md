@@ -9,12 +9,13 @@ layout: post
 tags: [dependency injection, design patterns, factory method, idiomatic ruby, module factory, ruby idioms, ruby]
 title: Dependency and Load-Order Management Using the Module Factory Pattern
 ---
-At last year's RubyConf in San Diego, [Craig Buchek](https://twitter.com/craigbuchek)
-gave a presentation entitled [Ruby Idioms You're Not Using Yet](https://www.youtube.com/watch?v=hc_wtllfKtQ),
-focusing on some of Ruby's under-utilized and emerging idioms. In this post
-we'll discuss one of those idioms, an idiom Craig appropriately calls **Module
-Factory**. In particular, we'll explore the using a Module Factory as a pattern
-for dependency and load-order management.
+At last year's RubyConf in San Diego, [Craig Buchek][Twitter.com - Craig Buchek]
+gave a presentation entitled [Ruby Idioms You're Not Using
+Yet][YouTube.com - Ruby Idioms You're Not Using Yet] focusing on some of Ruby's
+under-utilized and emerging idioms. In this post we'll discuss one of those
+idioms, an idiom Craig appropriately calls **Module Factory**. In particular,
+we'll explore the using a Module Factory as a pattern for dependency and
+load-order management.
 
 ## Hey! Who you callin' an idiom?
 
@@ -80,19 +81,20 @@ end
 ```
 
 Hopefully, these examples give you a good idea of idioms in Ruby, but if not,
-I'd encourage you to watch [Ruby Idioms You're Not Using Yet](https://www.youtube.com/watch?v=hc_wtllfKtQ),
-as it provides more examples which may help to further elucidate the concept.
+I'd encourage you to watch [Ruby Idioms You're Not Using
+Yet][YouTube.com - Ruby Idioms You're Not Using Yet], as it provides more
+examples which may help to further elucidate the concept.
 
 On with the show!
 
 ## Module Factory: An Introduction
 
 The Module Factory pattern as described in the presentation constitutes the use
-of some variety of [Factory Method](https://en.wikipedia.org/wiki/Factory_method_pattern)
-in place of a reference to a concrete Module when calling **extend** or
-**include** from a Class or a Module. This is a fairly technical description, so
-let's take a look at the example the presentation uses to demonstrate this
-pattern. This example comes from the README for the [Virtus gem](https://rubygems.org/gems/virtus):
+of some variety of [Factory Method][Wikipedia.org - Factory Method] in place of
+a reference to a concrete Module when calling **extend** or **include** from a
+Class or a Module. This is a fairly technical description, so let's take a look
+at the example the presentation uses to demonstrate this pattern. This example
+comes from the README for the [Virtus gem][RubyGems.org - Virtus]:
 
 ```ruby
 class User
@@ -100,13 +102,12 @@ class User
 end
 ```
 
-[View on GitHub](https://github.com/solnic/virtus/blob/e648e2fe771d715179bddb7b0df9b0169a295ae3/README.md#cherry-picking-extensions)
+[View on GitHub][GitHub.com - Virtus Cherry Picking]
 
 Though it may be unclear what is going on here, if we trust that neither the
-[Virtus docs](https://github.com/solnic/virtus/blob/e648e2fe771d715179bddb7b0df9b0169a295ae3/README.md#cherry-picking-extensions)
-nor the Ruby docs for [Module#include](http://www.ruby-doc.org/core-2.2.0/Module.html#method-i-include)
-contain an error, we can use a little deduction to piece together what's going
-on:
+[Virtus docs][GitHub.com - Virtus Cherry Picking] nor the Ruby docs for
+[Module#include][RubyDoc.org - Module#include] contain an error, we can use a
+little deduction to piece together what's going on:
 
 - Though the Ruby docs aren't totally explicit about it, **Module#include**
   will raise an error unless given one or more Modules. From this we can infer
@@ -114,10 +115,10 @@ on:
 - A little trial and error in irb further uncovers that though
   **Module#include** supports being invoked with multiple Modules, these Modules
   cannot be provided in an Array, but must be normal method arguments (or in the
-  case of an Array, must be exploded with the [splat operator](https://endofline.wordpress.com/2011/01/21/the-strange-ruby-splat/#calling_methods)
-  into normal method arguments). Since the Virtus docs don't use the splat
-  operator, we can further narrow our inference to deduce that **Virtus.model**
-  must be returning a single module.
+  case of an Array, must be exploded with the [splat
+  operator][Ruby Splat Operator] into normal method arguments). Since the Virtus
+  docs don't use the splat operator, we can further narrow our inference to
+  deduce that **Virtus.model** must be returning a single module.
 
 Now that we have a clearer understanding of what's going on in this example, it
 becomes easier to see how it fulfills our definition of a Module Factory:
@@ -139,11 +140,9 @@ code that I think could benefit from a refactoring to use the Module Factory
 pattern. For the sake of brevity, this code is non-functional and skips many of
 the details that don't impact our particular interests. That said, the code
 below should have a familiar flavor to anyone who has worked with an
-asynchronous job framework in the past, such as
-[Resque](https://github.com/resque/resque),
-[Sidekiq](https://github.com/mperham/sidekiq),
-[Backburner](https://github.com/nesquena/backburner), or
-[Rails' ActiveJob](https://github.com/rails/rails/tree/master/activejob).
+asynchronous job framework in the past, such as [Resque][GitHub.com - Resque],
+[Sidekiq][GitHub.com - Sidekiq], [Backburner][GitHub.com - Backburner], or
+[Rails' ActiveJob][GitHub.com - ActiveJob].
 
 The example code outlines the skeleton of a job class that performs some
 undefined unit of work. For those unfamiliar with any of the job frameworks I
@@ -267,14 +266,13 @@ here are my arguments against:
 - That whopper of a comment is going to be repeated in every other job class
   that uses both the NineLives and ExceptionNotification modules (and if it's
   not, it should be). Trust me, I've seen it happen. Not only is this a
-  violation of [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself),
-  but because it's a comment it's pretty likely to mutate and/or deteriorate
-  with each subsequent duplication. Eventually this leads to a situation
-  where a newcomer to the code base doesn't know which version of the comment is
-  accurate, or, alternatively, you end up with some job classes that tag
-  **include NineLives** simply with "Must be included before
-  ExceptionNotification" and no additional explanation. After this reduction,
-  the comment starts to disappear entirely.
+  violation of [DRY][Wikipedia.org - DRY], but because it's a comment it's
+  pretty likely to mutate and/or deteriorate with each subsequent duplication.
+  Eventually this leads to a situation where a newcomer to the code base doesn't
+  know which version of the comment is accurate, or, alternatively, you end up
+  with some job classes that tag **include NineLives** simply with "Must be
+  included before ExceptionNotification" and no additional explanation. After
+  this reduction, the comment starts to disappear entirely.
 - Without the comment, there is no other clue that there is a load-order
   dependency between these two modules. Obviously, this is why the comment was
   added, but a comment can't help the situation where a job class that already
@@ -372,13 +370,13 @@ What's going on here?
 I suspect I don't need to explain the internals of the block, but **Module.new**
 is definitely worth taking a closer look at on its own.
 
-[Module.new](http://www.ruby-doc.org/core-2.2.0/Module.html#method-c-new), is
-the more metaprogramming-friendly version of your standard module declaration
-using the **module** keyword. In fact, when used with a block, it's even more
-similar to a standard module declaration than might be obvious because in the
-context of the block the target of **self** is the module being constructed.
-This behavior is what allows us to make normal calls to **include** without
-having to use an explicit receiver or having to call **send**.
+[Module.new][RubyDoc.org - Module.new], is the more metaprogramming-friendly
+version of your standard module declaration using the **module** keyword. In
+fact, when used with a block, it's even more similar to a standard module
+declaration than might be obvious because in the context of the block the target
+of **self** is the module being constructed.  This behavior is what allows us to
+make normal calls to **include** without having to use an explicit receiver or
+having to call **send**.
 
 For our particular purposes, **Module.new** does offer one advantage over the
 **module** keyword worth mentioning. Because **Module.new** uses a block, a
@@ -491,14 +489,14 @@ flexibility, there's really a lot more opportunity out there. And so, rather
 than summarize what we've covered in this post, I'll leave you to ponder these
 possibilities:
 
-- As evidenced by [Kernel#Array](http://www.ruby-doc.org/core-2.2.0/Kernel.html#method-i-Array)
-  and [Kernel#Integer](http://www.ruby-doc.org/core-2.2.0/Kernel.html#method-i-Integer)
-  Ruby doesn't require method names to start with a lowercase letter. How might
-  a method with a title-cased name be used to compliment the Module Factory
-  pattern? Are there trade offs that come with this type of naming convention?
+- As evidenced by [Kernel#Array][RubyDoc.org - Kernel#Array] and
+  [Kernel#Integer][RubyDoc.org - Kernel#Integer] Ruby doesn't require method
+  names to start with a lowercase letter. How might a method with a title-cased
+  name be used to compliment the Module Factory pattern? Are there trade offs
+  that come with this type of naming convention?
 - Ruby method names don't need to be words at all, take for example
-  [Hash::[]](http://ruby-doc.org/core-2.1.5/Hash.html#method-c-5B-5D). How might
-  an operator style of method name pair with the Module Factory pattern? 
+  [Hash::[]][RubyDoc.org - Hash::square_brackets]. How might
+  an operator style of method name pair with the Module Factory pattern?
 - How else could the power of a method call be leveraged for Module Factory
   awesomeness? What magic could be yielded (pun intended!) by a factory method
   that takes a block? How might keyword arguments, Hash arguments, or splat
@@ -508,6 +506,26 @@ possibilities:
   sense to tingle. How might the Module Factory pattern be used for dependency
   injection in Ruby?
 
-[^1]: Source: [Merriam-Webster](http://www.merriam-webster.com/dictionary/idiom)
-[^2]: Source [thefreedictionary.com](http://www.thefreedictionary.com/idiom)
-[^3]: A third-party library like [**ActiveSupport**](https://rubygems.org/gems/activesupport) can make the work of title casing the string trivial.
+[^1]: Source: [Merriam-Webster][MW.com - Idiom Definition]
+[^2]: Source [thefreedictionary.com][TheFreeDictionary.com - Idiom]
+[^3]: A third-party library like [**ActiveSupport**][RubyGems.org - ActiveSupport] can make the work of title casing the string trivial.
+
+[GitHub.com - ActiveJob]: https://github.com/rails/rails/tree/master/activejob "GitHub.com - ActiveJob"
+[GitHub.com - Backburner]: https://github.com/nesquena/backburner "GitHub.com - Backburner"
+[GitHub.com - Resque]: https://github.com/resque/resque "GitHub.com - Resque"
+[GitHub.com - Sidekiq]: https://github.com/mperham/sidekiq "GitHub.com - Sidekiq"
+[GitHub.com - Virtus Cherry Picking]: https://github.com/solnic/virtus/blob/e648e2fe771d715179bddb7b0df9b0169a295ae3/README.md#cherry-picking-extensions "GitHub.com - Virtus - Cherry Picking Extensions"
+[MW.com - Idiom Definition]: http://www.merriam-webster.com/dictionary/idiom "Merriam-Webster - Idiom"
+[Ruby Splat Operator]: https://endofline.wordpress.com/2011/01/21/the-strange-ruby-splat/#calling_methods "Ruby Splat Operator"
+[RubyDoc.org - Hash::square_brackets]: http://ruby-doc.org/core-2.1.5/Hash.html#method-c-5B-5D "RubyDoc.org - Hash::[]"
+[RubyDoc.org - Kernel#Array]: http://www.ruby-doc.org/core-2.2.0/Kernel.html#method-i-Array "RubyDoc.org - Kernel#Array"
+[RubyDoc.org - Kernel#Integer]: http://www.ruby-doc.org/core-2.2.0/Kernel.html#method-i-Integer "RubyDoc.org - Kernel#Integer"
+[RubyDoc.org - Module#include]: http://www.ruby-doc.org/core-2.2.0/Module.html#method-i-include "RubyDoc.org - Module#include"
+[RubyDoc.org - Module.new]: http://www.ruby-doc.org/core-2.2.0/Module.html#method-c-new "RubyDoc.org - Module.new"
+[RubyGems.org - ActiveSupport]: https://rubygems.org/gems/activesupport "RubyGems.org - ActiveSupport"
+[RubyGems.org - Virtus]: https://rubygems.org/gems/virtus "RubyGems.org - Virtus"
+[TheFreeDictionary.com - Idiom]: http://www.thefreedictionary.com/idiom "TheFreeDictionary.com - Idiom Definition"
+[Twitter.com - CraigBuchek]: https://twitter.com/craigbuchek "Twitter.com - Craig Buchek"
+[Wikipedia.org - DRY]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself "Wikipedia.org - Don't Repeat Yourself"
+[Wikipedia.org - Factory Method]: https://en.wikipedia.org/wiki/Factory_method_pattern "Wikipedia.org - Factory Method Patter"
+[YouTube.com - Ruby Idioms You're Not Using Yet]: https://www.youtube.com/watch?v=hc_wtllfKtQ "YouTube.com - Ruby Idioms You're Not Using Yet"

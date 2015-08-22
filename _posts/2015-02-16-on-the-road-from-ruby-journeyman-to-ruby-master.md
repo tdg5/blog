@@ -36,7 +36,7 @@ the inferior quality of my past work in no time. For now though, onward!
 Back in 2009, at the encouragement of my stepfather who thought the future had
 great things in store for Ruby and Rails (boy, was he wrong!), I began to
 explore the Ruby programming language by trying to solve a few of the math heavy
-programming problems over at [Project Euler](https://projecteuler.net/). Up
+programming problems over at [Project Euler][ProjectEuler]. Up
 until this point, I'd only ever done any "programming" in Basic and Visual
 Basic, as these were the focus of the programming courses taught at my high
 school. I'd argue that I got pretty advanced in my usage of Visual Basic, going
@@ -488,4 +488,7 @@ writing code that is four years away from being mind-blowingly awful. If this
 stops being the case then I've stopped learning or I've stopped caring and
 either way, that'd be pretty sad.
 
-[^1]: I would **never** talk about another person's code in these terms, especially if that person was as junior as I was when I wrote these scripts. In the words of the [Ten Commandments of Egoless Programming](http://blog.stephenwyattbush.com/2012/04/07/dad-and-the-ten-commandments-of-egoless-programming), "Treat people who know less than you with respect, deference, and patience." I hope you too will follow this advice and save harsher criticisms for your own work.
+[^1]: I would **never** talk about another person's code in these terms, especially if that person was as junior as I was when I wrote these scripts. In the words of the [Ten Commandments of Egoless Programming][Ten Commandments of Egoless Programming], "Treat people who know less than you with respect, deference, and patience." I hope you too will follow this advice and save harsher criticisms for your own work.
+
+[ProjectEuler]: https://projecteuler.net/ "ProjectEuler.net"
+[Ten Commandments of Egoless Programming]: http://blog.stephenwyattbush.com/2012/04/07/dad-and-the-ten-commandments-of-egoless-programming "StephenWyattBush.com - The Ten Commandments of Egoless Programming"
