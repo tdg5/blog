@@ -11,17 +11,19 @@ title: Introducing the tco_method gem
 ---
 Earlier this week I published a gem intended to help simplify the process of
 compiling Ruby code with tail call optimization enabled in MRI Ruby. The gem,
-[tco_method](https://rubygems.org/gems/tco_method), builds on my recent research
-into the [internals of Ruby's implementation of tail call optimization](http://blog.tdg5.com/tail-call-optimization-ruby-deep-dive/)
-and the ideas presented in [Nithin Bekal's article *Tail Optimization in Ruby*](http://nithinbekal.com/posts/ruby-tco/).
+[tco_method][RubyGems.org - tco_method], builds on my recent research
+into the [internals of Ruby's implementation of tail call
+optimization][tdg5.com - tco deep dive] and the ideas presented in [Nithin
+Bekal's article *Tail Optimization in Ruby*][NithinBekal.com - TCO in Ruby].
 
 The gem aims to ease the process of compiling select Ruby code with tail call
-optimization by providing a helper method, [**TCOMethod.tco_eval**](http://www.rubydoc.info/gems/tco_method/TCOMethod/Mixin:tco_eval),
-for evaluating code with tail call optimization enabled and a mix-in,
-[**TCOMethod::Mixin**](http://www.rubydoc.info/gems/tco_method/TCOMethod/Mixin),
-for adding annotations to Classes and/or Modules for annotating singleton or
-instance methods that should be compiled with tail call optimization enabled.
-You can see what each of these approaches would look like below.
+optimization by providing a helper method,
+[**TCOMethod.tco_eval**][RubyDoc.info - tco_method - tco_eval], for evaluating
+code with tail call optimization enabled and a mix-in,
+[**TCOMethod::Mixin**][RubyDoc.info - tco_method - TCOMethod::Mixin], for adding
+annotations to Classes and/or Modules for annotating singleton or instance
+methods that should be compiled with tail call optimization enabled. You can
+see what each of these approaches would look like below.
 
 ## TCOMethod.eval
 
@@ -54,10 +56,10 @@ decorators began to explore and, as we'll see momentarily, the
 **TCOMethod::Mixin** continues to test the waters of.
 
 Beyond the opportunity it offers the Ruby community, I'm also excited because
-the [tco_method gem](https://rubygems.org/gems/tco_method) seems like a great
-opportunity to dig into Ruby's C extensions and see how extending the gem to
-interface with Ruby's C code more directly could extend the abilities of the gem
-while further simplifying access to tail call optimization in Ruby.
+the [tco_method gem][RubyGems.org - tco_method] seems like a great opportunity
+to dig into Ruby's C extensions and see how extending the gem to interface with
+Ruby's C code more directly could extend the abilities of the gem while further
+simplifying access to tail call optimization in Ruby.
 
 ## TCOMethod::Mixin#tco_method
 
@@ -90,7 +92,7 @@ enabled. More specifically, the helper annotations will:
 
 - find the method identified by the given argument
 - retrieve the source for that method using the [method_source
-  gem](https://github.com/banister/method_source)
+  gem][GitHub.com - banister/method_source]
 - generate a redefinition expression from the method source that
   reopens the defining Module or Class and redefines the method
 - pass the generated redefinition expression to **TCOMethod.tco_eval**,
@@ -98,8 +100,7 @@ enabled. More specifically, the helper annotations will:
   optimized version
 
 While this works in most situations, there are quite a few [pitfalls and
-gotchas](https://github.com/tdg5/tco_method/tree/6241e57f8bb8478e2ef2286d4cc6e463c0198e61#gotchas)
-that come from this approach.
+gotchas][GitHub.com - tco_method gotchas] that come from this approach.
 
 For one, this approach only works for methods defined using the **def** keyword.
 Though in some cases methods defined using **define_method** could be redefined
@@ -117,12 +118,12 @@ extension is the right way to address these issues.
 
 ## Interesting problems
 
-As I said before, I think the [tco_method gem](https://rubygems.org/gems/tco_method)
+As I said before, I think the [tco_method gem][RubyGems.org - tco_method]
 is a starting point, not a solution, and I'm excited by the various
 opportunities and challenges it presents. Though I am definitely interested in
-learning more about Ruby's C extension support, the [tco_method gem](https://rubygems.org/gems/tco_method)
-has already presented some interesting problems despite its current primitive
-and hacky nature.
+learning more about Ruby's C extension support, the [tco_method
+gem][RubyGems.org - tco_method] has already presented some interesting problems
+despite its current primitive and hacky nature.
 
 For example, in order to test that a recursive factorial method would no longer
 encounter a stack overflow after being recompiled with tail call optimization
@@ -131,7 +132,7 @@ have encountered a stack overflow without tail call optimization enabled and at
 what point that stack overflow would have occurred. To achieve this, I wrote a
 test helper that performs [a binary search to discover how many stack frames a
 recursive function can allocate before a stack overflow is
-encountered](https://github.com/tdg5/tco_method/blob/c28895742e18e9d87393c97435db99e4b71c5fa3/test/test_helpers/stack_busters/factorial_stack_buster.rb#L25).
+encountered][GitHub.com - tco_method - stack buster].
 
 Though my current solution could use some refactoring, I thought this was a fun
 and interesting problem to solve. Though I don't find binary search particularly
@@ -159,34 +160,49 @@ Matt Bittarelli, he suggested a couple of alternatives to the binary search
 approach that seemed intriguing and simpler. The first idea was simply to [force
 a **SystemStackError** and check the length of the exception's backtrace from the
 **rescue** context to determine the maximum stack
-depth](https://github.com/tdg5/tco_method/commit/e2e7f30314fd3d0e1b2d138328d7deeb31e7bd96).
+depth][GitHub.com - tco_method - depth by stack trace].
 Though this approach works in Ruby 2.2, [it does not work in Ruby 2.0 or Ruby
-2.1](https://travis-ci.org/tdg5/tco_method/builds/54811953). The other idea Matt
-had was that maybe a **SystemStackError** wasn't necessary at all if a block
-could be used to monitor how the stack depth changed from iteration to
-iteration. Though a little mind bending, I was able to [use a recursive method
-that yields to a block to monitor how the stack depth changes and using that
-information determine whether the method had been compiled with tail call
-optimization enabled](https://github.com/tdg5/tco_method/commit/c2963276376f7705b2fb1b6b582d88f07954c02f).
-Though the means of determining if a method is compiled with tail call
-optimization has changed since I initially wrote this article, I think all three
-of the above approaches are interesting and I expect more interesting problems
-will emerge as work on this gem continues. Thanks again to Matt Bittarelli for
-his insights into the problem!
+2.1][Travis-CI.org - tco_method]. The other idea Matt had was that maybe a
+**SystemStackError** wasn't necessary at all if a block could be used to monitor
+how the stack depth changed from iteration to iteration. Though a little mind
+bending, I was able to [use a recursive method that yields to a block to monitor
+how the stack depth changes and using that information determine whether the
+method had been compiled with tail call optimization
+enabled][GitHub.com - tco_method - depth by yield]. Though the means of
+determining if a method is compiled with tail call optimization has changed
+since I initially wrote this article, I think all three of the above approaches
+are interesting and I expect more interesting problems will emerge as work on
+this gem continues. Thanks again to Matt Bittarelli for his insights into the
+problem!
 
 ## Test drive
 
 Because tail recursive functions can typically be restated in other ways that
 don't require tail call optimization, I'm still on the fence as to whether TCO
 provides any real value other than expanding the expressiveness of the Ruby
-language. As such, I encourage you to take the [tco_method gem](https://rubygems.org/gems/tco_method)
-for a test drive and explore the opportunities it presents. If you do take
-it for a test drive, drop me a line to let me know how it went. I'd be
-interested to hear about your experiences both with tail call optimization in
-Ruby-land and with the API offered by the [tco_method gem](https://rubygems.org/gems/tco_method).
+language. As such, I encourage you to take the [tco_method
+gem][RubyGems.org - tco_method] for a test drive and explore the opportunities
+it presents. If you do take it for a test drive, drop me a line to let me know
+how it went. I'd be interested to hear about your experiences both with tail
+call optimization in Ruby-land and with the API offered by the [tco_method
+gem][RubyGems.org - tco_method].
+
 Contributions are also always welcome!
 
-[View the tco_method gem on RubyGems](https://rubygems.org/gems/tco_method)  
-[View the tco_method gem on GitHub](https://github.com/tdg5/tco_method)
+[View the tco_method gem on RubyGems][RubyGems.org - tco_method]  
+[View the tco_method gem on GitHub][GitHub.com - tco_method]
 
 As always, thanks for reading!
+
+[GitHub.com - tco_method - depth by yield]: https://github.com/tdg5/tco_method/commit/c2963276376f7705b2fb1b6b582d88f07954c02f "GitHub.com - tdg5/tco_method - Commit c2963276376f7705b2fb1b6b582d88f07954c02f"
+[Travis-CI.org - tco_method]: https://travis-ci.org/tdg5/tco_method/builds/54811953 "Travis-CI.org - tco_method - Build 54811953"
+[GitHub.com - banister/method_source]: https://github.com/banister/method_source "GitHub.com - banister/method_source"
+[GitHub.com - tco_method - depth by stack trace]: https://github.com/tdg5/tco_method/commit/e2e7f30314fd3d0e1b2d138328d7deeb31e7bd96 "GitHub.com - tdg5/tco_method commit e2e7f30314fd3d0e1b2d138328d7deeb31e7bd96"
+[GitHub.com - tco_method - stack buster]: https://github.com/tdg5/tco_method/blob/c28895742e18e9d87393c97435db99e4b71c5fa3/test/test_helpers/stack_busters/factorial_stack_buster.rb#L25 "GitHub.com - tdg5/tco_method/test/test_helpers/stack_busters/factorial_stack_buster.rb"
+[GitHub.com - tco_method gotchas]: https://github.com/tdg5/tco_method/tree/6241e57f8bb8478e2ef2286d4cc6e463c0198e61#gotchas "GitHub.com - tdg5/tco_method/README.md - Gotchas"
+[GitHub.com - tco_method]: https://github.com/tdg5/tco_method "GitHub.com - tdg5/tco_method"
+[NithinBekal.com - TCO in Ruby]: http://nithinbekal.com/posts/ruby-tco/ "NithinBekal.com - Tail Call Optimization in Ruby"
+[RubyDoc.info - tco_method - TCOMethod::Mixin]: http://www.rubydoc.info/gems/tco_method/TCOMethod/Mixin "RubyDoc.info - tco_method - TCOMethod::Mixin"
+[RubyDoc.info - tco_method - tco_eval]: http://www.rubydoc.info/gems/tco_method/TCOMethod/Mixin:tco_eval "RubyDoc.info - tco_method - tco_eval"
+[RubyGems.org - tco_method]: https://rubygems.org/gems/tco_method "RubyGems.org - tco_method gem"
+[tdg5.com - tco deep dive]: {{ "2015-01-19-tail-call-optimization-in-ruby-deep-dive" | pretty_post_slug_url }} "blog.tdg5.com - Tail Call Optimization in Ruby: Deep Dive"

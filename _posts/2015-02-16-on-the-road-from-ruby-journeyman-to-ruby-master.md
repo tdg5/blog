@@ -61,7 +61,7 @@ we?
 ## Problem 8: Largest Product in a Series
 
 Though it's not the first problem I solved, [Problem 8: Largest Product in a
-Series](https://projecteuler.net/problem=8), seems like a problem of sufficient
+Series][ProjectEuler - Problem 8], seems like a problem of sufficient
 complexity to merit a bit of discussion. For your convenience here is the full
 text of the question:
 
@@ -490,5 +490,6 @@ either way, that'd be pretty sad.
 
 [^1]: I would **never** talk about another person's code in these terms, especially if that person was as junior as I was when I wrote these scripts. In the words of the [Ten Commandments of Egoless Programming][Ten Commandments of Egoless Programming], "Treat people who know less than you with respect, deference, and patience." I hope you too will follow this advice and save harsher criticisms for your own work.
 
+[ProjectEuler - Problem 8]: https://projecteuler.net/problem=8 "ProjectEuler.net - Problem 8: Largest Product in a Series"
 [ProjectEuler]: https://projecteuler.net/ "ProjectEuler.net"
 [Ten Commandments of Egoless Programming]: http://blog.stephenwyattbush.com/2012/04/07/dad-and-the-ten-commandments-of-egoless-programming "StephenWyattBush.com - The Ten Commandments of Egoless Programming"
