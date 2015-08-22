@@ -3,8 +3,11 @@ GEM
   specs:
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    classifier-reborn (2.0.3)
+      fast-stemmer (~> 1.0)
     coderay (1.1.0)
     colorator (0.1)
+    fast-stemmer (1.0.2)
     ffi (1.9.10)
     hitimes (1.2.2)
     jekyll (3.0.0.pre.beta8)
@@ -47,6 +50,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  classifier-reborn
   jekyll (= 3.0.0.pre.beta8)
   pry
   redcarpet
