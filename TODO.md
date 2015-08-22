@@ -1,6 +1,5 @@
 # TODO
 - further post clean up
-- sidebar-1 social icon colors
 - post-article share
 - post-article bio
 - disqus
