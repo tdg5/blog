@@ -2,6 +2,7 @@ require_relative "../util/archive_util"
 require_relative "../util/author_util"
 require_relative "../util/category_util"
 require_relative "../util/post_util"
+require_relative "../util/rss_util"
 require_relative "../util/sitemap_util"
 require_relative "../util/tag_util"
 require_relative "../util/url_util"
@@ -13,6 +14,7 @@ module JekyllHueman
       AuthorUtil,
       CategoryUtil,
       PostUtil,
+      RSSUtil,
       SitemapUtil,
       TagUtil,
       URLUtil,
@@ -30,6 +32,7 @@ module JekyllHueman
     def pretty_post_url(*); super; end
     def pretty_post_slug_url(*); super; end
     def post_image_url(*); super; end
+    def rss_url(*); super; end
     def sitemap_url(*); super; end
     def tag_url(*); super; end
   end

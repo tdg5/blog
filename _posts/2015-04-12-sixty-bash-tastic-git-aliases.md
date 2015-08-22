@@ -9,11 +9,11 @@ layout: post
 tags: [alias, aliases, bash, bash aliases, git, git aliases]
 title: 60 Bash-tastic Git Aliases
 ---
-After spending the last 3.5 years using [git](https://git-scm.herokuapp.com/)
-for version control, I can't imagine going back to a life without it. I
-won't even start with the plethora of reasons why you should use a [source control
-management (SCM)](https://en.wikipedia.org/wiki/Revision_control) tool like
-git, but if you don't, suffice it to say that you should start **right now**.
+After spending the last 3.5 years using [git][Git - SCM] for version control, I
+can't imagine going back to a life without it. I won't even start with the
+plethora of reasons why you should use a [source control management
+(SCM)][Wikipedia.org - Revision Control] tool like git, but if you
+don't, suffice it to say that you should start **right now**.
 
 Though much of the focus on git is related to its benefits as an SCM, as
 I've gotten more comfortable with git, I've found it to be an invaluable
@@ -124,7 +124,7 @@ useful for getting a handle on the present state of a git repository.
 
 Tip: If you find yourself running **git status** a lot, a prompt that reflects
 the status of the current git repository like
-[liquidprompt](https://github.com/nojhan/liquidprompt) might help.
+[liquidprompt][GitHub.com - LiquidPrompt] might help.
 
 Warning: **gs** is also the name of the name of the Ghostscript binary. If you
 frequently use Ghostscript, you will want to use a different alias for **git
@@ -346,7 +346,7 @@ the last 10 branches isn't enough, the command can be configured to show more.
 
 I don't remember exactly where I found this function, but it seems to be an
 adaptation of the work of [Nathan
-Reynolds](git@github.com:nathforge/git-branch-recent.git).
+Reynolds][GitHub.com - gbrr].
 
 **Function:**
 
@@ -887,8 +887,15 @@ alias grba='git rebase --abort'
 **Example:**
 
 ```text
-# No message is displayed when aborting a rebase.
+error: could not apply fa3918d... something to add to patchset
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+Could not apply fa3918dfd7a38ce227f33ab5c01cf3fcaadee841... Change fake file
+
 $ grba
+# No message is displayed when aborting a rebase.
 ```
 
 ***
@@ -949,6 +956,15 @@ alias grbs='git rebase --skip'
 **Example:**
 
 ```text
+error: could not apply fa3918d... something to add to patchset
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+Could not apply fa3918dfd7a38ce227f33ab5c01cf3fcaadee841... Change fake file
+
+$ grbs
+# No message is displayed when skipping a patch
 ```
 
 ***
@@ -2222,12 +2238,13 @@ Switched to branch 'pull_request_1408'
 
 #### **Bonus #1**: up: cd to root of git repo, home dir, then root
 
-This shortcut is the creation of my former co-worker, Nicholas Ellis. It allows
-you to navigate toward the root of a file-system with stops at a few convenient
-paths. If you're in a git repo, the first call to **up** will **cd** you to the
-root of the git repo. From the root of a git repo, a call to **up** will take
-you to your home directory. Finally, from your home directory, a call to **up**
-will take you to the root of the file-system.
+This shortcut is the creation of my former co-worker, [Nicholas
+Ellis][Twitter.com - Nicholas Ellis]. It allows you to navigate toward the root
+of a file-system with stops at a few convenient paths. If you're in a git repo,
+the first call to **up** will **cd** you to the root of the git repo. From the
+root of a git repo, a call to **up** will take you to your home directory.
+Finally, from your home directory, a call to **up** will take you to the root of
+the file-system.
 
 **Alias:**
 
@@ -2291,12 +2308,12 @@ __git_complete gundo _git_reset
 
 #### **Bonus #3**: topcmds: **top** **c**o**m**man**ds**
 
-This command is credit [Ben Orenstein](https://twitter.com/r00k).
+This command is credit [Ben Orenstein][Twitter.com - Ben Orenstein].
 The command scans your bash history and generates a list of your most frequently
 used 1-2 word commands. The items high on this list are often good candidates for
 aliasing.
 
-[Ben Orenstien @ GoGaRuCo 2013](https://youtu.be/8ZMOWypU34k?t=807)
+[Ben Orenstein @ GoGaRuCo 2013][YouTube.com - Ben Orenstein at GoGaRuCo 2013]
 
 **Function:**
 
@@ -2332,13 +2349,14 @@ $ topcmds
 ## More git aliases
 
 If you're git itch still hasn't been satisfied, check out pretty blog post or
-talk by [Nicola Paolucci](https://twitter.com/durdn). He's a bona fide git
+talk by [Nicola Paolucci][Twitter.com - Nicola Paolucci]. He's a bona fide git
 master with lots of aliases, tools, and tips for achieving a more streamlined
 workflow with git.
 
-- [One weird trick for powerful Git aliases](http://blogs.atlassian.com/2014/10/advanced-git-aliases/)
-- [More Blog posts by Nicola Paolucci](http://blogs.atlassian.com/author/npaolucci/)
-- [Nicola Paolucci - Becoming a Git Master - Atlassian Summit 2014](https://www.youtube.com/watch?v=-kVzV6m5_Qg)
+- [One weird trick for powerful Git aliases][Atlassian - Advanced Git Aliases]
+- [More Blog posts by Nicola Paolucci][Atlassian - Posts By Nicola Paolucci]
+- [Nicola Paolucci - Becoming a Git Master - Atlassian Summit
+  2014][YouTube.com - Nicola Paolucci - Becoming A Git Master]
 
 
 ## To be continued&hellip;
@@ -2353,5 +2371,19 @@ get a glimpse of how the rest of the world interacts with git and what I could
 learn from those perspectives.
 
 If you enjoyed this article, consider subscribing to my [RSS
-feed](http://blog.tdg5.com/feed/) or following me on
-[Twitter](https://twitter.com/dannyguinther). Thanks for reading!
+feed][tdg5.com - tdg5 RSS] or following me on
+[Twitter][Twitter.com - Danny Guinther]. Thanks for reading!
+
+[Atlassian - Advanced Git Aliases]: http://blogs.atlassian.com/2014/10/advanced-git-aliases/ "Atlassian Blog - Advanced Git Aliases"
+[Atlassian - Posts By Nicola Paolucci]: http://blogs.atlassian.com/author/npaolucci/ "Atlassian Blog - Posts by Nicola Paolucci"
+[Git - SCM]: https://git-scm.herokuapp.com/ "Git - SCM"
+[GitHub.com - LiquidPrompt]: https://github.com/nojhan/liquidprompt "Github.com - LiquidPrompt"
+[GitHub.com - gbrr]: https://github.com/nathforge/git-branch-recent.git "GitHub.com - nathforge/git-branch-recent.git"
+[Twitter.com - Ben Orenstein]: https://twitter.com/r00k "Twitter.com - Ben Orenstein"
+[Twitter.com - Danny Guinther]: https://twitter.com/dannyguinther "Twitter.com - Danny Guinther"
+[Twitter.com - Nicholas Ellis]: https://twitter.com/naellis89 "Twitter.com - Nicholas Ellis"
+[Twitter.com - Nicola Paolucci]: https://twitter.com/durdn "Twitter.com - Nicola Paolucci"
+[Wikipedia.org - Revision Control]: https://en.wikipedia.org/wiki/Revision_control "Wikipedia.org - Revision Control"
+[YouTube.com - Ben Orenstein at GoGaRuCo 2013]: https://youtu.be/8ZMOWypU34k?t=807 "YouTube.com - Ben Orenstein at GoGaRuCo 2013"
+[YouTube.com - Nicola Paolucci - Becoming A Git Master]: https://www.youtube.com/watch?v=-kVzV6m5_Qg "Nicola Paolucci - Becoming a Git Master - Atlassian Summit 2014"
+[tdg5.com - tdg5 RSS]: {{ "tdg5" | rss_url }} "tdg5.com - Danny Guinther Author RSS Feed"
