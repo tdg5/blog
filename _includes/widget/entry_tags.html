@@ -1,0 +1,6 @@
+<p class="post-tags">
+  <span>Tags:</span>
+  {% for tag in page.tags %}
+  <a href="{{ tag | tag_url }}" rel="tag">{{ tag }}</a>
+  {% endfor %}
+</p>
