@@ -1,0 +1,20 @@
+{% assign author_data = site.data.authors[page.author] %}
+{% if author_data["gravatar_hash"] %}
+  {% assign gravatar_key = author_data["gravatar_hash"] %}
+{% elsif author_data["gravatar_email"] %}
+  {% assign gravatar_key = author_data["gravatar_email"] %}
+{% else %}
+  {% assign gravatar_key = "no_gravatar_key_provided" %}
+{% endif %}
+<div class="author-bio">
+  <div class="bio-avatar">
+    <img alt="{{ page.author }}"
+      class="avatar avatar-128 photo" height="128" width="128"
+      src="{{ gravatar_key | gravatar_avatar_url: 128, "retro", "r"  }}"
+      srcset="{{ gravatar_key | gravatar_avatar_url: 256, "retro", "r"  }} 2x"
+    />
+  </div>
+  <p class="bio-name">{{ page.author }}</p>
+  <p class="bio-desc">{{ author_data["bio"] }}</p>
+  <div class="clear"></div>
+</div>

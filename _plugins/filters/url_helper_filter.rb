@@ -1,6 +1,7 @@
 require_relative "../util/archive_util"
 require_relative "../util/author_util"
 require_relative "../util/category_util"
+require_relative "../util/gravatar_util"
 require_relative "../util/post_util"
 require_relative "../util/rss_util"
 require_relative "../util/sitemap_util"
@@ -13,6 +14,7 @@ module JekyllHueman
       ArchiveUtil,
       AuthorUtil,
       CategoryUtil,
+      GravatarUtil,
       PostUtil,
       RSSUtil,
       SitemapUtil,
@@ -29,6 +31,7 @@ module JekyllHueman
     def archive_url(*); super; end
     def author_url(*); super; end
     def category_url(*); super; end
+    def gravatar_avatar_url(*); super; end
     def pretty_post_url(*); super; end
     def pretty_post_slug_url(*); super; end
     def post_image_url(*); super; end

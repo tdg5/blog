@@ -1,7 +1,9 @@
 ---
 Danny Guinther:
   name: Danny Guinther
+  gravatar_hash: 5191c46958937376eaad2da13b5b520b
   nickname: tdg5
+  bio: "Hello! I'm a passionate and motivated engineer in the Boston/Cambridge area seeking challenging opportunities to utilize and extend my engineering and development skills through building new libraries, exploring community code, crafting new applications, and enhancing existing products."
   slug: tdg5
   social_links:
     github: https://github.com/tdg5
