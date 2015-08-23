@@ -7,6 +7,8 @@
 {% endif %}
 {% if page.featured_image %}
   {% assign featured_image_url = page.featured_image.url | absolute_url  %}
+{% elsif site.featured_image %}
+  {% assign featured_image_url = site.featured_image.url | absolute_url  %}
 {% endif %}
 
 {% if page.author %}
@@ -25,7 +27,6 @@
     {% assign description = site.description %}
   {% endif %}
 {% endif %}
-
 
 {% if page.categories %}
   {% if page.primary_category %}
@@ -78,6 +79,7 @@
 {% endif %}
 
 {% if featured_image_url %}
+  <meta name="twitter:image:src" content="{{ featured_image_url }}">
   <meta property="og:image" content="{{ featured_image_url }}" />
 {% endif %}
 
@@ -87,8 +89,4 @@
 
 {% if site.twitter_username %}
   <meta name="twitter:site" content="@{{ site.twitter_username }}">
-{% endif %}
-
-{% if featured_image_url %}
-  <meta name="twitter:image:src" content="{{ featured_image_url }}">
 {% endif %}

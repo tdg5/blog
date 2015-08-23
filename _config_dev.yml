@@ -1,6 +1,10 @@
 author: tdg5.com
 copyright: 'tdg5 &copy; 2015. All Rights Reserved.'
 description: Misadventures in programming!
+featured_image:
+  alt_text: blog.tdg5.com
+  title: blog.tdg5.com
+  url: /assets/images/favicons/favicon-256.png
 highlighter: rouge
 language: en-US
 markdown: redcarpet
