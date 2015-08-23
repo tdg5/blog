@@ -5,8 +5,9 @@ Danny Guinther:
   nickname: tdg5
   bio: "Hello! I'm a passionate and motivated engineer in the Boston/Cambridge area seeking challenging opportunities to utilize and extend my engineering and development skills through building new libraries, exploring community code, crafting new applications, and enhancing existing products."
   slug: tdg5
-  social_links:
-    github: https://github.com/tdg5
-    linkedin: https://www.linkedin.com/in/dannyguinther
+  social:
+    github_username: tdg5
+    facebook_username: danny.guinther
+    linkedin_username: dannyguinther
     rss: true
-    twitter: https://twitter.com/dannyguinther
+    twitter_username: dannyguinther

@@ -1,0 +1,94 @@
+{% assign author_data = site.data.authors[page.author] %}
+{% assign locale = site.language | replace: "-", "_" %}
+{% assign url = page.url | pretty_post_url | absolute_url %}
+
+{% if page.date %}
+  {% assign date = page.date | date_to_xmlschema %}
+{% endif %}
+{% if page.featured_image %}
+  {% assign featured_image_url = page.featured_image.url | absolute_url  %}
+{% endif %}
+
+{% if page.author %}
+  {% assign type = "article" %}
+  {% assign article = true %}
+{% else %}
+  {% assign type = "website" %}
+{% endif %}
+
+{% if page.description %}
+  {% assign description = page.description %}
+{% else %}
+  {% if article %}
+    {% assign description = page.content | markdownify | strip_html | truncatewords: 50 %}
+  {% else %}
+    {% assign description = site.description %}
+  {% endif %}
+{% endif %}
+
+
+{% if page.categories %}
+  {% if page.primary_category %}
+    {% assign primary_category = page.categories.first %}
+  {% else %}
+    {% assign primary_category = page.categories.first %}
+  {% endif %}
+{% endif %}
+
+{% if page.title %}
+  {% assign title = page.title %}
+{% else %}
+  {% assign title = site.title %}
+{% endif %}
+
+<link rel="canonical" href="{{ url }}" />
+<meta name="description" content="{{ description }}"/>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="{{ description }}">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:url" content="{{ url }}">
+<meta property="og:description" content="{{ description }}" />
+<meta property="og:locale" content="{{ locale }}" />
+<meta property="og:site_name" content="{{ site.title }}" />
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:type" content="{{ type }}" />
+<meta property="og:url" content="{{ url }}" />
+
+{% if date %}
+  <meta property="og:updated_time" content="{{ date }}" />
+  {% if article %}
+    <meta property="article:modified_time" content="{{ date }}" />
+    <meta property="article:published_time" content="{{ date }}" />
+  {% endif %}
+{% endif %}
+
+{% if page.tags %}
+  <meta property="article:tag" content="{{ page.tags | join: "," }}" />
+{% endif %}
+
+{% if page.primary_category %}
+  <meta property="article:section" content="{{ primary_category }}" />
+{% endif %}
+
+{% if author_data.social.facebook_username %}
+  <meta
+    property="article:author"
+    content="https://www.facebook.com/{{ author_data.social.facebook_username }}"
+  />
+{% endif %}
+
+{% if featured_image_url %}
+  <meta property="og:image" content="{{ featured_image_url }}" />
+{% endif %}
+
+{% if author_data.social.twitter_username %}
+  <meta name="twitter:creator" content="@{{ author_data.social.twitter_username }}">
+{% endif %}
+
+{% if site.twitter_username %}
+  <meta name="twitter:site" content="@{{ site.twitter_username }}">
+{% endif %}
+
+{% if featured_image_url %}
+  <meta name="twitter:image:src" content="{{ featured_image_url }}">
+{% endif %}

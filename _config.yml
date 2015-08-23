@@ -21,6 +21,8 @@ redcarpet:
   ]
 simple_hueman:
   rss_item_limit: 10
+social:
+  twitter_username: dannyguinther
 tagline: explore, create, adapt, repeat
 title: tdg5
 url: http://jekyll.tdg5.com
