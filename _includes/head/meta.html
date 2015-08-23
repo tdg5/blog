@@ -1,10 +1,10 @@
-{% assign author_data = site.data.authors[page.author] %}
 {% assign locale = site.language | replace: "-", "_" %}
 {% assign url = page.url | pretty_post_url | absolute_url %}
 
 {% if page.date %}
   {% assign date = page.date | date_to_xmlschema %}
 {% endif %}
+
 {% if page.featured_image %}
   {% assign featured_image_url = page.featured_image.url | absolute_url  %}
 {% elsif site.featured_image %}
@@ -12,8 +12,9 @@
 {% endif %}
 
 {% if page.author %}
-  {% assign type = "article" %}
   {% assign article = true %}
+  {% assign author_data = site.data.authors[page.author] %}
+  {% assign type = "article" %}
 {% else %}
   {% assign type = "website" %}
 {% endif %}
@@ -40,6 +41,12 @@
   {% assign title = page.title %}
 {% else %}
   {% assign title = site.title %}
+{% endif %}
+
+{% if author_data.social.twitter_username %}
+  {% assign creator_twitter_username = author_data.social.twitter_username %}
+{% elsif site.social.twitter_username %}
+  {% assign creator_twitter_username = site.social.twitter_username %}
 {% endif %}
 
 <link rel="canonical" href="{{ url }}" />
@@ -79,14 +86,14 @@
 {% endif %}
 
 {% if featured_image_url %}
-  <meta name="twitter:image:src" content="{{ featured_image_url }}">
+  <meta name="twitter:image" content="{{ featured_image_url }}">
   <meta property="og:image" content="{{ featured_image_url }}" />
 {% endif %}
 
-{% if author_data.social.twitter_username %}
-  <meta name="twitter:creator" content="@{{ author_data.social.twitter_username }}">
+{% if creator_twitter_username %}
+  <meta name="twitter:creator" content="@{{ creator_twitter_username }}">
 {% endif %}
 
-{% if site.twitter_username %}
-  <meta name="twitter:site" content="@{{ site.twitter_username }}">
+{% if site.social.twitter_username %}
+  <meta name="twitter:site" content="@{{ site.social.twitter_username }}">
 {% endif %}
