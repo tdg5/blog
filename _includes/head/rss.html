@@ -1,0 +1,4 @@
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }} Feed" href="{{ "" | rss_url }}" />
+{% if page.author %}
+  <link rel="alternate" type="application/rss+xml" title="tdg5 &raquo; {{ page.author }} Feed" href="{{ site.data.authors[page.author].slug | rss_url }}" />
+{% endif %}
