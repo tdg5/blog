@@ -56,7 +56,7 @@ module JekyllHueman
           post.data["layout"] = layout_for_site
           post.render(site.layouts, site.site_payload)
           maker.items.new_item do |item|
-            url = absolute_url(pretty_post_url(post.url))
+            url = absolute_url(pretty_url(post.url))
             item.content_encoded = wrap_cdata(post.output)
             item.description = wrap_cdata(post.excerpt.gsub(HTML_ESCAPING, ""))
             item.guid.content = url

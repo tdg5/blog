@@ -4,6 +4,8 @@ module JekyllHueman
   module URLUtil
     include ConfigUtil
 
+    UGLY_URL_MATCHER = /\/index.html$/
+
     def absolute_url(url = "")
       File.join(site_config["url"], url)
     end
@@ -12,6 +14,14 @@ module JekyllHueman
       page_date = page ? page.date : @context.registers[:page]["date"]
       page_date = page_date.strftime("%Y-%m-%d")
       File.join("/assets/images/posts/", page_date, image_name)
+    end
+
+
+    def pretty_url(url)
+      return url unless UGLY_URL_MATCHER === url
+      short = short_url(url)
+      short.concat("/") unless short[-1] == "/"
+      short
     end
 
     def short_url(url = "")
