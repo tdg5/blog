@@ -1,0 +1,20 @@
+---
+layout: page
+header_title: '<i class="fa fa-share-alt"></i>Success! <span>Thanks for sharing!</span>'
+permalink: /thanks_for_sharing/index.html
+title: Thanks for sharing!
+---
+{% if site.name %}
+  {% assign site_name = site.name %}
+{% else %}
+  {% assign site_name = site.url %}
+{% endif %}
+
+<section class="content">
+  <div class="pad group">
+    <div class="entry">
+      <p>Thanks for sharing!</p>
+      <p><a href="{{ site.url }}">Return to {{ site_name }}.</a></p>
+    </div>
+  </div>
+</section>

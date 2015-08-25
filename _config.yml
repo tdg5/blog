@@ -27,6 +27,7 @@ redcarpet:
 simple_hueman:
   rss_item_limit: 10
 social:
+  facebook_app_id: "1190183924340795"
   twitter_username: dannyguinther
 tagline: explore, create, adapt, repeat
 title: tdg5

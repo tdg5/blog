@@ -1,0 +1,55 @@
+<div class="share-bar">
+  <h3 class="heading">Share:</h3>
+  <ul class="share-list">
+    {% if site.social.facebook_app_id %}
+      <li class="share-service">
+        <a class="share-button share-email">
+          <i class="fa fa-envelope"></i>Email
+        </a>
+      </li>
+    {% endif %}
+    <li class="share-service">
+      <a class="share-button share-print" href="#print">
+        <i class="fa fa-print"></i>Print
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-facebook" href="{{ page | facebook_share_url }}">
+        <i class="fa fa-facebook"></i>Facebook
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-twitter" href="{{ page | twitter_share_url }}">
+        <i class="fa fa-twitter"></i>Twitter
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-linkedin" href="{{ page | linkedin_share_url }}">
+        <i class="fa fa-linkedin"></i>LinkedIn
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-google-plus" href="{{ page | google_plus_share_url }}">
+        <i class="fa fa-google-plus"></i>Google+
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-reddit" href="{{ page | reddit_share_url }}">
+        <i class="fa fa-reddit"></i>Reddit
+      </a>
+    </li>
+    <li class="share-service">
+      <a class="share-button share-hacker-news" href="{{ page | hacker_news_share_url }}">
+        <i class="fa fa-hacker-news"></i>Hacker News
+      </a>
+    </li>
+  </ul>
+</div>
+<script>
+  jQuery(document).ready(function($) {
+    $(".share-button").click(function(event) {
+      window.open(this.href, "_blank", 'location=yes,height=570,width=520,scrollbars=yes,status=yes');
+      event.preventDefault();
+    });
+  });
+</script>

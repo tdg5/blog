@@ -56,3 +56,23 @@
     color: #aaa;
   }
 }
+
+.share-service {
+  display: inline-block;
+}
+
+.share-button {
+  background: #f8f8f8;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  color: #777;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px 5px;
+  padding: 1px 8px 0 5px;
+  text-decoration: none;
+}
+
+.share-button .fa {
+  margin-right: 0.5em;
+}
