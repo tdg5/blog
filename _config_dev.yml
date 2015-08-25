@@ -8,6 +8,7 @@ featured_image:
 highlighter: rouge
 language: en-US
 markdown: redcarpet
+name: blog.tdg5.com
 permalink: /:title/index.html
 redcarpet:
   extensions: [
