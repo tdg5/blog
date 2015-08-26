@@ -1,10 +1,12 @@
 require_relative "../util/author_util"
 require_relative "../util/config_util"
+require_relative "../util/site_util"
 
 module JekyllHueman
   class AuthorPage < Jekyll::Page
     extend ConfigUtil
     include ConfigUtil
+    include SiteUtil
     include AuthorUtil
 
     DEFAULT_LAYOUT = "author_index".freeze
@@ -28,12 +30,15 @@ module JekyllHueman
       read_yaml(File.dirname(layout.path), File.basename(layout.path))
 
       title_prefix = simple_hueman_config["author_title_prefix"] || DEFAULT_TITLE_PREFIX
-      name_span = "<span>#{author["name"]}</span>"
+      author_name = "#{author["name"]} (#{author["nickname"]})"
+      name_span = "<span>#{author_name}</span>"
       header_title = "#{USER_ICON}#{title_prefix}#{name_span}"
+      desc = "Archive of articles by #{author_name}, author at #{site_id}."
 
+      self.data["description"] = desc
       self.data["header_title"] = header_title
       self.data["posts"] = posts.sort.reverse
-      self.data["title"] = "#{author["name"]} Archives"
+      self.data["title"] = "#{author_name} Author Archive"
     end
   end
 end

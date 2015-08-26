@@ -1,10 +1,14 @@
 require_relative "../util/config_util"
+require_relative "../util/site_util"
 require_relative "../util/tag_util"
+require_relative "../util/string_util"
 
 module JekyllHueman
   class TagPage < Jekyll::Page
     extend ConfigUtil
     include ConfigUtil
+    include SiteUtil
+    include StringUtil
     include TagUtil
 
     DEFAULT_LAYOUT = "tag_index".freeze
@@ -26,14 +30,16 @@ module JekyllHueman
       layout = site.layouts[self.class.layout_for_site(@site)]
       read_yaml(File.dirname(layout.path), File.basename(layout.path))
 
+      desc = "Archive of articles tagged #{tag} at #{site_id}."
       name_span = "<span>#{tag}</span>"
       tag_title_prefix = simple_hueman_config["tag_title_prefix"] || DEFAULT_TITLE_PREFIX
       header_title = "#{TAG_ICON}#{tag_title_prefix}#{name_span}"
 
+      self.data["description"] = desc
       self.data["header_title"] = header_title
       self.data["posts"] = posts
       self.data["tag"] = tag
-      self.data["title"] = "#{tag} Archives"
+      self.data["title"] = "#{titleize(tag)} Tag Archive"
     end
   end
 end
