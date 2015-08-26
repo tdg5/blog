@@ -1,5 +1,5 @@
 {% assign locale = site.language | replace: "-", "_" %}
-{% assign url = page.url | pretty_url | absolute_url %}
+{% assign url = page.url | pretty_absolute_url %}
 
 {% if page.date %}
   {% assign date = page.date | date_to_xmlschema %}

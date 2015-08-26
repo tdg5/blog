@@ -106,7 +106,7 @@ module JekyllHueman
     end
 
     def page_absolute_url(page)
-      absolute_url(pretty_url(page["url"]))
+      pretty_absolute_url(page["url"])
     end
 
     def page_description(page)
@@ -135,7 +135,7 @@ module JekyllHueman
         page = @context.registers[:site].pages.find do |p|
           p.name == "share_thanks.html"
         end
-        url = absolute_url(pretty_url(page.url)) if page
+        url = pretty_absolute_url(page.url) if page
       end
       url || site_url
     end
