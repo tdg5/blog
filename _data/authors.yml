@@ -6,6 +6,7 @@ Danny Guinther:
   bio: "Hello! I'm a passionate and motivated engineer in the Boston/Cambridge area seeking challenging opportunities to utilize and extend my engineering and development skills through building new libraries, exploring community code, crafting new applications, and enhancing existing products."
   slug: tdg5
   social:
+    disqus_shortname: tdg5
     github_username: tdg5
     facebook_username: danny.guinther
     linkedin_username: dannyguinther

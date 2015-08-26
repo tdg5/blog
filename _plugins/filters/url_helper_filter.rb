@@ -34,6 +34,7 @@ module JekyllHueman
     def author_url(*); super; end
     def category_url(*); super; end
     def gravatar_avatar_url(*); super; end
+    def pretty_absolute_url(*); super; end
     def pretty_url(*); super; end
     def pretty_post_slug_url(*); super; end
     def post_image_url(*); super; end

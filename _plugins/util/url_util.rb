@@ -16,6 +16,9 @@ module JekyllHueman
       File.join("/assets/images/posts/", page_date, image_name)
     end
 
+    def pretty_absolute_url(url)
+      absolute_url(pretty_url(url))
+    end
 
     def pretty_url(url)
       return url unless UGLY_URL_MATCHER === url
