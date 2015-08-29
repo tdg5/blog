@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# vi: set ft=ruby :
+
+def config_name(env = nil)
+  "_config#{"_#{env}" if env}.yml"
+end
+
+def process(command, env = "dev", *args)
+  config = config_name(env)
+  if command == "serve"
+    exec("jekyll serve -f --trace --lsi --config #{config} --drafts")
+  elsif command == "push"
+    exec("jekyll build -f --trace --lsi --config #{config} && s3_website push")
+  end
+end
+
+process(*ARGV)
