@@ -5,6 +5,8 @@ featured_image:
   alt_text: blog.tdg5.com
   title: blog.tdg5.com
   url: /assets/images/favicons/favicon-256.png
+gems:
+  - simple_hueman
 highlighter: rouge
 language: en-US
 markdown: redcarpet
