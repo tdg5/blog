@@ -589,9 +589,9 @@ Beyond just registering callbacks, the [`Pry::Hooks`][Pry::Hooks - RubyDoc]
 class supports a much fuller API for interrogating, manipulating, and defining
 hooks and events. This last point is worth making special note of since the use
 of custom events allows Pry plugins to expose their own events for other plugins
-to integrate with. For example, the `pry-remote` influenced, [`pry-bot`][pry-bot
-- GitHub] plugin exposes an `after_print` event for other plugins to integrate
-with.
+to integrate with. For example, the `pry-remote` influenced,
+[`pry-bot`][pry-bot - GitHub] plugin exposes an `after_print` event for other
+plugins to integrate with.
 
 For more information on working with the hooks API or `Pry::Hooks` class,
 check out the [Pry Wiki's Hooks page][Pry Wiki - Hooks] or the  [`Pry::Hooks`

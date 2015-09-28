@@ -223,7 +223,7 @@ that is made on the way to our goal, let's speed things up a bit. We'll still
 walk through each step, but we'll be more brief and skip the code snippets
 until we get a whiff of tail call optimization. That said, I've collected [the
 source for each step of the way from **CALL_METHOD** to the internals of Ruby's
-tail call optimization into one file][GitHub.com - from_call_method_to_tco.tco]
+tail call optimization into one file][GitHub.com - from_call_method_to_tco.c]
 for your viewing pleasure.
 
 Take a deep breath&hellip;
@@ -589,7 +589,7 @@ I certainly did. Thanks for reading!
 [GitHub.com - ruby/test/ruby/test_optimization]: https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213 "GitHub.com - ruby/test/ruby/test_optimization.rb"
 [GitHub.com - ruby/insns.def]: https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def "GitHub.com - ruby/insns.def"
 [GitHub.com - ruby/insns.def - line 1047]: https://github.com/ruby/ruby/blob/6c0a375c58e99d1f5f1c9b9754d1bb87f1646f61/insns.def#L1047 "GitHub.com - ruby/insns.def line 1047"
-[GitHub.com - from_callmethod_to_tco.c]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c "GitHub.com - from_callmethod_to_tco_.c"
+[GitHub.com - from_call_method_to_tco.c]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c "GitHub.com - from_callmethod_to_tco_.c"
 [GitHub.com - opt_send_without_block full]: https://github.com/tdg5/blog_snippets/blob/2a9e48ccc10082d37c821e3b838f223597a0d7b6/lib/blog_snippets/tail_call_optimization_in_ruby_internals/opt_send_without_block.vm.inc "GitHub.com - opt_send_without_block full method"
 [GitHub.com - vm_call_general - line 15]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L15 "GitHub.com - vm_call_general - line 15"
 [GitHub.com - vm_call_general - line 24]: https://github.com/tdg5/blog_snippets/blob/12cb499a95ced517ee9f70febfa9472e2d055d71/lib/blog_snippets/tail_call_optimization_in_ruby_internals/from_call_method_to_tco.c#L24 "GitHub.com - vm_call_general - line 24"

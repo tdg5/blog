@@ -525,7 +525,7 @@ possibilities:
 [RubyGems.org - ActiveSupport]: https://rubygems.org/gems/activesupport "RubyGems.org - ActiveSupport"
 [RubyGems.org - Virtus]: https://rubygems.org/gems/virtus "RubyGems.org - Virtus"
 [TheFreeDictionary.com - Idiom]: http://www.thefreedictionary.com/idiom "TheFreeDictionary.com - Idiom Definition"
-[Twitter.com - CraigBuchek]: https://twitter.com/craigbuchek "Twitter.com - Craig Buchek"
+[Twitter.com - Craig Buchek]: https://twitter.com/craigbuchek "Twitter.com - Craig Buchek"
 [Wikipedia.org - DRY]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself "Wikipedia.org - Don't Repeat Yourself"
 [Wikipedia.org - Factory Method]: https://en.wikipedia.org/wiki/Factory_method_pattern "Wikipedia.org - Factory Method Patter"
 [YouTube.com - Ruby Idioms You're Not Using Yet]: https://www.youtube.com/watch?v=hc_wtllfKtQ "YouTube.com - Ruby Idioms You're Not Using Yet"

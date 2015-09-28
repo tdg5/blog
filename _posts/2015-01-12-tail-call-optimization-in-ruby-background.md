@@ -43,7 +43,7 @@ tail call optimization happen at runtime.
 Let's get started!
 
 ## A little background on tail call optimization
-[Nithin's article][Nithin Bekall - TCO in Ruby] does a great job of explaining
+[Nithin's article][Nithin Bekal - TCO in Ruby] does a great job of explaining
 tail recursive functions and tail call optimization, so if you're a little iffy
 on either subject, I'd recommend reading that before you continue with this
 post. The [Tail call entry in Wikipedia][Wikipedia - tail call] is also a useful
