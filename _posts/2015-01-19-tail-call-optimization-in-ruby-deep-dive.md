@@ -33,6 +33,8 @@ definitely helped guide my decision to read the book.
 
 So, getting on to the subject of today's post. Hold on to your butts.
 
+![Hold on to your butts!][hold on to your butts]
+
 ## Revisiting our tail recursive Guinea pig
 In [my last post][tdg5.com - Tail Call Optimization in Ruby: Background], we
 discovered a tail recursive function in
@@ -611,6 +613,7 @@ I certainly did. Thanks for reading!
 [Ruby Rogues - RUM]: http://devchat.tv/ruby-rogues/146-rr-book-club-ruby-under-a-microscope-with-pat-shaughnessy "Ruby Rogues Episode 146 - Ruby Under a Microscope with Path Shaughnessy"
 [RubyDoc.org - RubyVM::InstructionSequence.disasm]: http://www.ruby-doc.org/core-2.2.0/RubyVM/InstructionSequence.html#method-c-disasm "RubyDoc.org - RubyVM::InstructionSequence.disasm"
 [Wikipedia - The C Programming Language]: https://en.wikipedia.org/wiki/The_C_Programming_Language "Wikipedia - The C Programming Language"
+[hold on to your butts]: {{ "hold_on_to_your_butts.jpg" | post_image_url }} "Samuel L. Jackson says \"Hold on to your butts\""
 [tco-diff]: {{ "tco-diff.jpg" | post_image_url }} "YARV TCO instructions diff"
 [tdg5.com - Tail Call Optimization in Ruby: Background]: {{ "2015-01-12-tail-call-optimization-in-ruby-background" | pretty_post_slug_url }} "tdg5.com - Tail Call Optimization in Ruby: Background"
 [vm-call-iseq-setup-diff]: {{ "vm-call-iseq-setup-diff.jpg" | post_image_url }} "vm_call_iseq_setup diff"
