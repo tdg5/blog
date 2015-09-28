@@ -63,7 +63,7 @@ RubyVM::InstructionSequence.new(code, nil, nil, nil, options).eval
 ```
 
 I won't go into the details again, but suffice it to say that this code snippet
-will add a **Factorial** class with a tail call optimized **fact** method to our
+will add a `Factorial` class with a tail call optimized `fact` method to our
 environment. Our journey begins with this class method.
 
 ## Initial descent
@@ -74,11 +74,11 @@ background and methods employed in
 [Ruby Under a Microscope][Pat Shaughnessy - RUM] will be of great utility.
 
 One method that [Ruby Under a Microscope][Pat Shaughnessy - RUM] uses to great
-effect is using [**RubyVM::InstructionSequence#disasm**][RubyDoc.org - RubyVM::InstructionSequence.disasm]
+effect is using [`RubyVM::InstructionSequence#disasm`][RubyDoc.org - RubyVM::InstructionSequence.disasm]
 to disassemble Ruby code into the underlying YARV instructions that the Ruby VM
 will actually execute at runtime. Using this technique we should be able to
 disassemble both a tail call optimized version and an unoptimized version of our
-**Factorial#fact** method and compare the instruction sequences for differences.
+`Factorial#fact` method and compare the instruction sequences for differences.
 
 Before we continue, let's rewind for a second and discuss YARV. YARV, which
 stands for Yet Another Ruby Virtual Machine, is a stack-oriented VM internal to
@@ -94,7 +94,7 @@ Back to our regularly scheduled broadcast.
 
 To facilitate comparing the YARV instructions of the tail call optimized and
 unoptimized versions of our factorial function, I've tweaked our Guinea pig
-script to disassemble both versions of the function and **puts** them to STDOUT.
+script to disassemble both versions of the function and `puts` them to STDOUT.
 Here's the resulting script:
 
 ```ruby
@@ -136,19 +136,19 @@ purple and the actual changes highlighted in red looks like so:
 [![Differences between the unoptimized Factorial class and the tail call optimized Factorial class][tco-diff]][tco-diff]
 
 Oh no! Disaster! It seems that our initial descent is some what of a failure.
-Other than the addition of a **TAILCALL** flag to a few of the
-**opt_send_without_block** instructions, the YARV instructions for both the
+Other than the addition of a `TAILCALL` flag to a few of the
+`opt_send_without_block` instructions, the YARV instructions for both the
 unoptimized version and the tail call optimized version are **exactly the
 same**. What gives?
 
 From here it seems like our only logical course of action is to descend even
 further and look at the C code that makes up those YARV instructions with the
-hope that the **TAILCALL** flag is really all that's needed to transform an
+hope that the `TAILCALL` flag is really all that's needed to transform an
 unoptimized call into a tail call optimized call.
 
 ## Descending into the C
 We begin our journey into Ruby's C internals where our YARV instructions left
-us, with the **opt_send_without_block** instruction. Hopefully, we can find
+us, with the `opt_send_without_block` instruction. Hopefully, we can find
 something in the implementation of that instruction that will help us find
 our way to where Ruby implements tail call optimization internally.
 
@@ -156,7 +156,7 @@ As discussed in [Ruby Under a Microscope][Pat Shaughnessy - RUM],
 the definitions that are used during the Ruby build process to generate the C
 code for all the YARV instructions live in the Ruby source in
 [insns.def][GitHub.com - ruby/insns.def].
-With a little grepping, we can find the definition of **opt_send_without_block**
+With a little grepping, we can find the definition of `opt_send_without_block`
 around [line 1047 of insns.def][GitHub.com - ruby/insns.def - line 1047]:
 
 ```c
@@ -174,13 +174,13 @@ opt_send_without_block
 
 As you've almost certainly noticed, this isn't quite C. Rather, during the Ruby
 build process this definition is used to generate the actual C code for the
-**opt_send_without_block** instruction. [You can view the fully generated C code
-for **opt_send_without_block** in all its monstrous glory
+`opt_send_without_block` instruction. [You can view the fully generated C code
+for `opt_send_without_block` in all its monstrous glory
 here][GitHub.com - opt_send_without_block full].
 
 Luckily, for our purposes, we don't have to go quite to that extreme and can
 operate at the instruction definition level. One mutation I will make before we
-continue is to expand the **CALL_METHOD** macro and remove some noise added to
+continue is to expand the `CALL_METHOD` macro and remove some noise added to
 facilitate the macro. That brings us to the following:
 
 ```c
@@ -200,94 +200,94 @@ OK, so what in the name of Neptune is going on here? Well, the first thing to
 notice is there's no sign of tail call optimization here, so the question for
 now is, where to next?
 
-In this case, the **ci** variable is of most interest to our particular quest.
-The **ci** variable references a **rb_call_info_t** struct which encapsulates a
+In this case, the `ci` variable is of most interest to our particular quest.
+The `ci` variable references a `rb_call_info_t` struct which encapsulates a
 variety of data about a method call including, among other things, the receiver
 of the call, how many arguments the call takes, and a reference to the C
 function that should actually be executed by the call. It's this final reference,
-**ci->call**, that we're most interested in, as we hope to find some trace of
+`ci->call`, that we're most interested in, as we hope to find some trace of
 tail call optimization therein.
 
 From the code above we can ascertain that when the Ruby VM executes a method
-call, it invokes the function pointed to by the **rb_call_info_t* struct's
-**call** field with the current thread (**th**), the current frame pointer
-(result of **GET_CFP**), and the **rb_call_info_t** struct itself (**ci**) for
+call, it invokes the function pointed to by the `rb_call_info_t` struct's
+`call` field with the current thread (`th`), the current frame pointer
+(result of `GET_CFP`), and the `rb_call_info_t` struct itself (`ci`) for
 arguments.
 
 This is definitely a step in the right direction, but since we have no insight
-into the origins of the function pointed to by the **rb_call_info_t** struct's
-**call** pointer, we'll need to step backward before we can step forward.
+into the origins of the function pointed to by the `rb_call_info_t` struct's
+`call` pointer, we'll need to step backward before we can step forward.
 Luckily for us, we literally only need to take one step backward to the previous
-line where **vm_search_method** is invoked.
+line where `vm_search_method` is invoked.
 
 At this point, rather than drill into every call
 that is made on the way to our goal, let's speed things up a bit. We'll still
 walk through each step, but we'll be more brief and skip the code snippets
 until we get a whiff of tail call optimization. That said, I've collected [the
-source for each step of the way from **CALL_METHOD** to the internals of Ruby's
+source for each step of the way from `CALL_METHOD` to the internals of Ruby's
 tail call optimization into one file][GitHub.com - from_call_method_to_tco.c]
 for your viewing pleasure.
 
 Take a deep breath&hellip;
 
-- The call to [**vm_search_method**][GitHub.com - vm_search_method] is where the
-  value of [**ci->call** is set, and it is set to reference another
-  function, **vm_call_general**][GitHub.com - vm_call_general - line 15].
+- The call to [`vm_search_method`][GitHub.com - vm_search_method] is where the
+  value of [`ci->call` is set, and it is set to reference another
+  function, `vm_call_general`][GitHub.com - vm_call_general - line 15].
 
-- [**vm_call_general**][GitHub.com - vm_call_general - line 24] when called
+- [`vm_call_general`][GitHub.com - vm_call_general - line 24] when called
   [invokes and returns the result of another method,
-  **vm_call_method**][GitHub.com - vm_call_method - line 26].
+  `vm_call_method`][GitHub.com - vm_call_method - line 26].
 
-- [**vm_call_method**][GitHub.com - vm_call_method - line 31]
+- [`vm_call_method`][GitHub.com - vm_call_method - line 31]
   at about 155 lines, is a monster of a function, that handles every type of
   method invocation that the Ruby VM supports. It'd be pretty easy to get lost
   in this method, but we are fortunate in that we know we are dealing with an
   instruction sequence method type because we got to this point from a YARV
   instruction. This allows us to jump right to the portion of the switch
   statement that deals with instruction sequence type methods. In which
-  case, [**vm_call_method** returns the result of yet another function
-  invocation **vm_call_iseq_setup**][GitHub.com - vm_call_iseq_setup - line 45].
+  case, [`vm_call_method` returns the result of yet another function
+  invocation `vm_call_iseq_setup`][GitHub.com - vm_call_iseq_setup - line 45].
 
 (If you're beginning to wonder if this rabbit hole of a descent has a bottom,
 don't worry, we're almost there.)
 
-- [**vm_call_iseq_setup**][GitHub.com - vm_call_iseq_setup - line 210]
+- [`vm_call_iseq_setup`][GitHub.com - vm_call_iseq_setup - line 210]
   is a two-liner that sets up the callee of the method and then [returns the
   result of another function invocation,
-  **vm_call_iseq_setup_2**][GitHub.com - vm_call_iseq_setup_2 - line 213].
+  `vm_call_iseq_setup_2`][GitHub.com - vm_call_iseq_setup_2 - line 213].
 
-- [**vm_call_iseq_setup_2**][GitHub.com - vm_call_iseq_setup_2 - line 218]
+- [`vm_call_iseq_setup_2`][GitHub.com - vm_call_iseq_setup_2 - line 218]
   is where we finally get our first whiff of tail call optimization. In fact, the
-  only purpose of **vm_call_iseq_setup_2** is to check if tail call optimization
+  only purpose of `vm_call_iseq_setup_2` is to check if tail call optimization
   is enabled and if so [it calls yet another function,
-  **vm_call_iseq_setup_tailcall**][GitHub.com - vm_call_iseq_setup_tailcall - line 224].
+  `vm_call_iseq_setup_tailcall`][GitHub.com - vm_call_iseq_setup_tailcall - line 224].
 
 (**So close!** But, while we're here, it's worth noting that normally [when tail
-call optimization is not enabled, **vm_call_iseq_setup_2** will call
-**vm_call_iseq_setup_normal**][GitHub.com - vm_call_iseq_setup_normal]
-instead of **vm_call_iseq_setup_tailcall**. We'll come back to this alternative
+call optimization is not enabled, `vm_call_iseq_setup_2` will call
+`vm_call_iseq_setup_normal`][GitHub.com - vm_call_iseq_setup_normal]
+instead of `vm_call_iseq_setup_tailcall`. We'll come back to this alternative
 path in a moment.)
 
-- One look at [**vm_call_iseq_setup_tailcall**][GitHub.com - vm_call_iseq_setup_tailcall - line 252]
+- One look at [`vm_call_iseq_setup_tailcall`][GitHub.com - vm_call_iseq_setup_tailcall - line 252]
   and it's obvious that we've found what we've been searching for, the heart of
   Ruby's support for tail call optimization.
 
 Success! Well, sort of, we still need to grok what's going on here, and come to
 think of it, where the hell are we? Let's take a look at what's going on inside
-**vm_call_iseq_setup_tailcall** and see if we can find our bearings and see how
+`vm_call_iseq_setup_tailcall` and see if we can find our bearings and see how
 this call translates into the goodness of tail call optimization.
 
 ## Just when you were starting to think it was turtles all the way down
-Though we could consider **vm_call_iseq_setup_tailcall** on its own, we would
+Though we could consider `vm_call_iseq_setup_tailcall` on its own, we would
 probably do better to use the same strategy that we employed earlier and compare
 the unoptimized version to the tail call optimized version, and see what is
 different between the two. It didn't work for us last time, but maybe we'll have
 better luck this time around.
 
 We've established that the tail optimized version can be found in
-**vm_call_iseq_setup_tailcall**, and if it wasn't obvious from its name or from
+`vm_call_iseq_setup_tailcall`, and if it wasn't obvious from its name or from
 my making a point of mentioning it during our descent, the unoptimized version
-can be found in [**vm_call_iseq_setup_normal**][GitHub.com - vm_call_iseq_setup_normal].
+can be found in [`vm_call_iseq_setup_normal`][GitHub.com - vm_call_iseq_setup_normal].
 Looking at both methods at a high level, it looks like we're still in the
 process of making the method call, as both of these functions seem to be
 preparing Ruby's internal stack prior to pushing a new frame onto the call
@@ -295,13 +295,13 @@ stack.
 
 Here's a side-by-side vimdiff highlighting the differences between the two
 functions, though I should warn you that I made a couple of minor adjustments to
-**vm_call_iseq_setup_normal** to suppress irrelevant differences:
+`vm_call_iseq_setup_normal` to suppress irrelevant differences:
 
 [![Differences between vm_call_iseq_setup_normal and vm_call_iseq_setup_tailcall][vm-call-iseq-setup-diff]][vm-call-iseq-setup-diff]
 
 Compared to the extremely minimal differences in the our initial diff, I'm much
 more optimistic that we'll find what we're looking for in this larger change
-set. Let's start with **vm_call_iseq_setup_normal** since it is the shorter and
+set. Let's start with `vm_call_iseq_setup_normal` since it is the shorter and
 more typical of the two functions.
 
 ## vm_call_iseq_setup_normal
@@ -309,36 +309,36 @@ more typical of the two functions.
 VALUE *argv = cfp->sp - ci->argc;
 ```
 
-**vm_call_iseq_setup_normal** begins by creating a pointer to the position on
-the stack where the argument vector (**argv**) for the next iteration of the
+`vm_call_iseq_setup_normal` begins by creating a pointer to the position on
+the stack where the argument vector (`argv`) for the next iteration of the
 recursive call begins. This is achieved by taking the current stack frame's
-stack pointer (**cfp->sp**) and moving backward down the stack the appropriate
+stack pointer (`cfp->sp`) and moving backward down the stack the appropriate
 number of elements, as determined by our old friend the call info struct
-(**rb_call_info_t**) and its argument count field (**ci->argc**).
+(`rb_call_info_t`) and its argument count field (`ci->argc`).
 
 ```c
 rb_iseq_t *iseq = ci->me->def->body.iseq;
 ```
 
-**vm_call_iseq_setup_normal** then continues by creating a pointer to the
-**rb_iseq_t** struct identifying and encapsulating data about the instruction
+`vm_call_iseq_setup_normal` then continues by creating a pointer to the
+`rb_iseq_t` struct identifying and encapsulating data about the instruction
 sequence that will be invoked by this call.
 
 ```c
 VALUE *sp = argv + iseq->param.size;
 ```
 
-**vm_call_iseq_setup_normal** next creates a new pointer (**sp**) and points it
-to where it calculates the end of the argument vector (**argv**) to be using the
-value returned by **iseq->param.size**, a field related to the instruction
+`vm_call_iseq_setup_normal` next creates a new pointer (`sp`) and points it
+to where it calculates the end of the argument vector (`argv`) to be using the
+value returned by `iseq->param.size`, a field related to the instruction
 sequence indicating how many parameters the instruction sequence takes.
 
-It may seem strange that the VM determines the beginning of **argv** by descending
-**ci->argc** elements from the top of the stack and then later finds the end of
-**argv** by ascending **iseq->param.size** elements up the stack, however the use
-of **iseq->param.size** allows the VM to allocate extra space on the stack in
+It may seem strange that the VM determines the beginning of `argv` by descending
+`ci->argc` elements from the top of the stack and then later finds the end of
+`argv` by ascending `iseq->param.size` elements up the stack, however the use
+of `iseq->param.size` allows the VM to allocate extra space on the stack in
 situations that use special types of arguments. In this case however, our Guinea
-pig function uses only simple arguments so **ci->argc** and **iseq->param.size**
+pig function uses only simple arguments so `ci->argc` and `iseq->param.size`
 are equal. This brings us right back to where we started at the top of the stack.
 
 ```c
@@ -370,9 +370,9 @@ frame is the next iteration of our recursive function.
 cfp->sp = argv - 1 /* recv */;
 ```
 
-This last bit of logic sets the current frame's stack pointer (**cfp->sp**) to
+This last bit of logic sets the current frame's stack pointer (`cfp->sp`) to
 point to the position on the stack just before the beginning of the argument
-vector (**argv - 1**). When this line is executed, that position on the stack is
+vector (`argv - 1`). When this line is executed, that position on the stack is
 occupied by the receiver of the next iteration of our function call. This may
 seem a little strange, but this assignment is preparing the current stack frame
 for when it resumes execution after the completion of the frame we've just
@@ -391,8 +391,8 @@ the tail call optimized case.
   rb_iseq_t *iseq = ci->me->def->body.iseq;
 ```
 
-**vm_call_iseq_setup_tailcall** starts exactly the same as its counterpart: It
-creates a pointer to the beginning of the argument vector (**argv**) of the next
+`vm_call_iseq_setup_tailcall` starts exactly the same as its counterpart: It
+creates a pointer to the beginning of the argument vector (`argv`) of the next
 iteration of our recursive function and extracts a reference to the instruction
 sequence struct from the call info struct.
 
@@ -402,16 +402,16 @@ VALUE *sp_orig, *sp;
 VALUE finish_flag = VM_FRAME_TYPE_FINISH_P(cfp) ? VM_FRAME_FLAG_FINISH : 0;
 ```
 
-Though the functions start the same, **vm_call_iseq_setup_tailcall** soon
+Though the functions start the same, `vm_call_iseq_setup_tailcall` soon
 distinguishes itself with the allocation of a number of additional variables.
-First, a new pointer (**src_argv**) is created pointing to the beginning of the
-argument vector (**argv**). Next, two pointers (**sp_orig** and **sp**) are
-allocated, but not assigned. Finally, a fourth variable (**finish_flag**) is
+First, a new pointer (`src_argv`) is created pointing to the beginning of the
+argument vector (`argv`). Next, two pointers (`sp_orig` and `sp`) are
+allocated, but not assigned. Finally, a fourth variable (`finish_flag`) is
 allocated and conditionally assigned.
 
-The final variable, **finish_flag**, is used to allow tail call optimization of
-special types of stack frames called **finish frames**. Since we're working with
-normal method frames, the **finish_flag** variable can be safely ignored.
+The final variable, `finish_flag`, is used to allow tail call optimization of
+special types of stack frames called `finish frames`. Since we're working with
+normal method frames, the `finish_flag` variable can be safely ignored.
 
 ```c
 cfp = th->cfp = RUBY_VM_PREVIOUS_CONTROL_FRAME(th->cfp);
@@ -422,20 +422,20 @@ Whereas the normal recursive strategy continues to accumulate frame after frame,
 this line begins to demonstrate how an optimized tail recursive call can avoid
 doing so.
 
-The secret sauce behind the success of **vm_call_iseq_setup_tailcall**, and tail
+The secret sauce behind the success of `vm_call_iseq_setup_tailcall`, and tail
 call optimization in general, is that each iteration actually removes itself
 from the stack, as part of invoking the next iteration. Since the nature of
 recursion can make discussion difficult, it's worth taking a moment here for
 clarity.
 
-The beginning of **vm_call_iseq_setup_tailcall**, places us at the point in the
+The beginning of `vm_call_iseq_setup_tailcall`, places us at the point in the
 sequence of events where the current frame, iteration n of
-**Factorial.fact_helper**, is preparing the stack for the recursive invocation
-of iteration n+1 of **Factorial.fact_helper**. Iteration n, after storing a
+`Factorial.fact_helper`, is preparing the stack for the recursive invocation
+of iteration n+1 of `Factorial.fact_helper`. Iteration n, after storing a
 reference to the argument vector intended for iteration n+1, pops the current
 stack frame (itself) off of the call stack, effectively removing itself from the
-stack and giving the appearance that **Factorial.fact** is the call in the stack
-before iteration n+1 of **Factorial.fact_helper**.
+stack and giving the appearance that `Factorial.fact` is the call in the stack
+before iteration n+1 of `Factorial.fact_helper`.
 
 In terms of another metaphor, if you think of the factorial calculation as
 exercise and the call stack as distance traveled, tail call optimization is kind
@@ -444,11 +444,11 @@ hamster and the recursive call are running in place, they both still make
 progress on the work they are performing. This analogy may also elucidate why
 tail recursion can be thought of as a special kind of loop construct.
 
-Returning our focus to **vm_call_iseq_setup_tailcall**, after popping the
-current frame from the call stack, **vm_call_iseq_setup_tailcall** then updates
-the thread's current frame pointer (**th->cfp**) and the **cfp** variable to
+Returning our focus to `vm_call_iseq_setup_tailcall`, after popping the
+current frame from the call stack, `vm_call_iseq_setup_tailcall` then updates
+the thread's current frame pointer (`th->cfp`) and the `cfp` variable to
 point at the stack frame prior to the invocation of our tail recursive function,
-**Factorial.fact**.
+`Factorial.fact`.
 
 Though this mechanism allows tail call optimization to avoid the stack overflows
 inherent to its counterpart, we will see in a moment that it also has other
@@ -468,22 +468,22 @@ handled manually.
 sp_orig = sp = cfp->sp;
 ```
 
-Though it is pretty clear that this line assigns the **sp_orig** and **sp**
-variables to the value stored in the current frame's stack pointer (**cfp->sp**)
-field, keep in mind that **cfp** now refers to the call to **Factorial.fact**.
+Though it is pretty clear that this line assigns the `sp_orig` and `sp`
+variables to the value stored in the current frame's stack pointer (`cfp->sp`)
+field, keep in mind that `cfp` now refers to the call to `Factorial.fact`.
 
 As you'll recall from the normal setup function, before the first invocation of
-**Factorial.fact_helper**, the previous frame (**Factorial.fact**) would have
+`Factorial.fact_helper`, the previous frame (`Factorial.fact`) would have
 rewound it's stack pointer to the position on the stack that it should resume
 execution from, which would have been the point on the stack right before the
-arguments consumed by the first iteration of **Factorial.fact_helper**. This
+arguments consumed by the first iteration of `Factorial.fact_helper`. This
 behavior benefits tail call optimization in a few ways.
 
 First, because the function call that just ended is exactly the same as the one
 that's being set up, it can be assumed that there's enough room on the stack for
 the call being prepared. This means that the stack pointer from the call prior
-to our tail optimized call (**cfp->sp**) can be used as the starting position
-for the new stack (**sp**) thats being assembled.
+to our tail optimized call (`cfp->sp`) can be used as the starting position
+for the new stack (`sp`) thats being assembled.
 
 Second, because the character of the stack is likely consistent for each
 recursive call, less overhead is required when setting up the stack. For
@@ -495,20 +495,20 @@ actually only assigned on the first iteration and on every other iteration the
 assignment can be skipped because the value is already nil.
 
 The final benefit that comes from being able to reuse the stack pointer from the
-stack frame prior to our tail optimized call (**cfp->sp**) is that that same
+stack frame prior to our tail optimized call (`cfp->sp`) is that that same
 pointer also doubles as a pointer to the place on the stack that our current
-frame's stack pointer (**cfp->sp**) will need to be rewound later.  To
-facilitate this usage a reference is set aside in **sp_orig** for later use.
+frame's stack pointer (`cfp->sp`) will need to be rewound later.  To
+facilitate this usage a reference is set aside in `sp_orig` for later use.
 
 ```c
 sp[0] = ci->recv;
 sp++;
 ```
 
-With this line, **vm_call_iseq_setup_tailcall** begins to rebuild the stack for
+With this line, `vm_call_iseq_setup_tailcall` begins to rebuild the stack for
 the next iteration of the recursive call. To achieve this, it first pushes the
-receiver of the call (**ci-> recv**) into the position at the head of the stack
-(**sp[0]**), and increments the stack pointer to the next position.
+receiver of the call (`ci-> recv`) into the position at the head of the stack
+(`sp[0]`), and increments the stack pointer to the next position.
 
 ```c
 for (i=0; i < iseq->param.size; i++) {
@@ -518,8 +518,8 @@ for (i=0; i < iseq->param.size; i++) {
 
 Next, the function continues by pushing each of the arguments for the next
 iteration onto the stack. This is where it becomes clear why a reference to the
-next iteration's argument vector is needed, as the **cfp** pointer was replaced,
-and without this reference (**src_argv**) there'd be no consistent means by
+next iteration's argument vector is needed, as the `cfp` pointer was replaced,
+and without this reference (`src_argv`) there'd be no consistent means by
 which to access those arguments.
 
 This loop is also responsible for the behavior I alluded to above where each
@@ -544,8 +544,8 @@ vm_push_frame(th, iseq, VM_FRAME_MAGIC_METHOD | finish_flag,
 
 The process of pushing a new frame on to the stack is almost exactly the same as
 in the normal setup function, except for one slight difference: The bitwise
-logic related to the **finish_flag** variable is added to allow tail call
-optimization to be performed on **finish frames** as we briefly discussed
+logic related to the `finish_flag` variable is added to allow tail call
+optimization to be performed on `finish frames` as we briefly discussed
 earlier.
 
 ```c
@@ -553,14 +553,14 @@ cfp->sp = sp_orig;
 ```
 
 Last but not least, after pushing the new frame on to the stack, the setup
-function sets the current frame pointer's stack pointer (**cfp->sp**) to the
+function sets the current frame pointer's stack pointer (`cfp->sp`) to the
 point on the stack that it should resume from. In this case, that position
 matches the original position of the frame's stack pointer which was tucked away
-in **sp_orig** for later use.
+in `sp_orig` for later use.
 
-At this point we're back in sync with **vm_call_iseq_setup_normal**, but whereas
-**vm_call_iseq_setup_normal** would have picked up another stack frame, after
-some minor stack shuffling, **vm_call_iseq_setup_tailcall** leaves us right back
+At this point we're back in sync with `vm_call_iseq_setup_normal`, but whereas
+`vm_call_iseq_setup_normal` would have picked up another stack frame, after
+some minor stack shuffling, `vm_call_iseq_setup_tailcall` leaves us right back
 where we started, but one step closer to the solution to our factorial
 calculation.
 
@@ -585,7 +585,7 @@ I certainly did. Thanks for reading!
 
 (I swear my next post will be shorter!)
 
-[^1]: Ruby's special **$** variables are out of the scope of this article, but you can see where the [parser defines the various special variables here](https://github.com/ruby/ruby/blob/17a65c320d9ce3bce3d7fe0177d74bf78314b8fa/parse.y#L7606).
+[^1]: Ruby's special `$` variables are out of the scope of this article, but you can see where the [parser defines the various special variables here](https://github.com/ruby/ruby/blob/17a65c320d9ce3bce3d7fe0177d74bf78314b8fa/parse.y#L7606).
 
 [Aaron Patterson - tenderlovemaking]: http://tenderlovemaking.com/ "Aaron Patterson - tenderlovemaking.com"
 [GitHub.com - ruby/test/ruby/test_optimization]: https://github.com/ruby/ruby/blob/fcf6fa8781fe236a9761ad5d75fa1b87f1afeea2/test/ruby/test_optimization.rb#L213 "GitHub.com - ruby/test/ruby/test_optimization.rb"
