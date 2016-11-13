@@ -8,6 +8,10 @@ TEST_FILE_EXISTS=0
 if [ -e "$TEST_FILE" ]; then TEST_FILE_EXISTS=1; fi
 TEST_FILE_SIZE=134217728
 
+if [ $EUID -ne 0 ]; then
+  echo "NOTE: Kernel cache will not be cleared between tests without sudo. This will likely cause inaccurate results." 1>&2
+fi
+
 # Header
 PRINTF_FORMAT="%8s : %s\n"
 printf "$PRINTF_FORMAT" 'block size' 'transfer rate'
@@ -22,6 +26,9 @@ do
     echo "Block size of $BLOCK_SIZE estimated to require $COUNT blocks, aborting further tests."
     break
   fi
+
+  # Clear kernel cache to ensure more accurate test
+  [ $EUID -eq 0 ] && [ -e /proc/sys/vm/drop_caches ] && echo 3 > /proc/sys/vm/drop_caches
 
   # Create a test file with the specified block size
   DD_RESULT=$(dd if=/dev/zero of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT 2>&1 1>/dev/null)
