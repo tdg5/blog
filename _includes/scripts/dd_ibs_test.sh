@@ -22,7 +22,7 @@ fi
 echo 'Generating test file...'
 BLOCK_SIZE=65536
 COUNT=$(($TEST_FILE_SIZE / $BLOCK_SIZE))
-dd if=/dev/urandom of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT > /dev/null 2>&1
+dd if=/dev/urandom of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT conv=fsync > /dev/null 2>&1
 
 # Header
 PRINTF_FORMAT="%8s : %s\n"
