@@ -4,7 +4,8 @@
 set -e
 
 TEST_FILE=${1:-dd_obs_testfile}
-[ -e "$TEST_FILE" ]; TEST_FILE_EXISTS=$?
+TEST_FILE_EXISTS=0
+if [ -e "$TEST_FILE" ]; then TEST_FILE_EXISTS=1; fi
 TEST_FILE_SIZE=134217728
 
 # Header
@@ -29,7 +30,7 @@ do
   TRANSFER_RATE=$(echo $DD_RESULT | \grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
 
   # Clean up the test file if we created one
-  [ $TEST_FILE_EXISTS -ne 0 ] && rm $TEST_FILE
+  if [ $TEST_FILE_EXISTS -ne 0 ]; then rm $TEST_FILE; fi
 
   # Output the result
   printf "$PRINTF_FORMAT" "$BLOCK_SIZE" "$TRANSFER_RATE"

@@ -4,7 +4,7 @@
 set -e
 
 TEST_FILE=${1:-dd_ibs_testfile}
-[ -e "$TEST_FILE" ]; TEST_FILE_EXISTS=$?
+if [ -e "$TEST_FILE" ]; then TEST_FILE_EXISTS=$?; fi
 TEST_FILE_SIZE=134217728
 
 # Exit if file exists
@@ -12,6 +12,7 @@ if [ -e $TEST_FILE ]; then
   echo "Test file $TEST_FILE exists, aborting."
   exit 1
 fi
+TEST_FILE_EXISTS=1
 
 # Create test file
 echo 'Generating test file...'
@@ -36,4 +37,4 @@ do
 done
 
 # Clean up the test file if we created one
-[ $TEST_FILE_EXISTS -ne 0 ] && rm $TEST_FILE
+if [ $TEST_FILE_EXISTS -ne 0 ]; then rm $TEST_FILE; fi
