@@ -22,7 +22,11 @@ fi
 echo 'Generating test file...'
 BLOCK_SIZE=65536
 COUNT=$(($TEST_FILE_SIZE / $BLOCK_SIZE))
-dd if=/dev/urandom of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT conv=fsync > /dev/null 2>&1
+DD_RESULT=$(dd if=/dev/urandom of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT conv=fsync 2>&1)
+if [[ $? != 0 ]]; then
+    echo "$DD_RESULT"
+    break;
+fi
 
 # Header
 PRINTF_FORMAT="%8s : %s\n"
@@ -35,10 +39,15 @@ do
   [ $EUID -eq 0 ] && [ -e /proc/sys/vm/drop_caches ] && echo 3 > /proc/sys/vm/drop_caches
 
   # Read test file out to /dev/null with specified block size
-  DD_RESULT=$(dd if=$TEST_FILE of=/dev/null bs=$BLOCK_SIZE 2>&1 1>/dev/null)
+  DD_RESULT=$(dd if=$TEST_FILE of=/dev/null bs=$BLOCK_SIZE 2>&1)
+
+  if [[ $? != 0 ]]; then
+      echo "$DD_RESULT"
+      break;
+  fi
 
   # Extract transfer rate
-  TRANSFER_RATE=$(echo $DD_RESULT | \grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
+  TRANSFER_RATE=$(echo $DD_RESULT | grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
 
   printf "$PRINTF_FORMAT" "$BLOCK_SIZE" "$TRANSFER_RATE"
 done
