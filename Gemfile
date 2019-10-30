@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "classifier-reborn"
-gem "jekyll", "3.0.0.pre.beta8"
+gem "jekyll", "3.6.3"
 gem "octopress"
 gem "octopress-ink"
 gem "redcarpet"
