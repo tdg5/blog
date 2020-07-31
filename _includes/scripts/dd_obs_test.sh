@@ -31,10 +31,15 @@ do
   [ $EUID -eq 0 ] && [ -e /proc/sys/vm/drop_caches ] && echo 3 > /proc/sys/vm/drop_caches
 
   # Create a test file with the specified block size
-  DD_RESULT=$(dd if=/dev/zero of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT conv=fsync 2>&1 1>/dev/null)
+  DD_RESULT=$(dd if=/dev/zero of=$TEST_FILE bs=$BLOCK_SIZE count=$COUNT conv=fsync 2>&1)
+
+  if [[ $? != 0 ]]; then
+      echo "$DD_RESULT"
+      break;
+  fi
 
   # Extract the transfer rate from dd's STDERR output
-  TRANSFER_RATE=$(echo $DD_RESULT | \grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
+  TRANSFER_RATE=$(echo $DD_RESULT | grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
 
   # Clean up the test file if we created one
   if [ $TEST_FILE_EXISTS -ne 0 ]; then rm $TEST_FILE; fi
