@@ -37,7 +37,7 @@ do
   TRANSFER_RATE=$(echo $DD_RESULT | \grep --only-matching -E '[0-9.]+ ([MGk]?B|bytes)/s(ec)?')
 
   # Clean up the test file if we created one
-  if [ $TEST_FILE_EXISTS -ne 0 ]; then rm $TEST_FILE; fi
+  if [ $TEST_FILE_EXISTS -eq 0 ]; then rm $TEST_FILE; fi
 
   # Output the result
   printf "$PRINTF_FORMAT" "$BLOCK_SIZE" "$TRANSFER_RATE"
