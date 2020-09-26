@@ -44,4 +44,4 @@ do
 done
 
 # Clean up the test file if we created one
-if [ $TEST_FILE_EXISTS -ne 0 ]; then rm $TEST_FILE; fi
+if [ $TEST_FILE_EXISTS -eq 0 ]; then rm $TEST_FILE; fi
